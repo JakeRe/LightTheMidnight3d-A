@@ -712,17 +712,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05a47ef706c2984da87b2a8c86b66e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  flashlightHitBox: {fileID: 993186483}
   mainCamera: {fileID: 963194227}
-  lightColor: {r: 1, g: 1, b: 1, a: 0.49803922}
+  player: {fileID: 78389245}
   flashLightEmitter: {fileID: 934735905}
+  worldPosition: {x: 0, y: 0, z: 0}
+  movementSpeed: 10
+  isReady: 0
   batteryLevel: 100
   batteryLevelMax: 100
   batteryDrain: 25
-  player: {fileID: 78389245}
-  isReady: 0
-  flashlightHitBox: {fileID: 993186483}
-  worldPosition: {x: 0, y: 0, z: 0}
+  lightColor: {r: 1, g: 1, b: 1, a: 0.49803922}
 --- !u!1 &993186483
 GameObject:
   m_ObjectHideFlags: 0
