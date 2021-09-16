@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float movementSpeed;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private Color lightColor;
     [SerializeField] private Light flashLightEmitter;
     [SerializeField] private float batteryLevel;
     [SerializeField] private float batteryLevelMax;
@@ -32,6 +33,8 @@ public class PlayerController : MonoBehaviour
         if(batteryLevel < 100 && !isReady)
         {
             batteryLevel += batteryDrain * Time.deltaTime;
+            flashLightEmitter.color += (lightColor) * Time.deltaTime;
+            flashLightEmitter.range += flashLightEmitter.range * Time.deltaTime;
 
             if (batteryLevel >= batteryLevelMax)
             {
@@ -75,8 +78,10 @@ public class PlayerController : MonoBehaviour
         {
             flashLightEmitter.gameObject.SetActive(true);
             batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
-            flashlightHitBox.gameObject.SetActive(true); 
-            
+            flashlightHitBox.gameObject.SetActive(true);
+
+            flashLightEmitter.color -= (Color.white / batteryDrain) * Time.deltaTime;
+            flashLightEmitter.range -= flashLightEmitter.range * Time.deltaTime;
             
         }
 

@@ -566,18 +566,18 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49803922}
   m_Intensity: 1
   m_Range: 20
   m_SpotAngle: 61
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0.27
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -714,6 +714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10
   mainCamera: {fileID: 963194227}
+  lightColor: {r: 1, g: 1, b: 1, a: 0.49803922}
   flashLightEmitter: {fileID: 934735905}
   batteryLevel: 100
   batteryLevelMax: 100
