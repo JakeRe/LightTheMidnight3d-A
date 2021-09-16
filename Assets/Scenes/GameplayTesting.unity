@@ -716,6 +716,7 @@ MonoBehaviour:
   mainCamera: {fileID: 963194227}
   flashLightEmitter: {fileID: 934735905}
   batteryLevel: 100
+  batteryLevelMax: 100
   batteryDrain: 25
   player: {fileID: 78389245}
   isReady: 0

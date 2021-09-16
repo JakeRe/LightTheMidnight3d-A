@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Light flashLightEmitter;
     [SerializeField] private float batteryLevel;
+    [SerializeField] private float batteryLevelMax;
     [SerializeField] private float batteryDrain;
     [SerializeField] private GameObject player;
     [SerializeField] private bool isReady;
@@ -28,19 +29,21 @@ public class PlayerController : MonoBehaviour
     {
         
         yield return new WaitForSeconds(5);
-        if(batteryLevel < 100)
+        if(batteryLevel < 100 && !isReady)
         {
-            isReady = false;
-            flashlightHitBox.gameObject.SetActive(false);
             batteryLevel += batteryDrain * Time.deltaTime;
-            flashLightEmitter.gameObject.SetActive(false);
 
+            if (batteryLevel >= batteryLevelMax)
+            {
+                batteryLevel = batteryLevelMax;
+                isReady = true;
+                yield break;
+            }
         }
 
-        if(batteryLevel >= 100)
-        {
-            isReady = true;
-        }
+        
+
+
 
     }
 
@@ -72,17 +75,22 @@ public class PlayerController : MonoBehaviour
         {
             flashLightEmitter.gameObject.SetActive(true);
             batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
-            flashlightHitBox.gameObject.SetActive(true);
-
-            if(batteryLevel <= batteryLevel)
-            {
-                StartCoroutine("FlashLightCoolDown");
-            }
-           
+            flashlightHitBox.gameObject.SetActive(true); 
+            
+            
         }
 
-       
+        if(batteryLevel <= 0)
+        {
+            isReady = false;
+            flashlightHitBox.gameObject.SetActive(false);
+            flashLightEmitter.gameObject.SetActive(false);
+        }
 
+        if (batteryLevel <= batteryLevelMax && !isReady)
+        {
+            StartCoroutine("FlashLightCoolDown");
+        }
 
     }
 }
