@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("The game object associated with the Player")]
     [SerializeField] private GameObject player;
     [Tooltip("The light gameobject used to cast the Flashlight beam")]
-    [SerializeField] private Light flashLightEmitter;
+    [SerializeField] public Light flashLightEmitter;
     
     [Header("Navigation")]
     [Tooltip("Position of the raycast from the Camera that the player will travel to")]
@@ -23,15 +23,17 @@ public class PlayerController : MonoBehaviour
 
     [Header("Light Management")]
     [Tooltip("Tells if the flashlight is ready for use")]
-    [SerializeField] private bool isReady;
+    [SerializeField] public bool isReady;
     [Tooltip("Current Battery Level of Flashlight")]
-    [SerializeField] private float batteryLevel;
+    [SerializeField] public float batteryLevel;
     [Tooltip("Maximum Battery Life for Flashlight")]
-    [SerializeField] private float batteryLevelMax;
+    [SerializeField] public float batteryLevelMax;
     [Tooltip("Rate by which the battery for the flashlight drains")]
     [SerializeField] private float batteryDrain; 
     [Tooltip("Color emitted by flashlight")]
     [SerializeField] private Color lightColor;
+    [Tooltip("Flashlight maximum range")]
+    [SerializeField] public float maxFlashlightRange;
     
     void Start()
     {
@@ -51,7 +53,7 @@ public class PlayerController : MonoBehaviour
             //Battery is added to over the course of time
             batteryLevel += batteryDrain * Time.deltaTime;
             flashLightEmitter.color += (lightColor) * Time.deltaTime;
-            flashLightEmitter.range += flashLightEmitter.range * Time.deltaTime;
+            flashLightEmitter.range = maxFlashlightRange;
 
             //If the battery is full, then break the loop
             if (batteryLevel >= batteryLevelMax)
