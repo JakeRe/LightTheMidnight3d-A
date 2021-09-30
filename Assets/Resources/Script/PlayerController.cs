@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     [Tooltip("Photon Viewer")]
     [SerializeField] private PhotonView photonView;
     [Tooltip("Local player Instance")]
-    public static GameObject LocalPlayerInstance;
+    [SerializeField] public static GameObject LocalPlayerInstance;
 
 
 
@@ -72,8 +72,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
         photonView = gameObject.GetComponent<PhotonView>();
         if (photonView.IsMine)
         {
-            PlayerController.LocalPlayerInstance = this.gameObject;
-
+            LocalPlayerInstance = gameObject;
         }
 
        
@@ -114,7 +113,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
     // Update is called once per frame
     void Update()
     {
-        if(photonView.IsMine && PhotonNetwork.IsConnected == true)
+        if(photonView.IsMine)
         {
             Movement();
             Attack();
