@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Realtime;
+using Photon.Pun;
 public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -21,6 +22,10 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Player's Movement Speed.")]
     [SerializeField] private float movementSpeed;
 
+    [Header("Health Management")]
+    [Tooltip("Health of the Player Character")]
+    [SerializeField] private float health;
+
     [Header("Light Management")]
     [Tooltip("Tells if the flashlight is ready for use")]
     [SerializeField] public bool isReady;
@@ -34,7 +39,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Color lightColor;
     [Tooltip("Flashlight maximum range")]
     [SerializeField] public float maxFlashlightRange;
+
+    [Header("Components")]
+    [Tooltip("Photon Viewer")]
+    [SerializeField] private PhotonView photonView;
+    [Tooltip("Local player Instance")]
+    public static GameObject LocalPlayerInstance;
     
+
+    void Awake()
+    {
+        PlayerController.LocalPlayerInstance = this.gameObject;
+
+        photonView = gameObject.GetComponent<PhotonView>();
+
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     void Start()
     {
         isReady = true;
@@ -68,9 +89,18 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
-        Attack();
-        BatteryManagement();
+        if(photonView.IsMine)
+        {
+            Movement();
+            Attack();
+            BatteryManagement();
+
+            if(health < 0f)
+            {
+                GameManager.Instance.LeaveRoom();
+            }
+        }
+        
     }
 
     //Region containing player motion and abilities
@@ -92,20 +122,20 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
-        Vector3 mouse = Input.mousePosition;
+        //Vector3 mouse = Input.mousePosition;
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 1000))
-        {
-            worldPosition = hit.point;
+        //if (Physics.Raycast(ray, out hit, 1000))
+        //{
+        //    worldPosition = hit.point;
 
-        }
+        //}
 
-        Debug.DrawRay(transform.position, mouse, Color.green);
+        //Debug.DrawRay(transform.position, mouse, Color.green);
 
-        player.transform.LookAt(worldPosition);
+        //player.transform.LookAt(worldPosition);
 
 
         if (Input.GetKey(KeyCode.W))
@@ -127,6 +157,15 @@ public class PlayerController : MonoBehaviour
         if (batteryLevel <= batteryLevelMax && !isReady)
         {
             StartCoroutine("FlashLightCoolDown");
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("enemy hit player");
+
         }
     }
 
