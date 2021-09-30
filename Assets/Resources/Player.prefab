@@ -138,6 +138,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4145518759405000674}
+  - {fileID: 48720126169169683}
   - {fileID: -2972182558943794008}
   sceneViewId: 0
   InstantiationId: 0
@@ -195,6 +196,7 @@ MonoBehaviour:
   batteryDrain: 10
   lightColor: {r: 1, g: 0.9733981, b: 0.33490568, a: 0}
   maxFlashlightRange: 50
+  isActive: 0
   photonView: {fileID: 9189496979898966923}
 --- !u!95 &9183460186236864467
 Animator:
@@ -230,7 +232,9 @@ MonoBehaviour:
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
   m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &30457905086078372
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,9 +277,9 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 0.49803922}
-  m_Intensity: 1
-  m_Range: 20
+  m_Color: {r: 1, g: 0.88423556, b: 0.19339621, a: 0.49803922}
+  m_Intensity: 20
+  m_Range: 30
   m_SpotAngle: 61
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10

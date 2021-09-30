@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using Photon.Realtime;
 using Photon.Pun;
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPunObservable
 {
     // Start is called before the first frame update
     [Header("GameObjects")]
@@ -25,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Health Management")]
     [Tooltip("Health of the Player Character")]
-    [SerializeField] private float health;
+    [SerializeField] public float health;
 
     [Header("Light Management")]
     [Tooltip("Tells if the flashlight is ready for use")]
@@ -40,13 +41,31 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Color lightColor;
     [Tooltip("Flashlight maximum range")]
     [SerializeField] public float maxFlashlightRange;
+    [Tooltip("If the flashlight is in Use")]
+    [SerializeField] public bool isActive;
 
     [Header("Components")]
     [Tooltip("Photon Viewer")]
     [SerializeField] private PhotonView photonView;
     [Tooltip("Local player Instance")]
     public static GameObject LocalPlayerInstance;
-    
+
+
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(health);
+            stream.SendNext(isActive);
+        }
+        else
+        {
+            this.health = (float)stream.ReceiveNext();
+            this.isActive = (bool)stream.ReceiveNext();
+        }
+
+    }
 
     void Awake()
     {
@@ -108,16 +127,21 @@ public class PlayerController : MonoBehaviour
     #region Player Abilities
     void Attack()
     {
-        if (Input.GetButton("Fire1") && batteryLevel >= 0 && isReady)
+        if (photonView.IsMine)
         {
-            flashLightEmitter.gameObject.SetActive(true);
-            batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
-            flashlightHitBox.gameObject.SetActive(true);
+            if (Input.GetButton("Fire1") && batteryLevel >= 0 && isReady)
+            {
+                isActive = true;
+                flashLightEmitter.gameObject.SetActive(true);
+                batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
+                flashlightHitBox.gameObject.SetActive(true);
 
-            flashLightEmitter.color -= (Color.white / batteryDrain) * Time.deltaTime;
-            flashLightEmitter.range -= flashLightEmitter.range * Time.deltaTime;
+                flashLightEmitter.color -= (Color.white / batteryDrain) * Time.deltaTime;
+                flashLightEmitter.range -= flashLightEmitter.range * Time.deltaTime;
 
+            }
         }
+       
     }
 
 
@@ -143,6 +167,21 @@ public class PlayerController : MonoBehaviour
         {
             player.transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
         }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            player.transform.Translate(-Vector3.forward * movementSpeed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            player.transform.Translate(Vector3.left * movementSpeed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            player.transform.Translate(Vector3.right * movementSpeed * Time.deltaTime);
+        }
     }
 
 
@@ -163,11 +202,16 @@ public class PlayerController : MonoBehaviour
     #endregion
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("enemy hit player");
 
         }
+        else
+        {
+            //Do Nothing
+        }
+
     }
 
     
