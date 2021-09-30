@@ -185,15 +185,15 @@ MonoBehaviour:
   player: {fileID: 30457904835916358}
   flashLightEmitter: {fileID: 30457905086078362}
   worldPosition: {x: 0, y: 0, z: 0}
-  movementSpeed: 0
-  health: 0
-  isReady: 0
-  batteryLevel: 0
-  batteryLevelMax: 0
-  batteryDrain: 0
-  lightColor: {r: 0, g: 0, b: 0, a: 0}
-  maxFlashlightRange: 0
-  photonView: {fileID: 0}
+  movementSpeed: 12
+  health: 10
+  isReady: 1
+  batteryLevel: 100
+  batteryLevelMax: 100
+  batteryDrain: 10
+  lightColor: {r: 1, g: 0.9733981, b: 0.33490568, a: 0}
+  maxFlashlightRange: 50
+  photonView: {fileID: 9189496979898966923}
 --- !u!95 &9183460186236864467
 Animator:
   serializedVersion: 3

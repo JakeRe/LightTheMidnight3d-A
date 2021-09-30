@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Realtime;
 using Photon.Pun;
 public class PlayerController : MonoBehaviour
@@ -159,7 +160,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine("FlashLightCoolDown");
         }
     }
-
+    #endregion
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
@@ -169,6 +170,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    #endregion
+    
 }
 
