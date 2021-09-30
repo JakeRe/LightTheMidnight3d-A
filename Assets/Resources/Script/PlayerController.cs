@@ -68,10 +68,15 @@ public class PlayerController : MonoBehaviour, IPunObservable
     }
 
     void Awake()
-    {
-        PlayerController.LocalPlayerInstance = this.gameObject;
-
+    { 
         photonView = gameObject.GetComponent<PhotonView>();
+        if (photonView.IsMine)
+        {
+            PlayerController.LocalPlayerInstance = this.gameObject;
+
+        }
+
+       
 
         DontDestroyOnLoad(this.gameObject);
     }
