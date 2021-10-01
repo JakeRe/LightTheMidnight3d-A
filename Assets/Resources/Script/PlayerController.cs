@@ -75,13 +75,14 @@ public class PlayerController : MonoBehaviour, IPunObservable
             LocalPlayerInstance = gameObject;
         }
 
-       
-
         DontDestroyOnLoad(this.gameObject);
     }
 
     void Start()
     {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+
+
         isReady = true;
         flashLightEmitter.gameObject.SetActive(false);
         flashlightHitBox.SetActive(false);
@@ -123,6 +124,10 @@ public class PlayerController : MonoBehaviour, IPunObservable
             {
                 GameManager.Instance.LeaveRoom();
             }
+        }
+        else
+        {
+            //DoNothing
         }
         
     }
@@ -218,6 +223,22 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     }
 
-    
+    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode)
+    {
+        this.CalledOnLevelWasLoaded(scene.buildIndex);
+    }
+
+    void OnLevelWasLoaded(int level)
+    {
+        this.CalledOnLevelWasLoaded(level);
+    }
+
+    void CalledOnLevelWasLoaded(int level)
+    {
+        if (!Physics.Raycast(transform.position, -Vector3.up, 5f))
+        {
+            transform.position = new Vector3(0f, 5f, 0f);
+        }
+    }
 }
 

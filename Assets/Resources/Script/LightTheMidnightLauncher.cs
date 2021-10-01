@@ -37,11 +37,6 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
             PhotonNetwork.JoinRandomRoom();
             isConnecting = false;
         }
-
-       
-           
-       
-
     }
 
     public override void OnDisconnected(DisconnectCause cause)

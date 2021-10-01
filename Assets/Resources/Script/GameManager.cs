@@ -45,7 +45,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+
         Instance = this;
+
+        if (!PhotonNetwork.IsConnected)
+        {
+            SceneManager.LoadScene("MultiplayerLauncher");
+
+            return;
+        }
 
         if (playerPrefab == null)
         {
@@ -90,5 +98,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
     }
+
   
+
 }
