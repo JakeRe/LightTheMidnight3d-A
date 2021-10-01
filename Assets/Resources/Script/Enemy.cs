@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject Player;
+
+    public float moveSpeed;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        Player = GameObject.FindGameObjectWithTag("Player");
+        // Random movement to get the objects moving around the scene - testing purposes only.
+        // transform.Translate(new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3)) * Time.deltaTime * moveSpeed);
+        float step = moveSpeed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, step);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,6 +30,14 @@ public class Enemy : MonoBehaviour
         else
         {
 
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
         }
     }
 }

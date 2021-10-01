@@ -6,6 +6,9 @@ TagManager:
   tags:
   - HitBox
   - Battery
+  - Bullet
+  - Enemy
+  - Spawn
   layers:
   - Default
   - TransparentFX
