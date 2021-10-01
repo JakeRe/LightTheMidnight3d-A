@@ -180,7 +180,18 @@ public class WaveSystem : MonoBehaviour
         newWave.enemiesList = GenerateEnemies(enemyPrefabs, newWave.enemyCount);
 
         wavesList.Add(newWave);
-        // Change the enemy variable in the Wave class to an enemy list/array, loop through the array and fill with random enemies
+    }
+
+    List<Transform> GenerateEnemies(Transform[] _enemies, int count)
+    {
+        List<Transform> enemies = new List<Transform>();
+
+        for (int i = 0; i < count; i++)
+        {
+            enemies.Add(_enemies[Random.Range(0, _enemies.Length)]);
+        }
+
+        return enemies;
     }
 
     /*
@@ -194,16 +205,4 @@ public class WaveSystem : MonoBehaviour
      * like that to differentiate between different spawn points.
      * 
      */
-
-    List<Transform> GenerateEnemies(Transform[] _enemies, int count)
-    {
-        List<Transform> enemies = new List<Transform>();
-
-        for (int i = 0; i < count; i++)
-        {
-            enemies.Add(_enemies[Random.Range(0, _enemies.Length)]);
-        }
-
-        return enemies;
-    }
 }
