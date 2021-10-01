@@ -43,9 +43,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject playerPrefab;
     #endregion
 
+    #region Unity Callbacks
     private void Start()
     {
-
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.SendRate = 20;
+        PhotonNetwork.SerializationRate = 5;
         Instance = this;
 
         if (!PhotonNetwork.IsConnected)
@@ -74,12 +77,20 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
     }
+    #endregion
 
+    #region Public Methods
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("MultiplayerLauncher");
     }
- 
+    
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
+    #endregion 
 
     #region Private Methods 
 
@@ -94,11 +105,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     #endregion
-    public void LeaveRoom()
-    {
-        PhotonNetwork.LeaveRoom();
-    }
-
+    
   
 
 }

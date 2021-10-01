@@ -17,19 +17,19 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject progressLabel;
 
     #endregion
-
-    // Start is called before the first frame update
-
+    
     #region Private Fields
 
 
     string gameVersion = "1";
-    bool isConnecting; 
+    bool isConnecting;
 
     #endregion
 
-    public override void OnConnectedToMaster()
+    #region Photon Callbacks
+     public override void OnConnectedToMaster()
     {
+        Debug.Log("Connected to Photon", this);
         Debug.Log("PUN Basics Tutorial / Launcher: OnConnectedToMaster() was called by PUN");
 
         if (isConnecting)
@@ -37,8 +37,7 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
             PhotonNetwork.JoinRandomRoom();
             isConnecting = false;
         }
-    }
-
+     }
     public override void OnDisconnected(DisconnectCause cause)
     {
         progressLabel.SetActive(false);
@@ -58,12 +57,12 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
 
 
     }
-
     public override void OnJoinedRoom()
     {
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
+        Debug.Log("${ PhotonNetwork.CurrentRoom.Name} joined!");
 
-        if(PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
             Debug.Log("we Load the room for one");
 
@@ -71,6 +70,9 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
         }
 
     }
+    #endregion
+
+    #region Unity Callbacks
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -81,12 +83,7 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    #endregion
 
     #region Public Methods 
 
@@ -108,4 +105,6 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
         }
     }
     #endregion
+
+  
 }

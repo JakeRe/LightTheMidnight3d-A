@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Photon.Realtime;
 using Photon.Pun;
-public class PlayerController : MonoBehaviour, IPunObservable
+public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
-    // Start is called before the first frame update
+    #region Game Objects
     [Header("GameObjects")]
     [Tooltip("Hitbox for the flashlight")]
     [SerializeField] private GameObject flashlightHitBox;
@@ -17,17 +17,20 @@ public class PlayerController : MonoBehaviour, IPunObservable
     [SerializeField] private GameObject player;
     [Tooltip("The light gameobject used to cast the Flashlight beam")]
     [SerializeField] public Light flashLightEmitter;
-    
+    #endregion
+    #region Navigation Management
     [Header("Navigation")]
     [Tooltip("Position of the raycast from the Camera that the player will travel to")]
     [SerializeField] private Vector3 worldPosition;
     [Tooltip("Player's Movement Speed.")]
     [SerializeField] private float movementSpeed;
-
+    #endregion 
+    #region Player Health Management
     [Header("Health Management")]
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
-
+    #endregion
+    #region Light Control
     [Header("Light Management")]
     [Tooltip("Tells if the flashlight is ready for use")]
     [SerializeField] public bool isReady;
@@ -43,77 +46,38 @@ public class PlayerController : MonoBehaviour, IPunObservable
     [SerializeField] public float maxFlashlightRange;
     [Tooltip("If the flashlight is in Use")]
     [SerializeField] public bool isActive;
-
+    #endregion
+    #region Components 
     [Header("Components")]
     [Tooltip("Photon Viewer")]
-    [SerializeField] private PhotonView photonView;
+    [SerializeField] public PhotonView photonView;
     [Tooltip("Local player Instance")]
     [SerializeField] public static GameObject LocalPlayerInstance;
+    #endregion 
 
 
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(health);
-            stream.SendNext(isActive);
-        }
-        else
-        {
-            this.health = (float)stream.ReceiveNext();
-            this.isActive = (bool)stream.ReceiveNext();
-        }
-
-    }
-
+    #region Unity Callbacks
     void Awake()
-    { 
-        photonView = gameObject.GetComponent<PhotonView>();
+        { 
+        photonView = GetComponent<PhotonView>();
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
         }
 
         DontDestroyOnLoad(this.gameObject);
-    }
-
+        }
     void Start()
-    {
+         {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 
 
         isReady = true;
         flashLightEmitter.gameObject.SetActive(false);
         flashlightHitBox.SetActive(false);
-    }
-
-    //Coroutine that deactivates and recharges the light.
-    IEnumerator FlashLightCoolDown()
-    {
-        //Light waits for five seconds before recharging.
-        yield return new WaitForSeconds(5);
-        //If the battery is not ready and less than 100
-        if(batteryLevel < 100 && !isReady)
-        {
-            //Battery is added to over the course of time
-            batteryLevel += batteryDrain * Time.deltaTime;
-            flashLightEmitter.color += (lightColor) * Time.deltaTime;
-            flashLightEmitter.range = maxFlashlightRange;
-
-            //If the battery is full, then break the loop
-            if (batteryLevel >= batteryLevelMax)
-            {
-                batteryLevel = batteryLevelMax;
-                isReady = true;
-                yield break;
-            }
-        }
-    }
-
-    // Update is called once per frame
+         }
     void Update()
-    {
+        {
         if(photonView.IsMine)
         {
             Movement();
@@ -130,9 +94,84 @@ public class PlayerController : MonoBehaviour, IPunObservable
             //DoNothing
         }
         
+        }
+    #endregion
+
+    #region Photon Calls
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(health);
+            stream.SendNext(isActive);
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else if(stream.IsReading)
+        {
+            this.health = (float)stream.ReceiveNext();
+            this.isActive = (bool)stream.ReceiveNext();
+            this.transform.position = (Vector3)stream.ReceiveNext();
+            this.transform.rotation = (Quaternion)stream.ReceiveNext();
+        }
+
     }
 
-    //Region containing player motion and abilities
+
+    #endregion
+
+    #region Unity Scene Management
+    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode)
+    {
+        this.CalledOnLevelWasLoaded(scene.buildIndex);
+    }
+
+    void OnLevelWasLoaded(int level)
+    {
+        this.CalledOnLevelWasLoaded(level);
+    }
+
+    void CalledOnLevelWasLoaded(int level)
+    {
+        if (!Physics.Raycast(transform.position, -Vector3.up, 5f))
+        {
+            transform.position = new Vector3(0f, 5f, 0f);
+        }
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+
+    }
+
+    #endregion
+
+    #region Enumerators 
+    IEnumerator FlashLightCoolDown()
+    {
+        //Light waits for five seconds before recharging.
+        yield return new WaitForSeconds(5);
+        //If the battery is not ready and less than 100
+        if (batteryLevel < 100 && !isReady)
+        {
+            //Battery is added to over the course of time
+            batteryLevel += batteryDrain * Time.deltaTime;
+            flashLightEmitter.color += (lightColor) * Time.deltaTime;
+            flashLightEmitter.range = maxFlashlightRange;
+
+            //If the battery is full, then break the loop
+            if (batteryLevel >= batteryLevelMax)
+            {
+                batteryLevel = batteryLevelMax;
+                isReady = true;
+                yield break;
+            }
+        }
+    }
+    #endregion
+
     #region Player Abilities
     void Attack()
     {
@@ -152,8 +191,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
         }
        
     }
-
-
     void Movement()
     {
         //Vector3 mouse = Input.mousePosition;
@@ -192,8 +229,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
             player.transform.Translate(Vector3.right * movementSpeed * Time.deltaTime);
         }
     }
-
-
     void BatteryManagement()
     {
         if (batteryLevel <= 0)
@@ -209,6 +244,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
         }
     }
     #endregion
+
+    #region Colission Detection
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -223,22 +260,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     }
 
-    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode)
-    {
-        this.CalledOnLevelWasLoaded(scene.buildIndex);
-    }
-
-    void OnLevelWasLoaded(int level)
-    {
-        this.CalledOnLevelWasLoaded(level);
-    }
-
-    void CalledOnLevelWasLoaded(int level)
-    {
-        if (!Physics.Raycast(transform.position, -Vector3.up, 5f))
-        {
-            transform.position = new Vector3(0f, 5f, 0f);
-        }
-    }
+    #endregion
 }
 
