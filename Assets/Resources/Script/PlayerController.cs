@@ -49,8 +49,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     #endregion
     #region Components 
     [Header("Components")]
-    [Tooltip("Photon Viewer")]
-    [SerializeField] public PhotonView photonView;
     [Tooltip("Local player Instance")]
     [SerializeField] public static GameObject LocalPlayerInstance;
     #endregion 
@@ -59,17 +57,31 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     #region Unity Callbacks
     void Awake()
         { 
-        photonView = GetComponent<PhotonView>();
+      
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
         }
 
-        DontDestroyOnLoad(this.gameObject);
-        }
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
          {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+
+        CameraWorkLTM _cameraWork = gameObject.GetComponent<CameraWorkLTM>();
+
+        if (_cameraWork != null)
+        {
+            if (photonView.IsMine)
+            {
+                _cameraWork.OnStartFollowing();
+            }
+        }
+        else
+        {
+            Debug.LogError("<Color=Red><b>Missing</b></Color> CameraWork Component on player Prefab.", this);
+        }
 
 
         isReady = true;
@@ -80,11 +92,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
         if(photonView.IsMine)
         {
-            Movement();
-            Attack();
-            BatteryManagement();
+            this.Movement();
+            this.Attack();
+            this.BatteryManagement();
 
-            if(health < 0f)
+            if(this.health < 0f)
             {
                 GameManager.Instance.LeaveRoom();
             }
@@ -231,11 +243,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     }
     void BatteryManagement()
     {
-        if (batteryLevel <= 0)
+        if (this.batteryLevel <= 0)
         {
-            isReady = false;
-            flashlightHitBox.gameObject.SetActive(false);
-            flashLightEmitter.gameObject.SetActive(false);
+            this.isReady = false;
+            this.flashlightHitBox.gameObject.SetActive(false);
+            this.flashLightEmitter.gameObject.SetActive(false);
         }
 
         if (batteryLevel <= batteryLevelMax && !isReady)
@@ -248,6 +260,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     #region Colission Detection
     private void OnTriggerEnter(Collider other)
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
+
         if (other.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("enemy hit player");

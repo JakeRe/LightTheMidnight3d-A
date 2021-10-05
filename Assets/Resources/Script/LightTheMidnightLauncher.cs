@@ -35,11 +35,13 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
         if (isConnecting)
         {
             PhotonNetwork.JoinRandomRoom();
-            isConnecting = false;
+            
         }
      }
     public override void OnDisconnected(DisconnectCause cause)
     {
+        isConnecting = false;
+
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
         Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
@@ -51,11 +53,6 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
         Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
-
-
-        base.OnJoinRandomFailed(returnCode, message);
-
-
     }
     public override void OnJoinedRoom()
     {
@@ -68,7 +65,6 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
 
             PhotonNetwork.LoadLevel("Room for 1");
         }
-
     }
     #endregion
 
@@ -89,16 +85,20 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
 
     public void Connect()
     {
+        isConnecting = true;
+
         progressLabel.SetActive(true);
         controlPanel.SetActive(false);
 
         if (PhotonNetwork.IsConnected)
         {
+            Debug.Log("Joining Room");
             PhotonNetwork.JoinRandomRoom();
-            Debug.Log("Should Join Random Room");
+            
         }
         else
         {
+            Debug.Log("Connecting");
             isConnecting = PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = gameVersion;
             Debug.Log("Accessing Settings");

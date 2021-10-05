@@ -39,16 +39,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region Public Fields 
-    public static GameManager Instance;
+    static public GameManager Instance;
     public GameObject playerPrefab;
+
+    private GameObject instance;
     #endregion
 
     #region Unity Callbacks
     private void Start()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.SendRate = 20;
-        PhotonNetwork.SerializationRate = 5;
         Instance = this;
 
         if (!PhotonNetwork.IsConnected)
