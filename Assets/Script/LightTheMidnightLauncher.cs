@@ -10,42 +10,38 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
 
     [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players, and so new room will be created")]
     [SerializeField]
-    private byte maxPlayersPerRoom = 4;
+    public byte maxPlayersPerRoom = 4;
     [Tooltip("The Ui Panel to let the user enter name, connect and play")]
     [SerializeField]  private GameObject controlPanel;
     [Tooltip("The UI Label to inform the user that the connection is in progress")]
     [SerializeField] private GameObject progressLabel;
 
     #endregion
-
-    // Start is called before the first frame update
-
+    
     #region Private Fields
 
 
     string gameVersion = "1";
-    bool isConnecting; 
+    bool isConnecting;
 
     #endregion
 
-    public override void OnConnectedToMaster()
+    #region Photon Callbacks
+     public override void OnConnectedToMaster()
     {
+        Debug.Log("Connected to Photon", this);
         Debug.Log("PUN Basics Tutorial / Launcher: OnConnectedToMaster() was called by PUN");
 
         if (isConnecting)
         {
             PhotonNetwork.JoinRandomRoom();
-            isConnecting = false;
+            
         }
-
-       
-           
-       
-
-    }
-
+     }
     public override void OnDisconnected(DisconnectCause cause)
     {
+        isConnecting = false;
+
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
         Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
@@ -57,25 +53,24 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
         Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
-
-
-        base.OnJoinRandomFailed(returnCode, message);
-
-
     }
-
     public override void OnJoinedRoom()
     {
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
+        Debug.Log("${ PhotonNetwork.CurrentRoom.Name} joined!");
 
-        if(PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
+            PhotonNetwork.IsMessageQueueRunning = false;
             Debug.Log("we Load the room for one");
 
             PhotonNetwork.LoadLevel("Room for 1");
+            PhotonNetwork.IsMessageQueueRunning = true;
         }
-
     }
+    #endregion
+
+    #region Unity Callbacks
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -86,31 +81,32 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    #endregion
 
     #region Public Methods 
 
     public void Connect()
     {
+        isConnecting = true;
+
         progressLabel.SetActive(true);
         controlPanel.SetActive(false);
 
         if (PhotonNetwork.IsConnected)
         {
+            Debug.Log("Joining Room");
             PhotonNetwork.JoinRandomRoom();
-            Debug.Log("Should Join Random Room");
+            
         }
         else
         {
+            Debug.Log("Connecting");
             isConnecting = PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = gameVersion;
             Debug.Log("Accessing Settings");
         }
     }
     #endregion
+
+  
 }

@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Photon.Realtime;
 using Photon.Pun;
-public class PlayerController : MonoBehaviour, IPunObservable
+public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
-    // Start is called before the first frame update
+    #region Game Objects
     [Header("GameObjects")]
     [Tooltip("Hitbox for the flashlight")]
     [SerializeField] private GameObject flashlightHitBox;
@@ -17,17 +17,20 @@ public class PlayerController : MonoBehaviour, IPunObservable
     [SerializeField] private GameObject player;
     [Tooltip("The light gameobject used to cast the Flashlight beam")]
     [SerializeField] public Light flashLightEmitter;
-    
+    #endregion
+    #region Navigation Management
     [Header("Navigation")]
     [Tooltip("Position of the raycast from the Camera that the player will travel to")]
     [SerializeField] private Vector3 worldPosition;
     [Tooltip("Player's Movement Speed.")]
     [SerializeField] private float movementSpeed;
-
+    #endregion 
+    #region Player Health Management
     [Header("Health Management")]
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
-
+    #endregion
+    #region Light Control
     [Header("Light Management")]
     [Tooltip("Tells if the flashlight is ready for use")]
     [SerializeField] public bool isReady;
@@ -43,57 +46,135 @@ public class PlayerController : MonoBehaviour, IPunObservable
     [SerializeField] public float maxFlashlightRange;
     [Tooltip("If the flashlight is in Use")]
     [SerializeField] public bool isActive;
-
+    #endregion
+    #region Components 
     [Header("Components")]
-    [Tooltip("Photon Viewer")]
-    [SerializeField] private PhotonView photonView;
     [Tooltip("Local player Instance")]
     [SerializeField] public static GameObject LocalPlayerInstance;
+    #endregion 
+
+    #region Unity Callbacks
+    void Awake()
+        { 
+      
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = gameObject;
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+    void Start()
+         {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+
+        CameraWorkLTM _cameraWork = gameObject.GetComponent<CameraWorkLTM>();
+
+        if (_cameraWork != null)
+        {
+            if (photonView.IsMine)
+            {
+                _cameraWork.OnStartFollowing();
+            }
+        }
+        else
+        {
+            Debug.LogError("<Color=Red><b>Missing</b></Color> CameraWork Component on player Prefab.", this);
+        }
 
 
+        isReady = true;
+        flashLightEmitter.gameObject.SetActive(false);
+        flashlightHitBox.SetActive(false);
+         }
+    void Update()
+        {
+        if(photonView.IsMine)
+        {
+            this.Movement();
+            this.Attack();
+            this.BatteryManagement();
 
+            if(this.health < 0f)
+            {
+                GameManager.Instance.LeaveRoom();
+            }
+        }
+        else
+        {
+            //DoNothing
+        }
+        
+        }
+    #endregion
+
+    #region Photon Calls
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
             stream.SendNext(health);
             stream.SendNext(isActive);
+            
+           
         }
-        else
+        else if(stream.IsReading)
         {
             this.health = (float)stream.ReceiveNext();
             this.isActive = (bool)stream.ReceiveNext();
+            
         }
 
     }
 
-    void Awake()
-    { 
-        photonView = gameObject.GetComponent<PhotonView>();
-        if (photonView.IsMine)
-        {
-            LocalPlayerInstance = gameObject;
-        }
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        info.Sender.TagObject = this.gameObject;
+        object[] instantiationData = info.photonView.InstantiationData;
 
        
-
-        DontDestroyOnLoad(this.gameObject);
     }
 
-    void Start()
+
+
+
+    #endregion
+
+    #region Unity Scene Management
+    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode)
     {
-        isReady = true;
-        flashLightEmitter.gameObject.SetActive(false);
-        flashlightHitBox.SetActive(false);
+        this.CalledOnLevelWasLoaded(scene.buildIndex);
     }
 
-    //Coroutine that deactivates and recharges the light.
+    void OnLevelWasLoaded(int level)
+    {
+        this.CalledOnLevelWasLoaded(level);
+    }
+
+    void CalledOnLevelWasLoaded(int level)
+    {
+        if (!Physics.Raycast(transform.position, -Vector3.up, 5f))
+        {
+            transform.position = new Vector3(0f, 5f, 0f);
+        }
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+
+    }
+
+    #endregion
+
+    #region Enumerators 
     IEnumerator FlashLightCoolDown()
     {
         //Light waits for five seconds before recharging.
         yield return new WaitForSeconds(5);
         //If the battery is not ready and less than 100
-        if(batteryLevel < 100 && !isReady)
+        if (batteryLevel < 100 && !isReady)
         {
             //Battery is added to over the course of time
             batteryLevel += batteryDrain * Time.deltaTime;
@@ -109,25 +190,8 @@ public class PlayerController : MonoBehaviour, IPunObservable
             }
         }
     }
+    #endregion
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(photonView.IsMine)
-        {
-            Movement();
-            Attack();
-            BatteryManagement();
-
-            if(health < 0f)
-            {
-                GameManager.Instance.LeaveRoom();
-            }
-        }
-        
-    }
-
-    //Region containing player motion and abilities
     #region Player Abilities
     void Attack()
     {
@@ -147,8 +211,6 @@ public class PlayerController : MonoBehaviour, IPunObservable
         }
        
     }
-
-
     void Movement()
     {
         //Vector3 mouse = Input.mousePosition;
@@ -187,15 +249,13 @@ public class PlayerController : MonoBehaviour, IPunObservable
             player.transform.Translate(Vector3.right * movementSpeed * Time.deltaTime);
         }
     }
-
-
     void BatteryManagement()
     {
-        if (batteryLevel <= 0)
+        if (this.batteryLevel <= 0)
         {
-            isReady = false;
-            flashlightHitBox.gameObject.SetActive(false);
-            flashLightEmitter.gameObject.SetActive(false);
+            this.isReady = false;
+            this.flashlightHitBox.gameObject.SetActive(false);
+            this.flashLightEmitter.gameObject.SetActive(false);
         }
 
         if (batteryLevel <= batteryLevelMax && !isReady)
@@ -204,8 +264,16 @@ public class PlayerController : MonoBehaviour, IPunObservable
         }
     }
     #endregion
+
+    #region Colission Detection
     private void OnTriggerEnter(Collider other)
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
+
         if (other.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("enemy hit player");
@@ -218,6 +286,7 @@ public class PlayerController : MonoBehaviour, IPunObservable
 
     }
 
-    
+    #endregion
+
 }
 

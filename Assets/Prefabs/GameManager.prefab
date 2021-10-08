@@ -45,3 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 30457904835916358, guid: dfbf3c738fc74a2418f575f82156099c,
     type: 3}
+  LTML: {fileID: 3853429878310556860, guid: 7947115ce40d4dd428f48d007dab7f87, type: 3}

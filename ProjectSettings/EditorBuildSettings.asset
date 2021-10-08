@@ -20,7 +20,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Room for 4.unity
     guid: e3939f77802f73648926d82fc65cd671
-  - enabled: 1
-    path: Assets/Scenes/GameplayTesting.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
