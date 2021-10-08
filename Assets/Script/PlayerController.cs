@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Photon.Realtime;
 using Photon.Pun;
+using Cinemachine;
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     #region Game Objects
@@ -24,6 +25,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private Vector3 worldPosition;
     [Tooltip("Player's Movement Speed.")]
     [SerializeField] private float movementSpeed;
+    [Tooltip("Stored Vector 3 for movement")]
+    [SerializeField] private Vector3 movementControl = Vector3.zero;
+    [SerializeField] private float horizontal;
+    [SerializeField] private float vertical;
+    [Tooltip("Virtual Camera used for Navigation")]
+    [SerializeField] private Transform playerCam;
+    [Tooltip("Value used to smooth out the rotational movemnent")]
+    [SerializeField] private float smoothDamp = 0.1f;
+    [SerializeField] private float smoothRotate;
+
     #endregion 
     #region Player Health Management
     [Header("Health Management")]
@@ -51,6 +62,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Components")]
     [Tooltip("Local player Instance")]
     [SerializeField] public static GameObject LocalPlayerInstance;
+    [SerializeField] private CharacterController characterController;
     #endregion 
 
     #region Unity Callbacks
@@ -91,7 +103,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
         if(photonView.IsMine)
         {
-            this.Movement();
+            
             this.Attack();
             this.BatteryManagement();
 
@@ -106,6 +118,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
         
         }
+
+    void LateUpdate()
+    {
+        if (photonView.IsMine)
+        {
+            this.Movement();
+        }
+    }
     #endregion
 
     #region Photon Calls
@@ -213,40 +233,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     }
     void Movement()
     {
-        //Vector3 mouse = Input.mousePosition;
+        
+        
+         horizontal = Input.GetAxis("Horizontal") * movementSpeed;
+         vertical = Input.GetAxis("Vertical") * movementSpeed;
+        
+        
+         
+         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //RaycastHit hit;
-
-        //if (Physics.Raycast(ray, out hit, 1000))
-        //{
-        //    worldPosition = hit.point;
-
-        //}
-
-        //Debug.DrawRay(transform.position, mouse, Color.green);
-
-        //player.transform.LookAt(worldPosition);
-
-
-        if (Input.GetKey(KeyCode.W))
+        if(direction.magnitude >= 0.1f)
         {
-            player.transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            player.transform.Translate(-Vector3.forward * movementSpeed * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            player.transform.Translate(Vector3.left * movementSpeed * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            player.transform.Translate(Vector3.right * movementSpeed * Time.deltaTime);
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothRotate, smoothDamp);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            characterController.Move((Vector3.right * horizontal + Vector3.forward * vertical) * Time.deltaTime);
         }
     }
     void BatteryManagement()

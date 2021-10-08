@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 48720126169169683}
   - component: {fileID: 5165545070461570051}
   - component: {fileID: 8671706917698528367}
-  - component: {fileID: 8766578081337645771}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -115,7 +114,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &9189496979898966923
 MonoBehaviour:
@@ -176,6 +175,12 @@ MonoBehaviour:
   flashLightEmitter: {fileID: 30457905086078362}
   worldPosition: {x: 0, y: 0, z: 0}
   movementSpeed: 12
+  movementControl: {x: 0, y: 0, z: 0}
+  horizontal: 0
+  vertical: 0
+  playerCam: {fileID: 0}
+  smoothDamp: 0.1
+  smoothRotate: 0
   health: 10
   isReady: 1
   batteryLevel: 100
@@ -184,6 +189,7 @@ MonoBehaviour:
   lightColor: {r: 1, g: 0.9733981, b: 0.33490568, a: 0}
   maxFlashlightRange: 50
   isActive: 0
+  characterController: {fileID: 8671706917698528367}
 --- !u!114 &5165545070461570051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,23 +224,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8766578081337645771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 30457904835916358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e8e38c785857f4a88c299d38058aaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distance: 7
-  height: 3
-  centerOffset: {x: 0, y: 0, z: 0}
-  followOnStart: 0
-  smoothSpeed: 0.125
 --- !u!1 &30457905086078372
 GameObject:
   m_ObjectHideFlags: 0
