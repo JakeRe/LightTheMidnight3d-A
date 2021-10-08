@@ -130,13 +130,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     //    {
     //        Debug.Log("Failed to Allocate a View ID");
     //        Destroy(player);
-           
+
     //    }
     //}
 
     //public void OnEvent(EventData photonEvent)
     //{
-    //    if(photonEvent.Code == SpawnLocalPlayer)
+    //    if (photonEvent.Code == SpawnLocalPlayer)
     //    {
     //        object[] data = (object[])photonEvent.CustomData;
 
