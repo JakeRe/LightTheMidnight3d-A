@@ -10,7 +10,7 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
 
     [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players, and so new room will be created")]
     [SerializeField]
-    private byte maxPlayersPerRoom = 4;
+    public byte maxPlayersPerRoom = 4;
     [Tooltip("The Ui Panel to let the user enter name, connect and play")]
     [SerializeField]  private GameObject controlPanel;
     [Tooltip("The UI Label to inform the user that the connection is in progress")]
@@ -61,9 +61,11 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
+            PhotonNetwork.IsMessageQueueRunning = false;
             Debug.Log("we Load the room for one");
 
             PhotonNetwork.LoadLevel("Room for 1");
+            PhotonNetwork.IsMessageQueueRunning = true;
         }
     }
     #endregion

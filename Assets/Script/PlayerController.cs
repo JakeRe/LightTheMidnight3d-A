@@ -53,7 +53,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] public static GameObject LocalPlayerInstance;
     #endregion 
 
-
     #region Unity Callbacks
     void Awake()
         { 
@@ -116,18 +115,27 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             stream.SendNext(health);
             stream.SendNext(isActive);
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
+            
+           
         }
         else if(stream.IsReading)
         {
             this.health = (float)stream.ReceiveNext();
             this.isActive = (bool)stream.ReceiveNext();
-            this.transform.position = (Vector3)stream.ReceiveNext();
-            this.transform.rotation = (Quaternion)stream.ReceiveNext();
+            
         }
 
     }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        info.Sender.TagObject = this.gameObject;
+        object[] instantiationData = info.photonView.InstantiationData;
+
+       
+    }
+
+
 
 
     #endregion
@@ -279,5 +287,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     #endregion
+
 }
 
