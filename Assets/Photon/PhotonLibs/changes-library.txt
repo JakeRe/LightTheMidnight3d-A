@@ -3,7 +3,10 @@ Photon C# Client Library - Changelog
 Exit Games GmbH - www.photonengine.com - forum.photonengine.com
 
 
-Version 4.1.6.6 (17. September 2021 - rev6200)
+Version 4.1.6.7 (27. September 2021 - rev6214)
+    Fixed: A bug in Protocol18 reader for very long arrays.
+
+Version 4.1.6.6 (21. September 2021 - rev6204)
     Changed: Dns resolution. It is suspected to fail sometimes due to a Mono/Unity bug (issue 6940). Changing from only attempting Dns.GetHostEntry to first attempting Dns.GetHostAddresses followed by Dns.GetHostByName in case of an Exception (yes obsolete api but maybe a different implementation).
     Removed: C# wrapper classes for native plugins (sockets and encryption). These classes will be part of the plugin packages.
     Changed: PhotonPeer values NativeSocketLibAvailable, NativePayloadEncryptionLibAvailable and NativeDatagramEncryptionLibAvailable are now obsolete. Unity's IL2CPP does not implement PrelinkAll in IL2CPP and we moved the wrapper classes for native libs out of the assembly.
