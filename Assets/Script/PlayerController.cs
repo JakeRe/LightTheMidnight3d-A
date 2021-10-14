@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("Position of the raycast from the Camera that the player will travel to")]
     [SerializeField] private Vector3 worldPosition;
     [Tooltip("Player's Movement Speed.")]
-    [SerializeField] private float movementSpeed;
+    [SerializeField] public float movementSpeed;
     [Tooltip("Stored Vector 3 for movement")]
     [SerializeField] private Vector3 movementControl = Vector3.zero;
     [SerializeField] private float horizontal;
@@ -82,6 +82,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
          {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 
+        //CameraWorkLTM _cameraWork = this.gameObject.GetComponent<CameraWorkLTM>();
+
+
+        //if (_cameraWork != null)
+        //{
+        //    if (photonView.IsMine)
+        //    {
+        //        _cameraWork.OnStartFollowing();
+        //    }
+        //}
+
         if (PlayerUIPrefab != null)
         {
             GameObject _uiGo = Instantiate(PlayerUIPrefab);
@@ -101,8 +112,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         if(photonView.IsMine)
         {
             
-            this.Attack();
-            this.BatteryManagement();
+            //this.Attack();
+            //this.BatteryManagement();
 
             if(this.health < 0f)
             {

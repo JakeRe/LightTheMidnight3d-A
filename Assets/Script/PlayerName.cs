@@ -11,6 +11,14 @@ public class PlayerName : MonoBehaviour
     [Header("Player Text Information")]
     [Tooltip("Display name for the players.")]
     [SerializeField] private TextMeshProUGUI playerNameText;
+    [Tooltip("Offset from the player target.")]
+    [SerializeField] private Vector3 screenOffset = new Vector3(0f, 30f, 0f);
+
+    float characterControllerHeight = 0f;
+    Transform targetTransform;
+    Renderer targetRenderer;
+    CanvasGroup _canvasGroup;
+    Vector3 targetPosition;
 
     private PlayerController target;
     #endregion
@@ -26,7 +34,17 @@ public class PlayerName : MonoBehaviour
         }
 
         target = _target;
-        if(playerNameText != null)
+       
+        targetTransform = this.GetComponent<Transform>();
+        targetRenderer = this.GetComponent<Renderer>();
+        CharacterController characterController = _target.GetComponent<CharacterController>();
+
+        if(characterController != null)
+        {
+            characterControllerHeight = characterController.height;
+        }
+      
+        if (playerNameText != null)
         {
             playerNameText.text = target.photonView.Owner.NickName;
         }
@@ -37,6 +55,8 @@ public class PlayerName : MonoBehaviour
     void Awake()
     {
         this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
+
+        _canvasGroup = this.GetComponent<CanvasGroup>();
     }
 
     void Update()
@@ -45,7 +65,23 @@ public class PlayerName : MonoBehaviour
         {
             Destroy(this.gameObject);
             return;
-        }    
+        }
+        
+    }
+
+    private void LateUpdate()
+    {
+        if(targetRenderer != null)
+        {
+            this._canvasGroup.alpha = targetRenderer.isVisible ? 1f : 0f;
+        }
+
+        if(targetTransform != null)
+        {
+            targetPosition = targetTransform.position;
+            targetPosition.y += characterControllerHeight;
+            this.transform.position = Camera.main.WorldToScreenPoint(targetPosition) + screenOffset;
+        }
     }
 
 }

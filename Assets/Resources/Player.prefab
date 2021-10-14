@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 48720126169169683}
   - component: {fileID: 5165545070461570051}
   - component: {fileID: 8671706917698528367}
+  - component: {fileID: 1067564568401698070}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -173,6 +174,8 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   player: {fileID: 30457904835916358}
   flashLightEmitter: {fileID: 30457905086078362}
+  PlayerUIPrefab: {fileID: 492264730041901208, guid: 551f5b46d17213a42bfccd95d7821e73,
+    type: 3}
   worldPosition: {x: 0, y: 0, z: 0}
   movementSpeed: 12
   movementControl: {x: 0, y: 0, z: 0}
@@ -224,6 +227,23 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1067564568401698070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30457904835916358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e8e38c785857f4a88c299d38058aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 7
+  height: 3
+  centerOffset: {x: 0, y: 0, z: 0}
+  followOnStart: 0
+  smoothSpeed: 0.125
 --- !u!1 &30457905086078372
 GameObject:
   m_ObjectHideFlags: 0
