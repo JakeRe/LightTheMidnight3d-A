@@ -1,19 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject Player;
+
+    public float moveSpeed;
+
+    public NavMeshAgent enemyAgent;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        Player = GameObject.FindGameObjectWithTag("Player");
+        // Random movement to get the objects moving around the scene - testing purposes only.
+        // float step = moveSpeed * Time.deltaTime;
+        // transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, step);
+        enemyAgent.SetDestination(Player.transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,6 +34,14 @@ public class Enemy : MonoBehaviour
         else
         {
 
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
         }
     }
 }
