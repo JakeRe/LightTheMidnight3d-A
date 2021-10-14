@@ -273,18 +273,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             return;
         }
-
-
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("enemy hit player");
-
-        }
         else
         {
-            //Do Nothing
-        }
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                Debug.Log("enemy hit player");
 
+            }
+        }
     }
 
     #endregion
