@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private GameObject player;
     [Tooltip("The light gameobject used to cast the Flashlight beam")]
     [SerializeField] public Light flashLightEmitter;
+    [Tooltip("This is the player's UI Prefab")]
+    [SerializeField] public GameObject PlayerUIPrefab;
     #endregion
     #region Navigation Management
     [Header("Navigation")]
@@ -80,20 +82,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
          {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 
-        CameraWorkLTM _cameraWork = gameObject.GetComponent<CameraWorkLTM>();
-
-        if (_cameraWork != null)
+        if (PlayerUIPrefab != null)
         {
-            if (photonView.IsMine)
-            {
-                _cameraWork.OnStartFollowing();
-            }
+            GameObject _uiGo = Instantiate(PlayerUIPrefab);
+            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
         }
         else
         {
-            Debug.LogError("<Color=Red><b>Missing</b></Color> CameraWork Component on player Prefab.", this);
+            Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
         }
-
 
         isReady = true;
         flashLightEmitter.gameObject.SetActive(false);
@@ -177,6 +174,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             transform.position = new Vector3(0f, 5f, 0f);
         }
+
+        GameObject _uiGo = Instantiate(this.PlayerUIPrefab);
+        _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
     }
 
     public override void OnDisable()
