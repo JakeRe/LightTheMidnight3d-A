@@ -10,14 +10,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     #region Game Objects
     [Header("GameObjects")]
-    [Tooltip("Hitbox for the flashlight")]
-    [SerializeField] private GameObject flashlightHitBox;
     [Tooltip("Main camera for use in navigation")]
     [SerializeField] private Camera mainCamera;
     [Tooltip("The game object associated with the Player")]
     [SerializeField] private GameObject player;
-    [Tooltip("The light gameobject used to cast the Flashlight beam")]
-    [SerializeField] public Light flashLightEmitter;
     [Tooltip("This is the player's UI Prefab")]
     [SerializeField] public GameObject PlayerUIPrefab;
     #endregion
@@ -43,23 +39,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
     #endregion
-    #region Light Control
-    [Header("Light Management")]
-    [Tooltip("Tells if the flashlight is ready for use")]
-    [SerializeField] public bool isReady;
-    [Tooltip("Current Battery Level of Flashlight")]
-    [SerializeField] public float batteryLevel;
-    [Tooltip("Maximum Battery Life for Flashlight")]
-    [SerializeField] public float batteryLevelMax;
-    [Tooltip("Rate by which the battery for the flashlight drains")]
-    [SerializeField] private float batteryDrain; 
-    [Tooltip("Color emitted by flashlight")]
-    [SerializeField] private Color lightColor;
-    [Tooltip("Flashlight maximum range")]
-    [SerializeField] public float maxFlashlightRange;
-    [Tooltip("If the flashlight is in Use")]
-    [SerializeField] public bool isActive;
-    #endregion
+   
     #region Components 
     [Header("Components")]
     [Tooltip("Local player Instance")]
@@ -103,10 +83,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
         }
 
-        isReady = true;
-        flashLightEmitter.gameObject.SetActive(false);
-        flashlightHitBox.SetActive(false);
-         }
+       
+        }
     void Update()
         {
         if(photonView.IsMine)
@@ -142,14 +120,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(health);
-            stream.SendNext(isActive);
+           
             
            
         }
         else if(stream.IsReading)
         {
             this.health = (float)stream.ReceiveNext();
-            this.isActive = (bool)stream.ReceiveNext();
+           
             
         }
 
@@ -199,49 +177,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     #endregion
 
-    #region Enumerators 
-    IEnumerator FlashLightCoolDown()
-    {
-        //Light waits for five seconds before recharging.
-        yield return new WaitForSeconds(5);
-        //If the battery is not ready and less than 100
-        if (batteryLevel < 100 && !isReady)
-        {
-            //Battery is added to over the course of time
-            batteryLevel += batteryDrain * Time.deltaTime;
-            flashLightEmitter.color += (lightColor) * Time.deltaTime;
-            flashLightEmitter.range = maxFlashlightRange;
-
-            //If the battery is full, then break the loop
-            if (batteryLevel >= batteryLevelMax)
-            {
-                batteryLevel = batteryLevelMax;
-                isReady = true;
-                yield break;
-            }
-        }
-    }
-    #endregion
-
     #region Player Abilities
-    void Attack()
-    {
-        if (photonView.IsMine)
-        {
-            if (Input.GetButton("Fire1") && batteryLevel >= 0 && isReady)
-            {
-                isActive = true;
-                flashLightEmitter.gameObject.SetActive(true);
-                batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
-                flashlightHitBox.gameObject.SetActive(true);
-
-                flashLightEmitter.color -= (Color.white / batteryDrain) * Time.deltaTime;
-                flashLightEmitter.range -= flashLightEmitter.range * Time.deltaTime;
-
-            }
-        }
-       
-    }
     void Movement()
     {
         
@@ -261,20 +197,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             characterController.Move((Vector3.right * horizontal + Vector3.forward * vertical) * Time.deltaTime);
         }
     }
-    void BatteryManagement()
-    {
-        if (this.batteryLevel <= 0)
-        {
-            this.isReady = false;
-            this.flashlightHitBox.gameObject.SetActive(false);
-            this.flashLightEmitter.gameObject.SetActive(false);
-        }
 
-        if (batteryLevel <= batteryLevelMax && !isReady)
-        {
-            StartCoroutine("FlashLightCoolDown");
-        }
-    }
     #endregion
 
     #region Colission Detection

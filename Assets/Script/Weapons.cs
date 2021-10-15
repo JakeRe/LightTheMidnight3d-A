@@ -36,14 +36,19 @@ public class Weapons : MonoBehaviour
     [Tooltip("The Weight of the Equipped Weapon")]
     [SerializeField] private float weight;
 
+    private void Awake()
+    {
+        player = GetComponentInParent<PlayerController>();
+    }
 
     void Update()
-    {
-        
+    { 
+        if (player.photonView.IsMine)
+        {
             this.BatteryManagement();
             this.Attack();
             this.WeightCheck();
-        
+        }
     }
     void BatteryManagement()
     {
@@ -54,7 +59,7 @@ public class Weapons : MonoBehaviour
             this.flashLightEmitter.gameObject.SetActive(false);
         }
 
-        if (batteryLevel <= batteryLevelMax && !isReady)
+        if (batteryLevel <= batteryLevelMax && !isReady && canRecharge)
         {
             StartCoroutine("FlashLightCoolDown");
         }
@@ -79,14 +84,13 @@ public class Weapons : MonoBehaviour
 
     void WeightCheck()
     {
-        if(gameObject.activeSelf == true && weight > 10)
+        if(gameObject.tag == "Heavy")
         {
             player.movementSpeed = 4;
         }
-        
-        if(gameObject.activeSelf == true && weight < 10)
+        else
         {
-            player.movementSpeed = 10;
+            player.movementSpeed = 12;
         }
     }
 

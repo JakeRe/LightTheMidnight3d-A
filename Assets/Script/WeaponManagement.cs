@@ -15,7 +15,7 @@ public class WeaponManagement: MonoBehaviour
 
     private void Awake()
     {
-        
+        playerController = GetComponentInParent<PlayerController>();
     }
     private void Start()
     {
