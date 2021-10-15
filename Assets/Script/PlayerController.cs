@@ -48,18 +48,24 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Components")]
     [Tooltip("Local player Instance")]
     [SerializeField] public static GameObject LocalPlayerInstance;
+    [Tooltip("Player controller component attached to player prefab")]
     [SerializeField] private CharacterController characterController;
     #endregion
 
     #region Weapons Management
+    [Header("Weapons Management")]
+    [Tooltip("Weapons Management Script Attached to Weapon Manager Prefab")]
     [SerializeField] private WeaponManagement weaponManagement;
+    [Tooltip("What the active weapon is for the player")]
     [SerializeField] public Weapons activeWeapon;
     #endregion
 
     #region Unity Callbacks
     void Awake()
         { 
-      
+
+        //If the photon view component registers as the users, then it makes the local player instance this game object 
+        //Then it checks for the weapon manager in it's children.
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
@@ -83,6 +89,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         //    }
         //}
 
+        //This is for player UI instantiation, if the UI prefab isn't null, then it will print a debug message. If not, then it will send a message that sets the target. 
+
         if (PlayerUIPrefab != null)
         {
             GameObject _uiGo = Instantiate(PlayerUIPrefab);
@@ -97,12 +105,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
     void Update()
         {
+
+        //If the photon view is registered as the players then when the health is equal to or less than zero, the player will be sent back to the main menu.
+
         if(photonView.IsMine)
         {
-            
-            //this.Attack();
-            //this.BatteryManagement();
-
             if(this.health < 0f)
             {
                 GameManager.Instance.LeaveRoom();
@@ -117,6 +124,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     void LateUpdate()
     {
+        //This handles the players movement if the photon view is registered as theirs. 
         if (photonView.IsMine)
         {
             this.Movement();
@@ -150,10 +158,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
        
     }
-
-
-
-
     #endregion
 
     #region Unity Scene Management
@@ -188,6 +192,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     #endregion
 
     #region Player Abilities
+
+    //This is how the player moves using the WASD directions on their keyboard. 
     void Movement()
     {
         
@@ -213,6 +219,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     #region Colission Detection
     private void OnTriggerEnter(Collider other)
     {
+        //This differentiates for the player if it's their photon view that hits another object.
         if (!photonView.IsMine)
         {
             return;
@@ -226,6 +233,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
             if (other.gameObject.CompareTag("Battery"))
             {
+                //When the player hits a battery pickup, this sets the active weapon's battery level to maximum. Then destroys the battery
                 activeWeapon.batteryLevel = activeWeapon.batteryLevelMax;
                 Destroy(other.gameObject);
             }
