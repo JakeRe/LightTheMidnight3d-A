@@ -13,13 +13,6 @@ public class BatteryPowerUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
-        {
-            player.batteryLevel = player.batteryLevelMax;
-            player.isReady = true;
-            player.flashLightEmitter.color = Color.white;
-            player.flashLightEmitter.range = player.maxFlashlightRange;
-            Destroy(this.gameObject);
-        }
+      
     }
 }
