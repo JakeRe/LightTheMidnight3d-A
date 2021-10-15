@@ -32,20 +32,28 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("Value used to smooth out the rotational movemnent")]
     [SerializeField] private float smoothDamp = 0.1f;
     [SerializeField] private float smoothRotate;
-
     #endregion 
     #region Player Health Management
     [Header("Health Management")]
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
     #endregion
-   
+
+    #region Player Point Management
+    [Header("Player Point Management")]
+    [SerializeField] private float Points;
+    #endregion
+
     #region Components 
     [Header("Components")]
     [Tooltip("Local player Instance")]
     [SerializeField] public static GameObject LocalPlayerInstance;
     [SerializeField] private CharacterController characterController;
-    #endregion 
+    #endregion
+
+    #region Weapons Management
+    [SerializeField] private WeaponManagement weaponManagement;
+    #endregion
 
     #region Unity Callbacks
     void Awake()
@@ -54,6 +62,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
+            weaponManagement = LocalPlayerInstance.GetComponentInChildren<WeaponManagement>();
         }
 
         DontDestroyOnLoad(gameObject);

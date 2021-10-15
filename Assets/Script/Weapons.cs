@@ -36,7 +36,7 @@ public class Weapons : MonoBehaviour
     [Tooltip("The Weight of the Equipped Weapon")]
     [SerializeField] private float weight;
 
-    private void Awake()
+    void Awake()
     {
         player = GetComponentInParent<PlayerController>();
     }
@@ -75,7 +75,6 @@ public class Weapons : MonoBehaviour
             batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
             flashlightHitBox.gameObject.SetActive(true);
 
-            flashLightEmitter.color -= (Color.cyan / batteryDrain) * Time.deltaTime;
             flashLightEmitter.range -= flashLightEmitter.range * Time.deltaTime;
 
         }
@@ -115,4 +114,6 @@ public class Weapons : MonoBehaviour
             }
         }
     }
+
+    
 }
