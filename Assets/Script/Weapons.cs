@@ -74,7 +74,6 @@ public class Weapons : MonoBehaviour
             flashLightEmitter.gameObject.SetActive(true);
             batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
             flashlightHitBox.gameObject.SetActive(true);
-
             flashLightEmitter.range -= flashLightEmitter.range * Time.deltaTime;
 
         }

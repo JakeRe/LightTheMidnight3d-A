@@ -11,7 +11,10 @@ public class WeaponManagement: MonoBehaviour
 {
     [Header("GameObjects")]
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private int selectedWeapon;
+    [SerializeField] public int selectedWeapon;
+    [SerializeField] private int equipmentCount;
+    [SerializeField] private int equipmentMax;
+    [SerializeField] private GameObject equipment;
 
     private void Awake()
     {
@@ -64,6 +67,8 @@ public class WeaponManagement: MonoBehaviour
             if(i == selectedWeapon)
             {
                 weapon.gameObject.SetActive(true);
+                playerController.activeWeapon = weapon.gameObject.GetComponent<Weapons>();
+
             }
             else
             {
@@ -72,4 +77,19 @@ public class WeaponManagement: MonoBehaviour
             i++;
         }
     }
+
+    void DeployEquipment()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if (equipmentCount >= equipmentMax && equipment != null)
+            {
+                equipmentCount--;
+                
+            }
+        }
+       
+    }
+
+    
 }

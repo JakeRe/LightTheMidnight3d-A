@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Weapons Management
     [SerializeField] private WeaponManagement weaponManagement;
+    [SerializeField] public Weapons activeWeapon;
     #endregion
 
     #region Unity Callbacks
@@ -221,7 +222,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (other.gameObject.CompareTag("Enemy"))
             {
                 Debug.Log("enemy hit player");
+            }
 
+            if (other.gameObject.CompareTag("Battery"))
+            {
+                activeWeapon.batteryLevel = activeWeapon.batteryLevelMax;
+                Destroy(other.gameObject);
             }
         }
     }
