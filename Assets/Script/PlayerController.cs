@@ -212,6 +212,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             characterController.Move((Vector3.right * horizontal + Vector3.forward * vertical) * Time.deltaTime);
         }
+        else
+        {
+            
+        }
     }
 
     #endregion
