@@ -7,6 +7,8 @@ TagManager:
   - HitBox
   - Battery
   - Enemy
+  - UnlockBarrier
+  - Waves
   layers:
   - Default
   - TransparentFX
