@@ -30,14 +30,14 @@ public class WaveSystem : MonoBehaviour
         public float spawnRate;
     }
 
-    // This array is used to store the waves.
+    // This list is used to store the waves.
     // public Wave[] waves;
     public List<Wave> wavesList;
     // This integer is used as an index to designate the next wave.
     private int nextWave = 0;
 
-    // This array will hold all spawn points in the level.
-    public Transform[] spawnPoints;
+    // This list will hold all active spawn points in the level.
+    public List<Transform> spawnPoints = new List<Transform>();
 
     /* The following floats are used to hold the grace period between each wave (waveGracePeriod)
      and the actual countdown timer that will be decreased between waves (waveCountdown). */
@@ -165,7 +165,7 @@ public class WaveSystem : MonoBehaviour
     void SpawnEnemy(Transform _enemy)
     {
         // Cycle through all enemies in list and set spawn point + instantiate
-        Transform _spawn = spawnPoints[Random.Range(0, spawnPoints.Length - 1)];
+        Transform _spawn = spawnPoints[Random.Range(0, spawnPoints.Count)];
         Instantiate(_enemy, _spawn.position, _spawn.rotation);
     }
 
