@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("Value used to smooth out the rotational movemnent")]
     [SerializeField] private float smoothDamp = 0.1f;
     [SerializeField] private float smoothRotate;
+    
     #endregion 
     #region Player Health Management
     [Header("Health Management")]
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] public static GameObject LocalPlayerInstance;
     [Tooltip("Player controller component attached to player prefab")]
     [SerializeField] private CharacterController characterController;
+    [SerializeField] private Rigidbody rb;
     #endregion
 
     #region Weapons Management
@@ -70,6 +72,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             LocalPlayerInstance = gameObject;
             weaponManagement = LocalPlayerInstance.GetComponentInChildren<WeaponManagement>();
+            rb = LocalPlayerInstance.GetComponent<Rigidbody>();
         }
 
         DontDestroyOnLoad(gameObject);
@@ -110,7 +113,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         if(photonView.IsMine)
         {
-            if(this.health < 0f)
+           
+            if (this.health < 0f)
             {
                 GameManager.Instance.LeaveRoom();
             }
@@ -122,13 +126,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         
         }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         //This handles the players movement if the photon view is registered as theirs. 
         if (photonView.IsMine)
         {
             this.Movement();
+           
         }
+
     }
     #endregion
 
@@ -196,26 +202,26 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     //This is how the player moves using the WASD directions on their keyboard. 
     void Movement()
     {
-        
-        
-         horizontal = Input.GetAxis("Horizontal") * movementSpeed;
-         vertical = Input.GetAxis("Vertical") * movementSpeed;
-        
-        
-         
-         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if(direction.magnitude >= 0.1f)
+
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+
+        Vector3 direction = new Vector3(horizontal, 0f, vertical);
+        direction = direction.normalized * movementSpeed * Time.deltaTime;
+
+        if (direction.magnitude >= 0.01f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothRotate, smoothDamp);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            characterController.Move((Vector3.right * horizontal + Vector3.forward * vertical) * Time.deltaTime);
+            rb.MovePosition(transform.position + direction);
         }
         else
         {
             
         }
+        Debug.Log(direction.magnitude.ToString());
     }
 
     #endregion
