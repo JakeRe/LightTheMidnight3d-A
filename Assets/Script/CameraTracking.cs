@@ -31,6 +31,7 @@ public class CameraTracking : MonoBehaviour
                 if (PhotonView.Get(player).IsMine)
                 {
                     vcam.Follow = player.transform;
+                    DontDestroyOnLoad(this);
                     break;
                 }
             }

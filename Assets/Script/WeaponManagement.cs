@@ -27,35 +27,39 @@ public class WeaponManagement: MonoBehaviour
 
     private void Update()
     {
-        int previousWeaponSelection = selectedWeapon;
+        if (playerController.photonView.IsMine)
+        {
+            int previousWeaponSelection = selectedWeapon;
 
-        if(Input.GetAxis("Mouse ScrollWheel")> 0f)
-        {
-            if(selectedWeapon >= transform.childCount - 1)
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
             {
-                selectedWeapon = 0;
+                if (selectedWeapon >= transform.childCount - 1)
+                {
+                    selectedWeapon = 0;
+                }
+                else
+                {
+                    selectedWeapon++;
+                }
             }
-            else
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
             {
-                selectedWeapon++;
+                if (selectedWeapon <= transform.childCount - 1)
+                {
+                    selectedWeapon = 0;
+                }
+                else
+                {
+                    selectedWeapon--;
+                }
             }
-        }
-        if(Input.GetAxis("Mouse ScrollWheel") < 0f)
-        {
-            if(selectedWeapon <= transform.childCount - 1)
-            {
-                selectedWeapon = 0;
-            }
-            else
-            {
-                selectedWeapon--;
-            }
-        }
 
-        if(previousWeaponSelection != selectedWeapon)
-        {
-            SelectedWeapon();
+            if (previousWeaponSelection != selectedWeapon)
+            {
+                SelectedWeapon();
+            }
         }
+        
 
     }
     void SelectedWeapon()
