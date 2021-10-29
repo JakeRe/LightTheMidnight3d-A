@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Cinemachine;
+
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     #region Game Objects
@@ -32,7 +34,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("Value used to smooth out the rotational movemnent")]
     [SerializeField] private float smoothDamp = 0.1f;
     [SerializeField] private float smoothRotate;
-    
+
+
+
     #endregion 
     #region Player Health Management
     [Header("Health Management")]
@@ -49,8 +53,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Components")]
     [Tooltip("Local player Instance")]
     [SerializeField] public static GameObject LocalPlayerInstance;
-    [Tooltip("Player controller component attached to player prefab")]
-    [SerializeField] private CharacterController characterController;
     [SerializeField] private Rigidbody rb;
     #endregion
 
@@ -71,7 +73,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
-            weaponManagement = LocalPlayerInstance.GetComponentInChildren<WeaponManagement>();
+            weaponManagement = LocalPlayerInstance.GetComponent<WeaponManagement>();
             rb = LocalPlayerInstance.GetComponent<Rigidbody>();
         }
 
@@ -161,6 +163,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     {
         info.Sender.TagObject = this.gameObject;
         object[] instantiationData = info.photonView.InstantiationData;
+        weaponManagement.enabled = true;
 
        
     }
@@ -190,6 +193,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     public override void OnDisable()
     {
+       
         base.OnDisable();
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
 
@@ -221,8 +225,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             
         }
-        Debug.Log(direction.magnitude.ToString());
     }
+
+
+  
+
+    
+    
 
     #endregion
 

@@ -165,9 +165,6 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     {
         if(photonEvent.Code == WeaponSwitchEventCode)
         {
-            int i = (int)photonEvent.CustomData;
-            i = selectedWeapon;
-
             
         }
 

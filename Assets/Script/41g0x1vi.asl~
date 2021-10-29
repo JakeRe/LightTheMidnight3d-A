@@ -5,10 +5,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Photon.Realtime;
 using Photon.Pun;
-using ExitGames.Client.Photon;
 using Cinemachine;
 
-public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
+public class WeaponManagement: MonoBehaviour
 {
     [Header("GameObjects")]
     [SerializeField] private PlayerController playerController;
@@ -19,12 +18,10 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     [SerializeField] public List<GameObject> weaponObjects;
     [SerializeField] private PhotonView weaponPV;
 
-    public const byte WeaponSwitchEventCode = 1;
     private void Awake()
     {
-        
+        weaponPV = GetComponent<PhotonView>();
         playerController = GetComponent<PlayerController>();
-        weaponPV = playerController.GetComponent<PhotonView>();
         foreach(Transform weapon in transform)
         {
             weaponObjects.Add(weapon.gameObject);
@@ -32,17 +29,54 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     }
     private void Start()
     {
-        SelectedWeapon();
+        //SelectedWeapon();
+        weaponPV.RPC("SelectedWeapon", RpcTarget.AllBuffered, selectedWeapon);
     }
 
     private void Update()
     {
-        WeaponChange();
+        if (playerController.photonView.IsMine && weaponPV.IsMine)
+        {
+            int previousWeaponSelection = selectedWeapon;
+
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                if (selectedWeapon >= transform.childCount - 1)
+                {
+                    selectedWeapon = 0;
+                }
+                else
+                {
+                    selectedWeapon++;
+                }
+                weaponPV.RPC("SelectedWeapon", RpcTarget.OthersBuffered);
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            {
+                if (selectedWeapon <= transform.childCount - 1)
+                {
+                    selectedWeapon = 0;
+                }
+                else
+                {
+                    selectedWeapon--;
+                }
+                weaponPV.RPC("SelectedWeapon", RpcTarget.OthersBuffered);
+            }
+
+            if (previousWeaponSelection != selectedWeapon)
+            {
+                //SelectedWeapon();
+                weaponPV.RPC("SelectedWeapon", RpcTarget.AllBuffered, selectedWeapon);
+                
+            }
+        }
+        
 
     }
 
-    
-    public void SelectedWeapon()
+    [PunRPC]
+    void SelectedWeapon(int i, PhotonMessageInfo info)
     {
         int i = 0;
 
@@ -61,59 +95,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
             i++;
         }
 
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(WeaponSwitchEventCode, i, raiseEventOptions, SendOptions.SendReliable);
-
-    }
-
-    public void WeaponChange()
-    {
-        if (playerController.photonView.IsMine)
-        {
-            int previousWeaponSelection = selectedWeapon;
-
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-            {
-
-
-                if (selectedWeapon >= transform.childCount - 1)
-                {
-                    selectedWeapon = 0;
-                }
-                else
-                {
-                    selectedWeapon++;
-                }
-              
-
-
-            }
-            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-            {
-
-                if (selectedWeapon <= transform.childCount - 1)
-                {
-                    selectedWeapon = 0;
-                }
-                else
-                {
-                    selectedWeapon--;
-                }
-               
-
-            }
-
-            if (previousWeaponSelection != selectedWeapon)
-            {
-
-
-                SelectedWeapon();
-
-
-
-            }
-        }
-
+        Debug.LogFormat("Info:", info.Sender, info.photonView, info.SentServerTime);
     }
 
 
@@ -123,18 +105,18 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
         if (stream.IsWriting)
         {
             stream.SendNext(selectedWeapon);
-            //foreach(GameObject obj in weaponObjects)
-            //{
-            //    stream.SendNext(obj.activeSelf);
-            //}
+            foreach(GameObject obj in weaponObjects)
+            {
+                stream.SendNext(obj.activeSelf);
+            }
         }
         if (stream.IsReading)
         {
-            selectedWeapon = (int)stream.ReceiveNext();
-            //foreach (GameObject obj in weaponObjects)
-            //{
-            //    obj.SetActive((bool)stream.ReceiveNext());
-            //}
+            this.selectedWeapon = (int)stream.ReceiveNext();
+            foreach (GameObject obj in weaponObjects)
+            {
+                obj.SetActive((bool)stream.ReceiveNext());
+            }
         }
     }
 
@@ -151,27 +133,5 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
        
     }
 
-    public void OnEnable()
-    {
-        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
-    }
-
-    public void OnDisable()
-    {
-        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
-    }
-
-    public void OnEvent(EventData photonEvent)
-    {
-        if(photonEvent.Code == WeaponSwitchEventCode)
-        {
-            int i = (int)photonEvent.CustomData;
-            i = selectedWeapon;
-
-            
-        }
-
-    }
-
-
+    
 }

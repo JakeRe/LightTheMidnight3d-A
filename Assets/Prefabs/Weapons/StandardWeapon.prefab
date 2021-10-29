@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1947491332181461518}
   - component: {fileID: 6545203067312216260}
+  - component: {fileID: 3977809388140593212}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -43,7 +44,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 59.9
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -92,6 +93,28 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &3977809388140593212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2558896919560656858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5361521601172712930
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,6 +127,8 @@ GameObject:
   - component: {fileID: 5361521601172712934}
   - component: {fileID: 5361521601172712935}
   - component: {fileID: 5361521601172712933}
+  - component: {fileID: 4819748641207274831}
+  - component: {fileID: 2513537923958909253}
   m_Layer: 0
   m_Name: StandardWeapon
   m_TagString: Untagged
@@ -186,18 +211,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f72e029ed2eefa84dbd2a21477d9664e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisWeaponPv: {fileID: 0}
   flashlightHitBox: {fileID: 8023462376318219397}
   flashLightEmitter: {fileID: 6545203067312216260}
   player: {fileID: 0}
   isReady: 0
   lightColor: {r: 1, g: 0.9831135, b: 0.41037738, a: 0}
-  maxFlashlightRange: 0
+  maxFlashlightRange: 50
   isActive: 0
-  canRecharge: 0
-  batteryLevel: 0
-  batteryLevelMax: 0
-  batteryDrain: 0
+  canRecharge: 1
+  batteryLevel: 50
+  batteryLevelMax: 50
+  batteryDrain: 2
   weight: 2
+--- !u!114 &4819748641207274831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5361521601172712930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 1
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 2513537923958909253}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &2513537923958909253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5361521601172712930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &8023462376318219397
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9150442144989322322
 Transform:
   m_ObjectHideFlags: 0
@@ -237,7 +302,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8023462376318219397}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 6.3303876}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 public class PlayerName : MonoBehaviour
 {
@@ -27,27 +28,31 @@ public class PlayerName : MonoBehaviour
 
     public void SetTarget(PlayerController _target)
     {
-        if(_target == null)
+        if(PhotonNetwork.OfflineMode == false)
         {
-            Debug.LogError("<Color=Red><a>Missing</a></Color> PlayMakerManager target for PlayerUI.SetTarget.", this);
-            return;
-        }
+            if (_target == null)
+            {
+                Debug.LogError("<Color=Red><a>Missing</a></Color> PlayMakerManager target for PlayerUI.SetTarget.", this);
+                return;
+            }
 
-        target = _target;
+            target = _target;
+
+            targetTransform = this.GetComponent<Transform>();
+            targetRenderer = this.GetComponent<Renderer>();
+            CharacterController characterController = _target.GetComponent<CharacterController>();
+
+            if (characterController != null)
+            {
+                characterControllerHeight = characterController.height;
+            }
+
+            if (playerNameText != null)
+            {
+                playerNameText.text = target.photonView.Owner.NickName;
+            }
+        }
        
-        targetTransform = this.GetComponent<Transform>();
-        targetRenderer = this.GetComponent<Renderer>();
-        CharacterController characterController = _target.GetComponent<CharacterController>();
-
-        if(characterController != null)
-        {
-            characterControllerHeight = characterController.height;
-        }
-      
-        if (playerNameText != null)
-        {
-            playerNameText.text = target.photonView.Owner.NickName;
-        }
     }
 
     #endregion

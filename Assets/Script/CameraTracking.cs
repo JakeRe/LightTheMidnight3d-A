@@ -20,6 +20,15 @@ public class CameraTracking : MonoBehaviour
         
     }
 
+    private void Awake()
+    {
+        if(tPlayer != null && PhotonView.Get(tPlayer).IsMine)
+        {
+            this.gameObject.SetActive(true);
+
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -36,6 +45,8 @@ public class CameraTracking : MonoBehaviour
                 }
             }
         }
+
+        
         
     }
 }

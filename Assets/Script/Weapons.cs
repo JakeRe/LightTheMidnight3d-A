@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ExitGames.Client.Photon;
 using Photon.Realtime;
 using Photon.Pun;
 
 public class Weapons : MonoBehaviour
 {
+    [Header("Photon View")]
+    [SerializeField] private PhotonView thisWeaponPv;
+
     [Header("Flashlight")]
     [Tooltip("Hitbox for the flashlight")]
     [SerializeField] private GameObject flashlightHitBox;
@@ -39,6 +43,7 @@ public class Weapons : MonoBehaviour
     void Awake()
     {
         player = GetComponentInParent<PlayerController>();
+        thisWeaponPv = GetComponent<PhotonView>();
     }
 
     void Update()
@@ -114,5 +119,21 @@ public class Weapons : MonoBehaviour
         }
     }
 
-    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(batteryLevel);
+            stream.SendNext(lightColor);
+            stream.SendNext(gameObject.activeSelf);
+        }
+        else if (stream.IsReading)
+        {
+            this.batteryLevel = (float)stream.ReceiveNext();
+            this.lightColor = (Color)stream.ReceiveNext();
+            this.gameObject.SetActive((bool)stream.ReceiveNext());
+        }
+    }
+
+
 }
