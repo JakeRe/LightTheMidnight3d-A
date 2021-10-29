@@ -167,9 +167,9 @@ MonoBehaviour:
   playerCam: {fileID: 0}
   smoothDamp: 0.1
   smoothRotate: 0
+  sensitivity: 3
   health: 10
   Points: 0
-  characterController: {fileID: 0}
   rb: {fileID: 3142378130236130317}
   weaponManagement: {fileID: 0}
   activeWeapon: {fileID: 0}
