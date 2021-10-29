@@ -1,0 +1,137 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using Photon.Realtime;
+using Photon.Pun;
+using Cinemachine;
+
+public class WeaponManagement: MonoBehaviour
+{
+    [Header("GameObjects")]
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] public int selectedWeapon;
+    [SerializeField] private int equipmentCount;
+    [SerializeField] private int equipmentMax;
+    [SerializeField] private GameObject equipment;
+    [SerializeField] public List<GameObject> weaponObjects;
+    [SerializeField] private PhotonView weaponPV;
+
+    private void Awake()
+    {
+        weaponPV = GetComponent<PhotonView>();
+        playerController = GetComponent<PlayerController>();
+        foreach(Transform weapon in transform)
+        {
+            weaponObjects.Add(weapon.gameObject);
+        }
+    }
+    private void Start()
+    {
+        //SelectedWeapon();
+        weaponPV.RPC("SelectedWeapon", RpcTarget.AllBuffered, selectedWeapon);
+    }
+
+    private void Update()
+    {
+        if (playerController.photonView.IsMine && weaponPV.IsMine)
+        {
+            int previousWeaponSelection = selectedWeapon;
+
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                if (selectedWeapon >= transform.childCount - 1)
+                {
+                    selectedWeapon = 0;
+                }
+                else
+                {
+                    selectedWeapon++;
+                }
+                weaponPV.RPC("SelectedWeapon", RpcTarget.OthersBuffered);
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            {
+                if (selectedWeapon <= transform.childCount - 1)
+                {
+                    selectedWeapon = 0;
+                }
+                else
+                {
+                    selectedWeapon--;
+                }
+                weaponPV.RPC("SelectedWeapon", RpcTarget.OthersBuffered);
+            }
+
+            if (previousWeaponSelection != selectedWeapon)
+            {
+                //SelectedWeapon();
+                weaponPV.RPC("SelectedWeapon", RpcTarget.AllBuffered, selectedWeapon);
+                
+            }
+        }
+        
+
+    }
+
+    [PunRPC]
+    void SelectedWeapon(int i, PhotonMessageInfo info)
+    {
+        int i = 0;
+
+        foreach(Transform weapon in transform)
+        {
+            if(i == selectedWeapon)
+            {
+                weapon.gameObject.SetActive(true);
+                playerController.activeWeapon = weapon.gameObject.GetComponent<Weapons>();
+
+            }
+            else
+            {
+                weapon.gameObject.SetActive(false);
+            }
+            i++;
+        }
+
+        Debug.LogFormat("Info:", info.Sender, info.photonView, info.SentServerTime);
+    }
+
+
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(selectedWeapon);
+            foreach(GameObject obj in weaponObjects)
+            {
+                stream.SendNext(obj.activeSelf);
+            }
+        }
+        if (stream.IsReading)
+        {
+            this.selectedWeapon = (int)stream.ReceiveNext();
+            foreach (GameObject obj in weaponObjects)
+            {
+                obj.SetActive((bool)stream.ReceiveNext());
+            }
+        }
+    }
+
+    void DeployEquipment()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if (equipmentCount >= equipmentMax && equipment != null)
+            {
+                equipmentCount--;
+                
+            }
+        }
+       
+    }
+
+    
+}

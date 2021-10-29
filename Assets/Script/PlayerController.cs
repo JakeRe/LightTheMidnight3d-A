@@ -4,62 +4,81 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Cinemachine;
+
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     #region Game Objects
     [Header("GameObjects")]
-    [Tooltip("Hitbox for the flashlight")]
-    [SerializeField] private GameObject flashlightHitBox;
     [Tooltip("Main camera for use in navigation")]
     [SerializeField] private Camera mainCamera;
     [Tooltip("The game object associated with the Player")]
     [SerializeField] private GameObject player;
-    [Tooltip("The light gameobject used to cast the Flashlight beam")]
-    [SerializeField] public Light flashLightEmitter;
+    [Tooltip("This is the player's UI Prefab")]
+    [SerializeField] public GameObject PlayerUIPrefab;
     #endregion
     #region Navigation Management
     [Header("Navigation")]
     [Tooltip("Position of the raycast from the Camera that the player will travel to")]
     [SerializeField] private Vector3 worldPosition;
     [Tooltip("Player's Movement Speed.")]
-    [SerializeField] private float movementSpeed;
+    [SerializeField] public float movementSpeed;
+    [Tooltip("Stored Vector for Player Rotation")]
+    [SerializeField] private Vector3 movementControl = Vector3.zero;
+    [SerializeField] private float horizontal;
+    [SerializeField] private float vertical;
+    [Tooltip("Virtual Camera used for Navigation")]
+    [SerializeField] private Camera playerCam;
+    [Tooltip("Value used to smooth out the rotational movemnent")]
+    [SerializeField] private float smoothDamp = 0.1f;
+    [SerializeField] private float smoothRotate;
+    [Tooltip("How fast the player rotates in accordance with mouse location")]
+    [SerializeField] private float sensitivity;
+ 
+
+
+
     #endregion 
     #region Player Health Management
     [Header("Health Management")]
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
     #endregion
-    #region Light Control
-    [Header("Light Management")]
-    [Tooltip("Tells if the flashlight is ready for use")]
-    [SerializeField] public bool isReady;
-    [Tooltip("Current Battery Level of Flashlight")]
-    [SerializeField] public float batteryLevel;
-    [Tooltip("Maximum Battery Life for Flashlight")]
-    [SerializeField] public float batteryLevelMax;
-    [Tooltip("Rate by which the battery for the flashlight drains")]
-    [SerializeField] private float batteryDrain; 
-    [Tooltip("Color emitted by flashlight")]
-    [SerializeField] private Color lightColor;
-    [Tooltip("Flashlight maximum range")]
-    [SerializeField] public float maxFlashlightRange;
-    [Tooltip("If the flashlight is in Use")]
-    [SerializeField] public bool isActive;
+
+    #region Player Point Management
+    [Header("Player Point Management")]
+    [SerializeField] private float Points;
     #endregion
+
     #region Components 
     [Header("Components")]
     [Tooltip("Local player Instance")]
     [SerializeField] public static GameObject LocalPlayerInstance;
-    #endregion 
+    [SerializeField] private Rigidbody rb;
+    #endregion
+
+    #region Weapons Management
+    [Header("Weapons Management")]
+    [Tooltip("Weapons Management Script Attached to Weapon Manager Prefab")]
+    [SerializeField] private WeaponManagement weaponManagement;
+    [Tooltip("What the active weapon is for the player")]
+    [SerializeField] public Weapons activeWeapon;
+    #endregion
 
     #region Unity Callbacks
     void Awake()
         { 
-      
+
+        //If the photon view component registers as the users, then it makes the local player instance this game object 
+        //Then it checks for the weapon manager in it's children.
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
+            weaponManagement = LocalPlayerInstance.GetComponent<WeaponManagement>();
+            rb = LocalPlayerInstance.GetComponent<Rigidbody>();
+            playerCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         }
 
         DontDestroyOnLoad(gameObject);
@@ -68,34 +87,40 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
          {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 
-        CameraWorkLTM _cameraWork = gameObject.GetComponent<CameraWorkLTM>();
+        //CameraWorkLTM _cameraWork = this.gameObject.GetComponent<CameraWorkLTM>();
 
-        if (_cameraWork != null)
+
+        //if (_cameraWork != null)
+        //{
+        //    if (photonView.IsMine)
+        //    {
+        //        _cameraWork.OnStartFollowing();
+        //    }
+        //}
+
+        //This is for player UI instantiation, if the UI prefab isn't null, then it will print a debug message. If not, then it will send a message that sets the target. 
+
+        if (PlayerUIPrefab != null)
         {
-            if (photonView.IsMine)
-            {
-                _cameraWork.OnStartFollowing();
-            }
+            GameObject _uiGo = Instantiate(PlayerUIPrefab);
+            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
         }
         else
         {
-            Debug.LogError("<Color=Red><b>Missing</b></Color> CameraWork Component on player Prefab.", this);
+            Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
         }
 
-
-        isReady = true;
-        flashLightEmitter.gameObject.SetActive(false);
-        flashlightHitBox.SetActive(false);
-         }
+       
+        }
     void Update()
         {
+
+        //If the photon view is registered as the players then when the health is equal to or less than zero, the player will be sent back to the main menu.
+
         if(photonView.IsMine)
         {
-            this.Movement();
-            this.Attack();
-            this.BatteryManagement();
-
-            if(this.health < 0f)
+           
+            if (this.health < 0f)
             {
                 GameManager.Instance.LeaveRoom();
             }
@@ -106,6 +131,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
         
         }
+
+    void FixedUpdate()
+    {
+        //This handles the players movement if the photon view is registered as theirs. 
+        if (photonView.IsMine)
+        {
+            this.Movement();
+           
+        }
+
+    }
     #endregion
 
     #region Photon Calls
@@ -114,14 +150,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(health);
-            stream.SendNext(isActive);
+           
             
            
         }
         else if(stream.IsReading)
         {
             this.health = (float)stream.ReceiveNext();
-            this.isActive = (bool)stream.ReceiveNext();
+           
             
         }
 
@@ -131,13 +167,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     {
         info.Sender.TagObject = this.gameObject;
         object[] instantiationData = info.photonView.InstantiationData;
+        weaponManagement.enabled = true;
 
        
     }
-
-
-
-
     #endregion
 
     #region Unity Scene Management
@@ -157,10 +190,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             transform.position = new Vector3(0f, 5f, 0f);
         }
+
+        GameObject _uiGo = Instantiate(this.PlayerUIPrefab);
+        _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
     }
 
     public override void OnDisable()
     {
+       
         base.OnDisable();
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
 
@@ -168,122 +205,69 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     #endregion
 
-    #region Enumerators 
-    IEnumerator FlashLightCoolDown()
-    {
-        //Light waits for five seconds before recharging.
-        yield return new WaitForSeconds(5);
-        //If the battery is not ready and less than 100
-        if (batteryLevel < 100 && !isReady)
-        {
-            //Battery is added to over the course of time
-            batteryLevel += batteryDrain * Time.deltaTime;
-            flashLightEmitter.color += (lightColor) * Time.deltaTime;
-            flashLightEmitter.range = maxFlashlightRange;
-
-            //If the battery is full, then break the loop
-            if (batteryLevel >= batteryLevelMax)
-            {
-                batteryLevel = batteryLevelMax;
-                isReady = true;
-                yield break;
-            }
-        }
-    }
-    #endregion
-
     #region Player Abilities
-    void Attack()
-    {
-        if (photonView.IsMine)
-        {
-            if (Input.GetButton("Fire1") && batteryLevel >= 0 && isReady)
-            {
-                isActive = true;
-                flashLightEmitter.gameObject.SetActive(true);
-                batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
-                flashlightHitBox.gameObject.SetActive(true);
 
-                flashLightEmitter.color -= (Color.white / batteryDrain) * Time.deltaTime;
-                flashLightEmitter.range -= flashLightEmitter.range * Time.deltaTime;
-
-            }
-        }
-       
-    }
+    //This is how the player moves using the WASD directions on their keyboard. 
     void Movement()
     {
-        //Vector3 mouse = Input.mousePosition;
-
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //RaycastHit hit;
-
-        //if (Physics.Raycast(ray, out hit, 1000))
-        //{
-        //    worldPosition = hit.point;
-
-        //}
-
-        //Debug.DrawRay(transform.position, mouse, Color.green);
-
-        //player.transform.LookAt(worldPosition);
 
 
-        if (Input.GetKey(KeyCode.W))
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+
+        Vector3 direction = new Vector3(horizontal, 0f, vertical);
+        direction = direction.normalized * movementSpeed * Time.deltaTime;
+
+        if (direction.magnitude >= 0.01f)
         {
-            player.transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothRotate, smoothDamp);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            rb.MovePosition(transform.position + direction);
+        }
+        else
+        {
+            
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if(playerCam != null)
         {
-            player.transform.Translate(-Vector3.forward * movementSpeed * Time.deltaTime);
+            movementControl.x += Input.GetAxis("Mouse X") * sensitivity;
+            transform.localRotation = Quaternion.Euler(0, movementControl.x, 0);
         }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            player.transform.Translate(Vector3.left * movementSpeed * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            player.transform.Translate(Vector3.right * movementSpeed * Time.deltaTime);
-        }
+        
     }
-    void BatteryManagement()
-    {
-        if (this.batteryLevel <= 0)
-        {
-            this.isReady = false;
-            this.flashlightHitBox.gameObject.SetActive(false);
-            this.flashLightEmitter.gameObject.SetActive(false);
-        }
 
-        if (batteryLevel <= batteryLevelMax && !isReady)
-        {
-            StartCoroutine("FlashLightCoolDown");
-        }
-    }
+
+  
+
+    
+    
+
     #endregion
 
     #region Colission Detection
     private void OnTriggerEnter(Collider other)
     {
+        //This differentiates for the player if it's their photon view that hits another object.
         if (!photonView.IsMine)
         {
             return;
         }
-
-
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("enemy hit player");
-
-        }
         else
         {
-            //Do Nothing
-        }
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                Debug.Log("enemy hit player");
+            }
 
+            if (other.gameObject.CompareTag("Battery"))
+            {
+                //When the player hits a battery pickup, this sets the active weapon's battery level to maximum. Then destroys the battery
+                activeWeapon.batteryLevel = activeWeapon.batteryLevelMax;
+                Destroy(other.gameObject);
+            }
+        }
     }
 
     #endregion

@@ -108,5 +108,11 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
     }
     #endregion
 
+    public void ConnectSinglePlayer()
+    {
+        PhotonNetwork.OfflineMode = true;
+        PhotonNetwork.LoadLevel("Vertical Slice");
+    }
+
   
 }
