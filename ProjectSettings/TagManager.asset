@@ -10,6 +10,7 @@ TagManager:
   - Heavy
   - UnlockBarrier
   - Waves
+  - Nav
   layers:
   - Default
   - TransparentFX

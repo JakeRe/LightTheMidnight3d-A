@@ -48,6 +48,10 @@ public class TestPlayer : MonoBehaviour
         
     }
 
+    // All of this area unlocking stuff should really be moved to the WorldArea script.
+    // I can also create a general "unlock" or "purchase" script that'll handle transactions for
+    // unlocking areas, shop purchases, and anything else you need to buy. Then the actual
+    // area unlocking would be within the World Area script (removing the barrier, adding spawns, etc.)
     private void UnlockTransactionEnter(GameObject area)
     {
         WorldArea areaScript = area.GetComponentInParent<WorldArea>();

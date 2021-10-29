@@ -5,7 +5,10 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public float moveSpeed;
+    [SerializeField]
+    private float moveSpeed;
+    [SerializeField]
+    private float attackRange;
 
     public NavMeshAgent enemyAgent;
 
@@ -37,12 +40,30 @@ public class Enemy : MonoBehaviour
 
     private Vector3 TargetPosition(string targetTag)
     {
+        // Find target object in scene.
         GameObject target = GameObject.FindGameObjectWithTag(targetTag);
-        return target.transform.position;
+
+        // Check if enemy is within attacking range. If not, return the position of the target.
+        if (Vector3.Distance(transform.position, target.transform.position) > attackRange)
+            return target.transform.position;
+
+        return transform.position;
     }
 
     private void MoveTowardTarget(Vector3 targetPos)
     {
         enemyAgent.SetDestination(targetPos);
+    }
+
+    private void Attack()
+    {
+
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawLine(transform.position, TargetPosition("Player"));
     }
 }
