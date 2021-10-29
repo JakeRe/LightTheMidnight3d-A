@@ -25,15 +25,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private Vector3 worldPosition;
     [Tooltip("Player's Movement Speed.")]
     [SerializeField] public float movementSpeed;
-    [Tooltip("Stored Vector 3 for movement")]
+    [Tooltip("Stored Vector for Player Rotation")]
     [SerializeField] private Vector3 movementControl = Vector3.zero;
     [SerializeField] private float horizontal;
     [SerializeField] private float vertical;
     [Tooltip("Virtual Camera used for Navigation")]
-    [SerializeField] private Transform playerCam;
+    [SerializeField] private Camera playerCam;
     [Tooltip("Value used to smooth out the rotational movemnent")]
     [SerializeField] private float smoothDamp = 0.1f;
     [SerializeField] private float smoothRotate;
+    [Tooltip("How fast the player rotates in accordance with mouse location")]
+    [SerializeField] private float sensitivity;
+ 
 
 
 
@@ -75,6 +78,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             LocalPlayerInstance = gameObject;
             weaponManagement = LocalPlayerInstance.GetComponent<WeaponManagement>();
             rb = LocalPlayerInstance.GetComponent<Rigidbody>();
+            playerCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         }
 
         DontDestroyOnLoad(gameObject);
@@ -225,6 +229,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             
         }
+
+        if(playerCam != null)
+        {
+            movementControl.x += Input.GetAxis("Mouse X") * sensitivity;
+            transform.localRotation = Quaternion.Euler(0, movementControl.x, 0);
+        }
+        
     }
 
 

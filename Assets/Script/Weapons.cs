@@ -85,6 +85,8 @@ public class Weapons : MonoBehaviour
 
     }
 
+    
+
     void WeightCheck()
     {
         if(gameObject.tag == "Heavy")
