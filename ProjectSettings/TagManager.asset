@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - UnlockBarrier
   - Waves
+  - Nav
   layers:
   - Default
   - TransparentFX

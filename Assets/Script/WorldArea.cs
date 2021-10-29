@@ -19,10 +19,12 @@ public class WorldArea : MonoBehaviour
     private bool isUnlocked;
 
     WaveSystem WaveManager;
+    CarMovement CarScript;
 
     void Start()
     {
         WaveManager = GameObject.FindGameObjectWithTag("Waves").GetComponent<WaveSystem>();
+        CarScript = gameObject.GetComponentInParent<CarMovement>();
     }
 
     void Update()
@@ -37,7 +39,7 @@ public class WorldArea : MonoBehaviour
             Debug.Log("You unlocked " + areaName + "!");
             isUnlocked = true;
 
-            for (int i = 0; i < areaSpawns.Length - 1; i++)
+            for (int i = 0; i < areaSpawns.Length; i++)
             {
                 WaveManager.spawnPoints.Add(areaSpawns[i]);
             }

@@ -60,6 +60,8 @@ public class WaveSystem : MonoBehaviour
     // This is the Enemy prefab to be used when creating waves. Need to change in the future to create an array that holds all enemy types.
     public Transform[] enemyPrefabs;
 
+    public int currentWave;
+
     private void Start()
     {
         waveCountdown = waveGracePeriod;
@@ -138,6 +140,8 @@ public class WaveSystem : MonoBehaviour
     IEnumerator SpawnWave(Wave _wave)
     {
         Debug.Log("Spawning Wave: " + _wave.waveNumber);
+        currentWave = _wave.waveNumber;
+
         state = SpawnState.SPAWNING;
 
 
