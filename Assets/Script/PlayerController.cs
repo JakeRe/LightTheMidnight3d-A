@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Photon.Pun;
+using UnityEngine.UI;
 using Cinemachine;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
@@ -45,6 +46,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Health Management")]
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
+    public delegate void ChangeHealth();
+    public static event ChangeHealth OnHealthChangedPositive;
+    public static event ChangeHealth OnHealthChangedNegative;
     #endregion
 
     #region Player Point Management
@@ -259,6 +263,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (other.gameObject.CompareTag("Enemy"))
             {
                 Debug.Log("enemy hit player");
+                health -= 1;
+                OnHealthChangedNegative();
             }
 
             if (other.gameObject.CompareTag("Battery"))
@@ -266,6 +272,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 //When the player hits a battery pickup, this sets the active weapon's battery level to maximum. Then destroys the battery
                 activeWeapon.batteryLevel = activeWeapon.batteryLevelMax;
                 Destroy(other.gameObject);
+            }
+
+            if (other.gameObject.CompareTag("Health"))
+            {
+                health += 1;
+                OnHealthChangedPositive();
+
             }
         }
     }
