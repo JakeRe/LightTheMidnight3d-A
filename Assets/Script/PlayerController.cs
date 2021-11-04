@@ -50,6 +50,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("Alpha of the player material when the player takes damage")]
     [SerializeField] private float damageAlpha;
     [SerializeField] private Renderer playerRenderer;
+    [SerializeField] private Color playerNormal;
+    [SerializeField] private Material playerMaterial;
     public delegate void ChangeHealth();
     public static event ChangeHealth OnHealthChangedPositive;
     public static event ChangeHealth OnHealthChangedNegative;
@@ -97,6 +99,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             playerCam = GameObject.Find("Main Camera").GetComponent<Camera>();
             playerAS = LocalPlayerInstance.GetComponent<AudioSource>();
             playerRenderer = LocalPlayerInstance.GetComponent<Renderer>();
+            playerNormal = playerRenderer.material.color;
+            playerMaterial = playerRenderer.material;
+            canBeDamaged = true;
         }
 
         DontDestroyOnLoad(gameObject);
@@ -274,15 +279,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            if (other.gameObject.CompareTag("Enemy") && canBeDamaged)
-            {
-                Debug.Log("enemy hit player");
-                health -= 1;
-                OnHealthChangedNegative();
-                playerAS.PlayOneShot(Sounds[0]);
-                StartCoroutine(Invincibility());
-            }
-
             if (other.gameObject.CompareTag("Battery"))
             {
                 //When the player hits a battery pickup, this sets the active weapon's battery level to maximum. Then destroys the battery
@@ -300,30 +296,41 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    private void OnCollisionEnter(Collision enemy)
+    {
+        if (enemy.gameObject.CompareTag("Enemy") && canBeDamaged)
+        {
+            Debug.Log("enemy hit player");
+            health -= 1;
+            OnHealthChangedNegative();
+            playerAS.PlayOneShot(Sounds[0]);
+            StartCoroutine(Invincibility());
+        }
+    }
+
     IEnumerator Invincibility()
     {
-        ChangeAlpha(playerRenderer.material, damageAlpha);
         canBeDamaged = !canBeDamaged;
+        ChangeAlpha();
         yield return new WaitForSecondsRealtime(invincibilityTime);
         canBeDamaged = !canBeDamaged;
-        ChangeAlpha(playerRenderer.material, damageAlpha);
+        ChangeAlpha();
         yield break;
     }
 
     #endregion
 
 
-    void ChangeAlpha(Material playerMat, float alpha)
+    void ChangeAlpha()
     {
         if (!canBeDamaged)
         {
-            Color oldColor = playerMat.color;
-            Color newColor = new Color(oldColor.r, oldColor.g, oldColor.b, alpha);
-            playerMat.SetColor("Invincible", newColor);
+            playerMaterial.color = new Color(playerNormal.r, playerNormal.g, playerNormal.b, damageAlpha);
+           
         }
         else
         {
-            playerMat.SetColor("Damagable", playerMat.color);
+            playerMaterial.color = playerNormal;
         }
      
     }
