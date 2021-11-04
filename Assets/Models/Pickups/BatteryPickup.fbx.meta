@@ -3,7 +3,12 @@ guid: 8925178583341f34b84237a4d3977c4d
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BatteryPickup
+    second: {fileID: 2100000, guid: 01495b674c3e83f4ba576047e2aed9bc, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

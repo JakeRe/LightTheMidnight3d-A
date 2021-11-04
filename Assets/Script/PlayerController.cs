@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Health Management")]
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
+    [SerializeField] private float maxHealth;
     [Tooltip("How Much Time In Invincibility The Player has After Taking Damage")]
     [SerializeField] public float invincibilityTime;
     [Tooltip("This player can be damaged")]
@@ -55,6 +56,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     public delegate void ChangeHealth();
     public static event ChangeHealth OnHealthChangedPositive;
     public static event ChangeHealth OnHealthChangedNegative;
+    public delegate void PickedUp();
+    public static event PickedUp PickedUpItem;
+    
     #endregion
 
     #region Player Point Management
@@ -283,14 +287,19 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             {
                 //When the player hits a battery pickup, this sets the active weapon's battery level to maximum. Then destroys the battery
                 activeWeapon.batteryLevel = activeWeapon.batteryLevelMax;
-                Destroy(other.gameObject);
                 playerAS.PlayOneShot(Sounds[1]);
+                PickedUpItem();
             }
 
             if (other.gameObject.CompareTag("Health"))
             {
-                health += 1;
-                OnHealthChangedPositive();
+                if(health < maxHealth)
+                {
+                    health += 1;
+                    OnHealthChangedPositive();
+                    PickedUpItem();                    
+                }
+                
 
             }
         }
