@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Photon.Pun;
+using UnityEngine.UI;
 using Cinemachine;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
@@ -36,15 +37,24 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private float smoothRotate;
     [Tooltip("How fast the player rotates in accordance with mouse location")]
     [SerializeField] private float sensitivity;
- 
-
-
 
     #endregion 
     #region Player Health Management
     [Header("Health Management")]
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
+    [Tooltip("How Much Time In Invincibility The Player has After Taking Damage")]
+    [SerializeField] public float invincibilityTime;
+    [Tooltip("This player can be damaged")]
+    [SerializeField] private bool canBeDamaged;
+    [Tooltip("Alpha of the player material when the player takes damage")]
+    [SerializeField] private float damageAlpha;
+    [SerializeField] private Renderer playerRenderer;
+    [SerializeField] private Color playerNormal;
+    [SerializeField] private Material playerMaterial;
+    public delegate void ChangeHealth();
+    public static event ChangeHealth OnHealthChangedPositive;
+    public static event ChangeHealth OnHealthChangedNegative;
     #endregion
 
     #region Player Point Management
@@ -57,6 +67,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("Local player Instance")]
     [SerializeField] public static GameObject LocalPlayerInstance;
     [SerializeField] private Rigidbody rb;
+    #endregion
+
+    #region Sound Effects
+    [Header("Sound Effects")]
+    [Tooltip("SFX For Player Taking Damage")]
+    [SerializeField] private AudioClip[] Sounds;
+    [Tooltip("AudioSource Attached to the Player")]
+    [SerializeField] private AudioSource playerAS;
     #endregion
 
     #region Weapons Management
@@ -79,6 +97,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             weaponManagement = LocalPlayerInstance.GetComponent<WeaponManagement>();
             rb = LocalPlayerInstance.GetComponent<Rigidbody>();
             playerCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+            playerAS = LocalPlayerInstance.GetComponent<AudioSource>();
+            playerRenderer = LocalPlayerInstance.GetComponent<Renderer>();
+            playerNormal = playerRenderer.material.color;
+            playerMaterial = playerRenderer.material;
+            canBeDamaged = true;
         }
 
         DontDestroyOnLoad(gameObject);
@@ -256,21 +279,60 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            if (other.gameObject.CompareTag("Enemy"))
-            {
-                Debug.Log("enemy hit player");
-            }
-
             if (other.gameObject.CompareTag("Battery"))
             {
                 //When the player hits a battery pickup, this sets the active weapon's battery level to maximum. Then destroys the battery
                 activeWeapon.batteryLevel = activeWeapon.batteryLevelMax;
                 Destroy(other.gameObject);
+                playerAS.PlayOneShot(Sounds[1]);
+            }
+
+            if (other.gameObject.CompareTag("Health"))
+            {
+                health += 1;
+                OnHealthChangedPositive();
+
             }
         }
     }
 
+    private void OnCollisionEnter(Collision enemy)
+    {
+        if (enemy.gameObject.CompareTag("Enemy") && canBeDamaged)
+        {
+            Debug.Log("enemy hit player");
+            health -= 1;
+            OnHealthChangedNegative();
+            playerAS.PlayOneShot(Sounds[0]);
+            StartCoroutine(Invincibility());
+        }
+    }
+
+    IEnumerator Invincibility()
+    {
+        canBeDamaged = !canBeDamaged;
+        ChangeAlpha();
+        yield return new WaitForSecondsRealtime(invincibilityTime);
+        canBeDamaged = !canBeDamaged;
+        ChangeAlpha();
+        yield break;
+    }
+
     #endregion
 
+
+    void ChangeAlpha()
+    {
+        if (!canBeDamaged)
+        {
+            playerMaterial.color = new Color(playerNormal.r, playerNormal.g, playerNormal.b, damageAlpha);
+           
+        }
+        else
+        {
+            playerMaterial.color = playerNormal;
+        }
+     
+    }
 }
 

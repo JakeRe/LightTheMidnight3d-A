@@ -8,6 +8,7 @@ TagManager:
   - Battery
   - Enemy
   - Heavy
+  - Health
   - UnlockBarrier
   - Waves
   - Nav

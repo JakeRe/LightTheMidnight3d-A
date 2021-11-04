@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 281bbed698c2d2742b50e35407739c7a
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Zubilo
+  fontNames:
+  - Zubilo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 90f7d5e3871f7294ab3e7a75c932f562, type: 3}
+  - {fileID: 12800000, guid: 9119775e6c40e1c40a1b8d67b30a5085, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

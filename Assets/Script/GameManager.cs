@@ -59,38 +59,46 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         Instance = this;
-
-        if (!PhotonNetwork.IsConnected)
+        if(PhotonNetwork.OfflineMode == false)
         {
-            PhotonNetwork.LoadLevel("MultiplayerLauncher");
-
-            return;
-        }
-
-        if (playerPrefab == null)
-        {
-            Debug.LogError("Player prefab has not been set. Add Player Prefab to Game Manager in the Inspector");
-        }
-        else
-        {
-            if (PlayerController.LocalPlayerInstance == null && PhotonNetwork.PlayerList.Length < LTML.maxPlayersPerRoom)
+            if (!PhotonNetwork.IsConnected)
             {
-                Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
-                // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-                PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
+                PhotonNetwork.LoadLevel("MultiplayerLauncher");
 
+                return;
+            }
+
+            if (playerPrefab == null)
+            {
+                Debug.LogError("Player prefab has not been set. Add Player Prefab to Game Manager in the Inspector");
             }
             else
             {
-                Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
+                if (PlayerController.LocalPlayerInstance == null && PhotonNetwork.PlayerList.Length < LTML.maxPlayersPerRoom)
+                {
+                    Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
+                    // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
+                    PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
 
+                }
+                else
+                {
+                    Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
+
+                }
             }
         }
     }
+    
     #endregion
 
     #region Public Methods
     public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel("MultiplayerLauncher");
+    }
+
+    public void ReturnToMenuOffline()
     {
         PhotonNetwork.LoadLevel("MultiplayerLauncher");
     }

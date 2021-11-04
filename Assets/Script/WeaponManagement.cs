@@ -74,8 +74,6 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
 
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)
             {
-
-
                 if (selectedWeapon >= transform.childCount - 1)
                 {
                     selectedWeapon = 0;
@@ -84,9 +82,6 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
                 {
                     selectedWeapon++;
                 }
-              
-
-
             }
             if (Input.GetAxis("Mouse ScrollWheel") < 0f)
             {
@@ -99,18 +94,10 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
                 {
                     selectedWeapon--;
                 }
-               
-
             }
-
             if (previousWeaponSelection != selectedWeapon)
             {
-
-
                 SelectedWeapon();
-
-
-
             }
         }
 
