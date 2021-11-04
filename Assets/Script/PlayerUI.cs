@@ -42,9 +42,4 @@ public class PlayerUI : MonoBehaviour
     {
         healthAnim.SetTrigger("HealthAdded");
     }
-
-    void BatteryChange()
-    {
-        
-    }
 }

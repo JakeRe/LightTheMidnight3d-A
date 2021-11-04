@@ -3,7 +3,12 @@ guid: 3cd0b6bba78dcd44e97fac84dbe14078
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SandwichPickup
+    second: {fileID: 2100000, guid: 9578105572414ca499046a4b0f1f9e6e, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
