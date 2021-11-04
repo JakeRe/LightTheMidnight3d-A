@@ -5,9 +5,10 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public GameObject Player;
-
-    public float moveSpeed;
+    [SerializeField]
+    private float moveSpeed;
+    [SerializeField]
+    private float attackRange;
 
     public NavMeshAgent enemyAgent;
 
@@ -18,11 +19,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
-        // Random movement to get the objects moving around the scene - testing purposes only.
-        // float step = moveSpeed * Time.deltaTime;
-        // transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, step);
-        enemyAgent.SetDestination(Player.transform.position);
+        MoveTowardTarget(TargetPosition("Player"));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,10 +27,6 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.CompareTag("HitBox"))
         {
             Destroy(this.gameObject);
-        }
-        else
-        {
-
         }
     }
 
@@ -43,5 +36,34 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private Vector3 TargetPosition(string targetTag)
+    {
+        // Find target object in scene.
+        GameObject target = GameObject.FindGameObjectWithTag(targetTag);
+
+        // Check if enemy is within attacking range. If not, return the position of the target.
+        if (Vector3.Distance(transform.position, target.transform.position) > attackRange)
+            return target.transform.position;
+
+        return transform.position;
+    }
+
+    private void MoveTowardTarget(Vector3 targetPos)
+    {
+        enemyAgent.SetDestination(targetPos);
+    }
+
+    private void Attack()
+    {
+
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawLine(transform.position, TargetPosition("Player"));
     }
 }

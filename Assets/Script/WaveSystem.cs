@@ -9,7 +9,7 @@ public class WaveSystem : MonoBehaviour
      has been completed, and then spawn the next wave with increasing numbers of enemies and a faster
      spawn rate, as well as varying enemy types based on how far the player has progressed. */
     
-    /* This enumerator is used to hold the states of the wave system.
+    /* This enum is used to hold the states of the wave system.
     The SPAWNING state is for when the system is actively spawning a wave.
     The WAITING state is for when the system is waiting for the wave to be completed.
     The COUNTDOWN state is for when the system is counting down between the end of
@@ -30,14 +30,14 @@ public class WaveSystem : MonoBehaviour
         public float spawnRate;
     }
 
-    // This array is used to store the waves.
+    // This list is used to store the waves.
     // public Wave[] waves;
     public List<Wave> wavesList;
     // This integer is used as an index to designate the next wave.
     private int nextWave = 0;
 
-    // This array will hold all spawn points in the level.
-    public Transform[] spawnPoints;
+    // This list will hold all active spawn points in the level.
+    public List<Transform> spawnPoints = new List<Transform>();
 
     /* The following floats are used to hold the grace period between each wave (waveGracePeriod)
      and the actual countdown timer that will be decreased between waves (waveCountdown). */
@@ -57,8 +57,11 @@ public class WaveSystem : MonoBehaviour
     // This float is used to manage the rate at which the spawn rate increases by wave.
     public float spawnRateIncrease;
 
-    // This is the Enemy prefab to be used when creating waves. Need to change in the future to create an array that holds all enemy types.
+    // This array holds all Enemy types to be used when creating a wave.
     public Transform[] enemyPrefabs;
+
+    // This int indicates what the current wave is.
+    public int currentWave;
 
     private void Start()
     {
@@ -138,6 +141,8 @@ public class WaveSystem : MonoBehaviour
     IEnumerator SpawnWave(Wave _wave)
     {
         Debug.Log("Spawning Wave: " + _wave.waveNumber);
+        currentWave = _wave.waveNumber;
+
         state = SpawnState.SPAWNING;
 
 
@@ -165,7 +170,7 @@ public class WaveSystem : MonoBehaviour
     void SpawnEnemy(Transform _enemy)
     {
         // Cycle through all enemies in list and set spawn point + instantiate
-        Transform _spawn = spawnPoints[Random.Range(0, spawnPoints.Length - 1)];
+        Transform _spawn = spawnPoints[Random.Range(0, spawnPoints.Count)];
         Instantiate(_enemy, _spawn.position, _spawn.rotation);
     }
 
