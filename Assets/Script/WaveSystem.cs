@@ -9,7 +9,7 @@ public class WaveSystem : MonoBehaviour
      has been completed, and then spawn the next wave with increasing numbers of enemies and a faster
      spawn rate, as well as varying enemy types based on how far the player has progressed. */
     
-    /* This enumerator is used to hold the states of the wave system.
+    /* This enum is used to hold the states of the wave system.
     The SPAWNING state is for when the system is actively spawning a wave.
     The WAITING state is for when the system is waiting for the wave to be completed.
     The COUNTDOWN state is for when the system is counting down between the end of
@@ -57,9 +57,10 @@ public class WaveSystem : MonoBehaviour
     // This float is used to manage the rate at which the spawn rate increases by wave.
     public float spawnRateIncrease;
 
-    // This is the Enemy prefab to be used when creating waves. Need to change in the future to create an array that holds all enemy types.
+    // This array holds all Enemy types to be used when creating a wave.
     public Transform[] enemyPrefabs;
 
+    // This int indicates what the current wave is.
     public int currentWave;
 
     private void Start()
