@@ -19,6 +19,8 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     [SerializeField] public List<GameObject> weaponObjects;
     [SerializeField] private PhotonView weaponPV;
 
+    
+  
     public const byte WeaponSwitchEventCode = 1;
     private void Awake()
     {
@@ -52,6 +54,8 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
             {
                 weapon.gameObject.SetActive(true);
                 playerController.activeWeapon = weapon.gameObject.GetComponent<Weapons>();
+                Weapons activeWeapon = weapon.gameObject.GetComponent<Weapons>();
+                activeWeapon.BatteryUpdate();
 
             }
             else
@@ -146,6 +150,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     public void OnDisable()
     {
         PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+        PlayerUI.batteryUpdate -= SelectedWeapon;
     }
 
     public void OnEvent(EventData photonEvent)
@@ -160,5 +165,6 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
 
     }
 
+    
 
 }

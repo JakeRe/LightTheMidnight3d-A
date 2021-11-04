@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ExitGames.Client.Photon;
+using UnityEngine.UI;
 using Photon.Realtime;
 using Photon.Pun;
 
@@ -29,6 +30,7 @@ public class Weapons : MonoBehaviour
     [SerializeField] public bool isActive;
 
     [Header("Weapon Specifics")]
+    [SerializeField] private PlayerUI playerUI;
     [Tooltip("Determines if the weapon can recharge")]
     [SerializeField] private bool canRecharge;
     [Tooltip("Current Battery Level of Flashlight")]
@@ -40,10 +42,20 @@ public class Weapons : MonoBehaviour
     [Tooltip("The Weight of the Equipped Weapon")]
     [SerializeField] private float weight;
 
+
+  
+
+    private void OnEnable()
+    {
+        PlayerUI.batteryUpdate += ActiveWeapon;
+
+    }
+
     void Awake()
     {
         player = GetComponentInParent<PlayerController>();
         thisWeaponPv = GetComponent<PhotonView>();
+        playerUI = FindObjectOfType<PlayerUI>();
     }
 
     void Update()
@@ -53,6 +65,9 @@ public class Weapons : MonoBehaviour
             this.BatteryManagement();
             this.Attack();
             this.WeightCheck();
+            
+            
+            
         }
     }
     void BatteryManagement()
@@ -75,14 +90,22 @@ public class Weapons : MonoBehaviour
 
         if (Input.GetButton("Fire1") && batteryLevel >= 0 && isReady)
         {
+            playerUI.weaponBattery.maxValue = batteryLevelMax;
             isActive = true;
             flashLightEmitter.gameObject.SetActive(true);
             batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
             flashlightHitBox.gameObject.SetActive(true);
             flashLightEmitter.range -= flashLightEmitter.range * Time.deltaTime;
+            playerUI.weaponBattery.value = batteryLevel;
 
         }
 
+    }
+
+    public void BatteryUpdate()
+    {
+        playerUI.weaponBattery.maxValue = batteryLevelMax;
+        playerUI.weaponBattery.value = batteryLevel;
     }
 
     
@@ -137,5 +160,9 @@ public class Weapons : MonoBehaviour
         }
     }
 
+    public void ActiveWeapon()
+    {
+        
+    }
 
 }

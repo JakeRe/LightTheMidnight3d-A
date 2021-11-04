@@ -10,8 +10,13 @@ public class PlayerUI : MonoBehaviour
 {
     [Header("UI Element for Player Health")]
     [SerializeField] private Image healthUI;
+    [SerializeField] public Slider weaponBattery;
     [SerializeField] private Animator healthAnim;
 
+    public delegate void EquippedWeapon();
+    public static event EquippedWeapon batteryUpdate;
+    //public delegate void ManageBattery();
+    //public static event ManageBattery BatteryLevelUpdate;
     private void Awake()
     {
         healthAnim = GetComponent<Animator>();
@@ -36,5 +41,10 @@ public class PlayerUI : MonoBehaviour
     void HealthChangePositive()
     {
         healthAnim.SetTrigger("HealthAdded");
+    }
+
+    void BatteryChange()
+    {
+        
     }
 }
