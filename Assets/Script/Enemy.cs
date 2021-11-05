@@ -9,17 +9,29 @@ public class Enemy : MonoBehaviour
     private float moveSpeed;
     [SerializeField]
     private float attackRange;
+    [SerializeField]
+    private float attackRate;
 
     public NavMeshAgent enemyAgent;
 
+    //public enum EnemyState { CHASING, ATTACKING, COOLDOWN }
+    //public EnemyState state;
+
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        MoveTowardTarget(TargetPosition("Player"));
+        if (!CloseToPlayer())
+        {
+            MoveTowardTarget(TargetPosition("Player"));
+        }
+        else if (CloseToPlayer())
+        {
+            MoveTowardTarget(TargetPosition(null));
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,24 +42,34 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+   /* private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
+    }*/
+
+    private bool CloseToPlayer()
+    {
+        // Check if the distance between this object and the Player is less than or equal to the attack range.
+        if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= attackRange)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private Vector3 TargetPosition(string targetTag)
     {
-        // Find target object in scene.
+        if (targetTag == null)
+            return gameObject.transform.position;
+
+        // Find target object in scene and return its position.
         GameObject target = GameObject.FindGameObjectWithTag(targetTag);
 
-        // Check if enemy is within attacking range. If not, return the position of the target.
-        if (Vector3.Distance(transform.position, target.transform.position) > attackRange)
-            return target.transform.position;
-
-        return transform.position;
+        return target.transform.position;
     }
 
     private void MoveTowardTarget(Vector3 targetPos)
@@ -55,10 +77,11 @@ public class Enemy : MonoBehaviour
         enemyAgent.SetDestination(targetPos);
     }
 
-    private void Attack()
+    /*private void Attack()
     {
-
-    }
+        TestPlayer playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<TestPlayer>();
+        playerScript.health -= 1;
+    }*/
 
     void OnDrawGizmos()
     {

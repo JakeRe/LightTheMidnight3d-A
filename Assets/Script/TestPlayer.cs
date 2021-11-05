@@ -16,6 +16,8 @@ public class TestPlayer : MonoBehaviour
 
     [SerializeField]
     public float darkCurrency;
+    [SerializeField]
+    public float health;
 
     void Start()
     {
