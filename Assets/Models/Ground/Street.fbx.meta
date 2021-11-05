@@ -3,12 +3,52 @@ guid: a07f6fb2bf1a41545829ef9589b0c4d3
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Curb
+    second: {fileID: 2100000, guid: 53c16d07cc6605a40b347d4120c36dcf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Decal_YellowLines
+    second: {fileID: 2100000, guid: 893ab5aca5eaf46489a6c1579ae262c8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Decals_Arrows
+    second: {fileID: 2100000, guid: 956b2f7d84b636f4da610269f662741a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Decals_Crosswalk
+    second: {fileID: 2100000, guid: 8961829e3b4fcb840901e20361e962bb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Decals_WhiteLines
+    second: {fileID: 2100000, guid: ace2489219aa8a143b0f8bd8c32afd59, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Manhole
+    second: {fileID: 2100000, guid: 5d0246a2f77e969438a1dd252f151d25, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sidewalk1
+    second: {fileID: 2100000, guid: 8e586b246b7c98b4fa6f237b255ff327, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Street
+    second: {fileID: 2100000, guid: 97d215bc3f4289e47a50233773e59d14, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -36,7 +76,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
