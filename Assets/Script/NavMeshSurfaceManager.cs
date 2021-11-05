@@ -10,7 +10,7 @@ public class NavMeshSurfaceManager : MonoBehaviour
 
     void Start()
     {
-
+        UpdateNavSurface();
     }
 
     void Update()

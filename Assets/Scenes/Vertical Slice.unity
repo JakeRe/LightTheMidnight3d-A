@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4541,7 +4541,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.5984849, y: 1}
+    m_SensorSize: {x: 1.6012597, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -7965,6 +7965,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1888666884}
   - component: {fileID: 1888666883}
+  - component: {fileID: 1888666885}
   m_Layer: 0
   m_Name: NavMesh
   m_TagString: Nav
@@ -8016,6 +8017,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1888666885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888666882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd2e415353805ad49b7bbcccc710854c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaces:
+  - {fileID: 1888666883}
 --- !u!1 &1904303935 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1668871744657540803, guid: fcea07b5cb6c08b4e9ef23853ac426c9,
