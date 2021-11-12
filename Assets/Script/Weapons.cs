@@ -42,7 +42,7 @@ public class Weapons : MonoBehaviour
     [Tooltip("The Weight of the Equipped Weapon")]
     [SerializeField] private float weight;
 
-
+    [SerializeField] private float moveSpeed;
   
 
     private void OnEnable()
@@ -112,6 +112,10 @@ public class Weapons : MonoBehaviour
 
     void WeightCheck()
     {
+        /*
+         * This code can probably be removed. I changed it so the player's movement speed
+         * is automatically set to the speed provided by the weapon. Easier to change in
+         * the inspector and avoids having hard-coded values.
         if(gameObject.tag == "Heavy")
         {
             player.movementSpeed = 4;
@@ -120,6 +124,9 @@ public class Weapons : MonoBehaviour
         {
             player.movementSpeed = 12;
         }
+        */
+
+        player.movementSpeed = moveSpeed;
     }
 
     IEnumerator FlashLightCoolDown()

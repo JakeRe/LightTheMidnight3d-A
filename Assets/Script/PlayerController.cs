@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("How fast the player rotates in accordance with mouse location")]
     [SerializeField] private float sensitivity;
 
+    [SerializeField] private LayerMask groundMask;
     #endregion 
     #region Player Health Management
     [Header("Health Management")]
@@ -144,7 +145,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         //If the photon view is registered as the players then when the health is equal to or less than zero, the player will be sent back to the main menu.
 
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
            
             if (this.health < 0f)
@@ -165,7 +166,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         if (photonView.IsMine)
         {
             this.Movement();
-           
+
         }
 
     }
@@ -259,13 +260,47 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         if(playerCam != null)
         {
-            movementControl.x += Input.GetAxis("Mouse X") * sensitivity;
-            transform.localRotation = Quaternion.Euler(0, movementControl.x, 0);
+            // This is the old mouse look code, may be able to remove in the future.
+            // movementControl.x += Input.GetAxis("Mouse X") * sensitivity;
+            // transform.localRotation = Quaternion.Euler(0, movementControl.x, 0);
+            
+            Aim();
         }
         
     }
 
+    void Aim()
+    {
+        var (success, position) = GetMousePosition();
 
+        if (success)
+        {
+            // Calculate the direction
+            var direction = position - transform.position;
+
+            // Ignore the height difference
+            direction.y = 0;
+
+            // Make the transform look in the direction
+            transform.forward = direction;
+        }
+    }
+
+    private (bool success, Vector3 position) GetMousePosition()
+    {
+        var ray = playerCam.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, groundMask))
+        {
+            // The Raycast hit something, return with the position.
+            return (success: true, position: hitInfo.point);
+        }
+        else
+        {
+            // The Raycast did not hit anything.
+            return (success: false, position: Vector3.zero);
+        }
+    }
   
 
     
@@ -343,5 +378,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
      
     }
+
 }
 

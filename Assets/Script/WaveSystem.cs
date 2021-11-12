@@ -203,11 +203,5 @@ public class WaveSystem : MonoBehaviour
      * TODO: Completed waves need to be stored in some kind of list to track player progression.
      * The number of waves completed could also be stored in some kind of variable so a whole list isn't used.
      * Waves completed need to be tracked to make sure new enemies are added to the waves when needed.
-     * 
-     * TODO: Find a way to only have enemies spawn at certain spawn points when that area has been unlocked.
-     * Maybe store active spawn points in a list, and then cycle through the ones that are present in the scene
-     * and add them to the list when their area has been unlocked. Could use tags for the area or something
-     * like that to differentiate between different spawn points.
-     * 
      */
 }
