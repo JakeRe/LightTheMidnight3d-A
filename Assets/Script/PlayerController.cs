@@ -311,7 +311,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             Debug.Log("enemy hit player");
             health -= 1;
-            OnHealthChangedNegative();
             playerAS.PlayOneShot(Sounds[0]);
             StartCoroutine(Invincibility());
         }

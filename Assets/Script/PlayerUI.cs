@@ -9,9 +9,14 @@ using ExitGames.Client.Photon;
 public class PlayerUI : MonoBehaviour
 {
     [Header("UI Element for Player Health")]
-    [SerializeField] private Image healthUI;
     [SerializeField] public Slider weaponBattery;
-    [SerializeField] private Animator healthAnim;
+    [SerializeField] private PlayerController player;
+
+    [SerializeField] private float health;
+    [SerializeField] private float numOfHearts;
+    [SerializeField] private Image[] hearts;
+    [SerializeField] private Sprite fullHeart;
+    [SerializeField] private Sprite emptyHeart;
 
     public delegate void EquippedWeapon();
     public static event EquippedWeapon batteryUpdate;
@@ -19,27 +24,47 @@ public class PlayerUI : MonoBehaviour
     //public static event ManageBattery BatteryLevelUpdate;
     private void Awake()
     {
-        healthAnim = GetComponent<Animator>();
+        player = FindObjectOfType<PlayerController>();
+        health = player.health;
+        numOfHearts = health;
     }
 
-    private void OnEnable()
+    private void Update()
     {
-        PlayerController.OnHealthChangedPositive += HealthChangePositive;
-        PlayerController.OnHealthChangedNegative += HealthChangeNegative;
+        health = player.health;
+
+        for(int i = 0; i<hearts.Length; i++)
+        {
+            if (i < health)
+            {
+                hearts[i].sprite = fullHeart;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
+
+            if (i < numOfHearts)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+            {
+                hearts[i].enabled = false;
+            }
+        }
     }
 
-    private void OnDisable()
-    {
-        PlayerController.OnHealthChangedNegative -= HealthChangeNegative;
-        PlayerController.OnHealthChangedPositive -= HealthChangePositive;
-    }
-    void HealthChangeNegative()
-    {
-        healthAnim.SetTrigger("HealthRemoved");
-    }
+    //private void OnEnable()
+    //{
+    //    PlayerController.OnHealthChangedPositive += HealthChangePositive;
+    //    PlayerController.OnHealthChangedNegative += HealthChangeNegative;
+    //}
 
-    void HealthChangePositive()
-    {
-        healthAnim.SetTrigger("HealthAdded");
-    }
+    //private void OnDisable()
+    //{
+    //    PlayerController.OnHealthChangedNegative -= HealthChangeNegative;
+    //    PlayerController.OnHealthChangedPositive -= HealthChangePositive;
+    //}
+
 }
