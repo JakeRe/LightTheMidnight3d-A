@@ -4234,10 +4234,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8390666328551508, guid: dfbf3c738fc74a2418f575f82156099c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 30457904835907002, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
       propertyPath: m_RootOrder
@@ -4297,81 +4293,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 953406461112770908, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046653116721999956, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046653116721999956, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 4059227400701480605, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_Range
-      value: 50.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4059227400701480605, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4059227400701480605, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.8002132
-      objectReference: {fileID: 0}
-    - target: {fileID: 4059227400701480605, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4059227400701480605, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_SpotAngle
-      value: 56.546867
-      objectReference: {fileID: 0}
-    - target: {fileID: 4059227400701480605, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_InnerSpotAngle
-      value: 41.320927
-      objectReference: {fileID: 0}
-    - target: {fileID: 5550192154498209727, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: moveSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6752292933632533150, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_Range
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6752292933632533150, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_SpotAngle
-      value: 63.976017
-      objectReference: {fileID: 0}
-    - target: {fileID: 6752292933632533150, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_InnerSpotAngle
-      value: 45.04883
-      objectReference: {fileID: 0}
-    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: moveSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7509996073077018335, guid: dfbf3c738fc74a2418f575f82156099c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9189496979898966923, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}

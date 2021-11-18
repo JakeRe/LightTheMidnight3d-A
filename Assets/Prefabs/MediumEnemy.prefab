@@ -128,6 +128,7 @@ MonoBehaviour:
   moveSpeed: 7.5
   attackRange: 1.5
   attackRate: 0
+  enemyHealth: 50
   enemyAgent: {fileID: 1632055073798285410}
 --- !u!195 &1632055073798285410
 NavMeshAgent:

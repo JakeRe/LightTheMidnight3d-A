@@ -322,6 +322,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             {
                 //When the player hits a battery pickup, this sets the active weapon's battery level to maximum. Then destroys the battery
                 activeWeapon.batteryLevel = activeWeapon.batteryLevelMax;
+                activeWeapon.flashLightEmitter.range = activeWeapon.maxFlashlightRange;
                 playerAS.PlayOneShot(Sounds[1]);
                 PickedUpItem();
             }
