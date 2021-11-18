@@ -63,7 +63,8 @@ public class PlayerName : MonoBehaviour
 
     void Awake()
     {
-        this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
+        
+        this.transform.SetParent(GameObject.Find("LIght The Midnight UI").GetComponent<Transform>(), false);
 
         _canvasGroup = this.GetComponent<CanvasGroup>();
     }

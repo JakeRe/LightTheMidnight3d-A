@@ -21,14 +21,22 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private Sprite fullHeart;
     [SerializeField] private Sprite emptyHeart;
 
+    [SerializeField] private GameObject playerHud;
+    [SerializeField] private GameObject pauseMenu;
+
     public delegate void EquippedWeapon();
     public static event EquippedWeapon batteryUpdate;
+
+    public static bool isPaused;
     //public delegate void ManageBattery();
     //public static event ManageBattery BatteryLevelUpdate;
     private void Awake()
     {
         player = FindObjectOfType<PlayerController>();
         health = player.health;
+        pauseMenu.SetActive(false);
+        isPaused = false;
+        playerHud.SetActive(true);
         numOfHearts = health;
     }
 
@@ -55,6 +63,31 @@ public class PlayerUI : MonoBehaviour
             {
                 hearts[i].enabled = false;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPaused = !isPaused;
+
+            Pause();
+        }
+    }
+
+
+    void Pause()
+    {
+        if (isPaused == true)
+        {
+            Time.timeScale = 0;
+            playerHud.SetActive(false);
+            pauseMenu.SetActive(true);
+        }
+
+        if (!isPaused)
+        {
+            Time.timeScale = 1;
+            playerHud.SetActive(true);
+            pauseMenu.SetActive(false);
         }
     }
 
