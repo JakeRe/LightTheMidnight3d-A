@@ -6918,6 +6918,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1640646569348399537, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}
+      propertyPath: emptyHeart
+      value: 
+      objectReference: {fileID: 21300000, guid: 643a64c91d4659a42b49950534380c41,
+        type: 3}
+    - target: {fileID: 1640646569348399537, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
       propertyPath: fullBattery
       value: 
       objectReference: {fileID: 21300000, guid: f4e8c1eee18ecf741b889950c913d79b,
