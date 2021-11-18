@@ -1346,6 +1346,12 @@ PlayableDirector:
     value: {fileID: 1227149374}
   - key: {fileID: 5646344484468078794, guid: 758ece2b8c7517f4182888804afee25c, type: 2}
     value: {fileID: 1463999581}
+  - key: {fileID: 5623044289474865232, guid: 758ece2b8c7517f4182888804afee25c, type: 2}
+    value: {fileID: 1130706840}
+  - key: {fileID: 8000395151349103453, guid: 758ece2b8c7517f4182888804afee25c, type: 2}
+    value: {fileID: 586002716}
+  - key: {fileID: -6061289241470840612, guid: 758ece2b8c7517f4182888804afee25c, type: 2}
+    value: {fileID: 1922425862}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &298632779
@@ -2392,8 +2398,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "....Okay, check one, two, perriwinkle, ah! There we are, it\u2019s finally
-    back on again."
+  m_text: " I know they may look cute, but if they touch you, you\u2019ll turn into
+    one of the little pudding gremlins."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4053,8 +4059,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "....Okay, check one, two, perriwinkle, ah! There we are, it\u2019s finally
-    back on again."
+  m_text: Oh, speak of the Devil, there's a Roak now.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7791,8 +7796,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "....Okay, check one, two, perriwinkle, ah! There we are, it\u2019s finally
-    back on again."
+  m_text: 'Your flashlight looks strong enough, remind them of what the sun looks
+    like by holding left click!
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
