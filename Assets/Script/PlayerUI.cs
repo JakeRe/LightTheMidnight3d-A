@@ -9,37 +9,98 @@ using ExitGames.Client.Photon;
 public class PlayerUI : MonoBehaviour
 {
     [Header("UI Element for Player Health")]
-    [SerializeField] private Image healthUI;
     [SerializeField] public Slider weaponBattery;
-    [SerializeField] private Animator healthAnim;
+    [SerializeField] private PlayerController player;
+    [SerializeField] public Sprite emptyBattery;
+    [SerializeField] public Sprite fullBattery;
+
+    [SerializeField] private float health;
+    [SerializeField] private float numOfHearts;
+    [SerializeField] private Image[] hearts;
+    [SerializeField] public Image batteryLevel;
+    [SerializeField] private Sprite fullHeart;
+    [SerializeField] private Sprite emptyHeart;
+
+    [SerializeField] private GameObject playerHud;
+    [SerializeField] private GameObject pauseMenu;
 
     public delegate void EquippedWeapon();
     public static event EquippedWeapon batteryUpdate;
+
+    public static bool isPaused;
     //public delegate void ManageBattery();
     //public static event ManageBattery BatteryLevelUpdate;
     private void Awake()
     {
-        healthAnim = GetComponent<Animator>();
+        player = FindObjectOfType<PlayerController>();
+        health = player.health;
+        pauseMenu.SetActive(false);
+        isPaused = false;
+        playerHud.SetActive(true);
+        numOfHearts = health;
     }
 
-    private void OnEnable()
+    private void Update()
     {
-        PlayerController.OnHealthChangedPositive += HealthChangePositive;
-        PlayerController.OnHealthChangedNegative += HealthChangeNegative;
+        health = player.health;
+
+        for(int i = 0; i<hearts.Length; i++)
+        {
+            if (i < health)
+            {
+                hearts[i].sprite = fullHeart;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
+
+            if (i < numOfHearts)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+            {
+                hearts[i].enabled = false;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPaused = !isPaused;
+
+            Pause();
+        }
     }
 
-    private void OnDisable()
+
+    public void Pause()
     {
-        PlayerController.OnHealthChangedNegative -= HealthChangeNegative;
-        PlayerController.OnHealthChangedPositive -= HealthChangePositive;
-    }
-    void HealthChangeNegative()
-    {
-        healthAnim.SetTrigger("HealthRemoved");
+        if (isPaused == true)
+        {
+            Time.timeScale = 0;
+            playerHud.SetActive(false);
+            pauseMenu.SetActive(true);
+        }
+
+        if (!isPaused)
+        {
+            Time.timeScale = 1;
+            playerHud.SetActive(true);
+            pauseMenu.SetActive(false);
+        }
     }
 
-    void HealthChangePositive()
-    {
-        healthAnim.SetTrigger("HealthAdded");
-    }
+    //private void OnEnable()
+    //{
+    //    PlayerController.OnHealthChangedPositive += HealthChangePositive;
+    //    PlayerController.OnHealthChangedNegative += HealthChangeNegative;
+    //}
+
+    //private void OnDisable()
+    //{
+    //    PlayerController.OnHealthChangedNegative -= HealthChangeNegative;
+    //    PlayerController.OnHealthChangedPositive -= HealthChangePositive;
+    //}
+
 }

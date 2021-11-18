@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 2513537923958909253}
   m_Layer: 0
   m_Name: StandardWeapon
-  m_TagString: Untagged
+  m_TagString: HitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -195,6 +195,7 @@ MonoBehaviour:
   lightColor: {r: 1, g: 0.9831135, b: 0.41037738, a: 0}
   maxFlashlightRange: 50
   isActive: 0
+  playerUI: {fileID: 0}
   canRecharge: 1
   batteryLevel: 50
   batteryLevelMax: 50
@@ -226,9 +227,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9150442144989322322}
   - component: {fileID: 1062683449472605734}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hitbox
-  m_TagString: Untagged
+  m_TagString: HitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
