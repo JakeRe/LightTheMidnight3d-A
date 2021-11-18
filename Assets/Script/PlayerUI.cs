@@ -11,10 +11,13 @@ public class PlayerUI : MonoBehaviour
     [Header("UI Element for Player Health")]
     [SerializeField] public Slider weaponBattery;
     [SerializeField] private PlayerController player;
+    [SerializeField] public Sprite emptyBattery;
+    [SerializeField] public Sprite fullBattery;
 
     [SerializeField] private float health;
     [SerializeField] private float numOfHearts;
     [SerializeField] private Image[] hearts;
+    [SerializeField] public Image batteryLevel;
     [SerializeField] private Sprite fullHeart;
     [SerializeField] private Sprite emptyHeart;
 

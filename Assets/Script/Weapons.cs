@@ -106,6 +106,11 @@ public class Weapons : MonoBehaviour
     {
         playerUI.weaponBattery.maxValue = batteryLevelMax;
         playerUI.weaponBattery.value = batteryLevel;
+        
+        if(batteryLevel == 0)
+        {
+            playerUI.batteryLevel.sprite = playerUI.emptyBattery;
+        }
     }
 
     
@@ -138,6 +143,7 @@ public class Weapons : MonoBehaviour
             if (batteryLevel >= batteryLevelMax)
             {
                 batteryLevel = batteryLevelMax;
+                playerUI.batteryLevel.sprite = playerUI.fullBattery;
                 isReady = true;
                 yield break;
             }
