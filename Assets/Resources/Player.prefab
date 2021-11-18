@@ -169,6 +169,9 @@ MonoBehaviour:
   smoothDamp: 0.1
   smoothRotate: 0
   sensitivity: 3
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 2048
   health: 3
   maxHealth: 3
   invincibilityTime: 4
