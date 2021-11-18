@@ -74,7 +74,7 @@ public class PlayerUI : MonoBehaviour
     }
 
 
-    void Pause()
+    public void Pause()
     {
         if (isPaused == true)
         {
