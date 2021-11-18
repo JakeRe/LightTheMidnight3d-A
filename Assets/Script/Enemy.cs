@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     private float attackRange;
     [SerializeField]
     private float attackRate;
+    [SerializeField]
+    private float enemyHealth;
 
     public NavMeshAgent enemyAgent;
 
@@ -32,13 +34,17 @@ public class Enemy : MonoBehaviour
         {
             MoveTowardTarget(TargetPosition(null));
         }
+
+        CheckHealth();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("HitBox"))
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            Weapons weaponScript = other.gameObject.GetComponentInParent<Weapons>();
+            enemyHealth -= weaponScript.damageRate;
         }
     }
 
@@ -88,5 +94,13 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.DrawLine(transform.position, TargetPosition("Player"));
+    }
+
+    private void CheckHealth()
+    {
+        if (enemyHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
