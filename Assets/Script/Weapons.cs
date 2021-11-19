@@ -114,7 +114,7 @@ public class Weapons : MonoBehaviour
         playerUI.weaponBattery.maxValue = batteryLevelMax;
         playerUI.weaponBattery.value = batteryLevel;
         
-        if(batteryLevel == 0)
+        if(batteryLevel <= 0)
         {
             playerUI.batteryLevel.sprite = playerUI.emptyBattery;
         }
@@ -183,17 +183,6 @@ public class Weapons : MonoBehaviour
         
     }
 
-    /*
-     * if (isOn)
-     *      light is active
-     *      hitbox is active
-     *      drain battery
-     * else if (!isOn)
-     *      light is inactive
-     *      hitbox is inactive
-     *      battery recharges
-    */
-
     /// <summary>
     /// This method will toggle the flashlight on or off when the left mouse button is clicked.
     /// When checking if it can toggle on, the method will also see if the flashlight is ready
@@ -233,12 +222,13 @@ public class Weapons : MonoBehaviour
             flashlightHitBox.gameObject.SetActive(false);
             playerUI.weaponBattery.maxValue = batteryLevelMax;
             playerUI.weaponBattery.value = batteryLevel;
-            if (batteryLevel <= batteryLevelMax)
-                batteryLevel += batteryRecharge * Time.deltaTime;
-            if (flashLightEmitter.range <= maxFlashlightRange)
-                flashLightEmitter.range += batteryRecharge/2 * Time.deltaTime; //revert to flashLightEmitter.range instsead of batteryRecharge if needed
-            //flashLightEmitter.color += (lightColor) * Time.deltaTime;
-
+            if (canRecharge)
+            {
+                if (batteryLevel <= batteryLevelMax)
+                    batteryLevel += batteryRecharge * Time.deltaTime;
+                if (flashLightEmitter.range <= maxFlashlightRange)
+                    flashLightEmitter.range += batteryRecharge / 2 * Time.deltaTime;
+            }
         }
     }
 }

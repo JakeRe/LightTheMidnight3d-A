@@ -129,6 +129,7 @@ MonoBehaviour:
   attackRange: 1.5
   attackRate: 0
   enemyHealth: 50
+  enemyValue: 100
   enemyAgent: {fileID: 1632055073798285410}
 --- !u!195 &1632055073798285410
 NavMeshAgent:

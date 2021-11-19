@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     private float attackRate;
     [SerializeField]
     private float enemyHealth;
+    [SerializeField]
+    private float enemyValue;
 
     public NavMeshAgent enemyAgent;
 
@@ -100,6 +102,8 @@ public class Enemy : MonoBehaviour
     {
         if (enemyHealth <= 0)
         {
+            GameObject player = GameObject.Find("Player");
+            player.GetComponent<PlayerController>().playerPoints += enemyValue;
             Destroy(gameObject);
         }
     }
