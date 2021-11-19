@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Player Point Management
     [Header("Player Point Management")]
-    [SerializeField] public float playerPoints;
+    [SerializeField] public int playerPoints;
     #endregion
 
     #region Components 
