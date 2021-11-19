@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using ExitGames.Client.Photon;
 
 public class PlayerUI : MonoBehaviour
@@ -24,6 +25,9 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject playerHud;
     [SerializeField] private GameObject pauseMenu;
 
+    [SerializeField] private TextMeshProUGUI playerPoints;
+    [SerializeField] private float points;
+
     public delegate void EquippedWeapon();
     public static event EquippedWeapon batteryUpdate;
 
@@ -34,6 +38,8 @@ public class PlayerUI : MonoBehaviour
     {
         player = FindObjectOfType<PlayerController>();
         health = player.health;
+        points = player.playerPoints;
+        playerPoints.text = points.ToString();
         pauseMenu.SetActive(false);
         isPaused = false;
         playerHud.SetActive(true);
@@ -42,9 +48,12 @@ public class PlayerUI : MonoBehaviour
 
     private void Update()
     {
+        points = player.playerPoints;
         health = player.health;
+        playerPoints.text = points.ToString();
 
-        for(int i = 0; i<hearts.Length; i++)
+
+        for (int i = 0; i<hearts.Length; i++)
         {
             if (i < health)
             {
