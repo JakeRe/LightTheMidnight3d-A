@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 5e1d51028b0892b4b8b25055464ecf4b, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: ab675e6698bde46fd87143fb0d7580cb, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 967899090}
-  m_IndirectSpecularColor: {r: 0.4813401, g: 0.44435033, b: 0.80940807, a: 1}
+  m_IndirectSpecularColor: {r: 0.085245974, g: 0.27900007, b: 0.48329502, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1559,7 +1559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.95750004, y: 0.9466668}
   m_AnchorMax: {x: 0.95750004, y: 0.9466668}
-  m_AnchoredPosition: {x: -8.1, y: -8.5}
+  m_AnchoredPosition: {x: -8.099976, y: -8.5}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &347901542
@@ -3530,7 +3530,7 @@ GameObject:
   - component: {fileID: 967899091}
   - component: {fileID: 967899090}
   m_Layer: 0
-  m_Name: Directional Light
+  m_Name: World Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3547,7 +3547,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.29577118, g: 0.23553754, b: 0.6320754, a: 1}
+  m_Color: {r: 0.49027634, g: 0.4009434, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -4974,7 +4974,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.5995146, y: 1}
+    m_SensorSize: {x: 1.0243902, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5895,11 +5895,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4031487459994707217}
     m_Modifications:
-    - target: {fileID: -5999306175623800858, guid: fcea07b5cb6c08b4e9ef23853ac426c9,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d9fa6ada1b8b8142ad7ed1b773bd0f8,
         type: 3}
       propertyPath: m_RootOrder
@@ -5990,6 +5985,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 27edea1a0c45c7240960f933b03d39b7, type: 2}
+    - target: {fileID: -5999306175623800858, guid: fcea07b5cb6c08b4e9ef23853ac426c9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d9fa6ada1b8b8142ad7ed1b773bd0f8, type: 3}
 --- !u!65 &1653577487
@@ -6475,10 +6475,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1640646569964813630, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.10003662
+      objectReference: {fileID: 0}
     - target: {fileID: 1640646570113435465, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -13.099976
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640646570113435465, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -13.300049
       objectReference: {fileID: 0}
     - target: {fileID: 1640646570280226897, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}
@@ -7131,7 +7141,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8062501, y: 0.9466668}
   m_AnchorMax: {x: 0.8062501, y: 0.9466668}
-  m_AnchoredPosition: {x: -12.000046, y: -9.199966}
+  m_AnchoredPosition: {x: -12.0000305, y: -9.199951}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1908960566
