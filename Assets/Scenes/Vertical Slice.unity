@@ -4898,7 +4898,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7768762, y: 1}
+    m_SensorSize: {x: 1.5995146, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5819,6 +5819,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4031487459994707217}
     m_Modifications:
+    - target: {fileID: -5999306175623800858, guid: fcea07b5cb6c08b4e9ef23853ac426c9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d9fa6ada1b8b8142ad7ed1b773bd0f8,
         type: 3}
       propertyPath: m_RootOrder
@@ -5909,11 +5914,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 27edea1a0c45c7240960f933b03d39b7, type: 2}
-    - target: {fileID: -5999306175623800858, guid: fcea07b5cb6c08b4e9ef23853ac426c9,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d9fa6ada1b8b8142ad7ed1b773bd0f8, type: 3}
 --- !u!65 &1653577487
@@ -6269,6 +6269,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 1640646568912324543, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -12.099976
+      objectReference: {fileID: 0}
     - target: {fileID: 1640646569348399546, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}
       propertyPath: m_Name
@@ -6378,6 +6383,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640646570113435465, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -13.099976
       objectReference: {fileID: 0}
     - target: {fileID: 1640646570280226897, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}

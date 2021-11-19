@@ -15,6 +15,10 @@ public class Enemy : MonoBehaviour
     private float enemyHealth;
     [SerializeField]
     private float enemyValue;
+    [SerializeField]
+    private GameObject deathFX;
+    [SerializeField]
+    private GameObject enemyModel;
 
     public NavMeshAgent enemyAgent;
 
@@ -23,7 +27,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-
+        deathFX.GetComponentInChildren<ParticleSystem>();
     }
 
     void Update()
@@ -102,9 +106,10 @@ public class Enemy : MonoBehaviour
     {
         if (enemyHealth <= 0)
         {
-            GameObject player = GameObject.Find("Player");
-            player.GetComponent<PlayerController>().playerPoints += enemyValue;
-            Destroy(gameObject);
+            MoveTowardTarget(TargetPosition(null));
+            deathFX.GetComponent<ParticleSystem>().Play();
+            enemyModel.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(gameObject, 2.5f);
         }
     }
 }
