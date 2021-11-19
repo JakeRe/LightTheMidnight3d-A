@@ -66,7 +66,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30457904835916358}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -1074999624675565339, guid: 5c6e66c1b8ce9844c8c222ef9a44dc16, type: 3}
 --- !u!23 &30457904835916356
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -196,7 +196,7 @@ MonoBehaviour:
   playerRenderer: {fileID: 0}
   playerNormal: {r: 0, g: 0, b: 0, a: 0}
   playerMaterial: {fileID: 0}
-  Points: 0
+  playerPoints: 0
   rb: {fileID: 3142378130236130317}
   Sounds:
   - {fileID: 8300000, guid: 9666ca5e4dacd1845980574db969e007, type: 3}
