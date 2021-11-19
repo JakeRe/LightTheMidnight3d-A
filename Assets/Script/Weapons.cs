@@ -23,7 +23,7 @@ public class Weapons : MonoBehaviour
     [Tooltip("Tells if the flashlight is ready for use")]
     [SerializeField] public bool isReady;
     [Tooltip("Indicates if the flashlight is toggled on.")]
-    [SerializeField] public bool isOn = true;
+    [SerializeField] public bool isOn = false;
     [Tooltip("Color emitted by flashlight")]
     [SerializeField] private Color lightColor;
     [Tooltip("Flashlight maximum range")]
