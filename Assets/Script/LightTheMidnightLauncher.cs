@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 using Photon.Pun;
 using Photon.Realtime;
 public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
@@ -15,6 +16,8 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
     [SerializeField]  private GameObject controlPanel;
     [Tooltip("The UI Label to inform the user that the connection is in progress")]
     [SerializeField] private GameObject progressLabel;
+    [SerializeField] private VideoPlayer openingAnim;
+    [SerializeField] private GameObject videoObject;
 
     #endregion
     
@@ -74,6 +77,9 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+        openingAnim.Prepare();
+        openingAnim.loopPointReached += CheckVideo;
+        videoObject.SetActive(false);
     }
 
     private void Start()
@@ -111,8 +117,19 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
     public void ConnectSinglePlayer()
     {
         PhotonNetwork.OfflineMode = true;
-        PhotonNetwork.LoadLevel("Vertical Slice");
+        videoObject.SetActive(true);
+        openingAnim.Play();
+
+      
+        
     }
 
-  
+    void CheckVideo(UnityEngine.Video.VideoPlayer vp) {
+
+        PhotonNetwork.LoadLevel("Vertical Slice");
+
+    }
+
+
+
 }
