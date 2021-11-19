@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -791,7 +791,7 @@ GameObject:
   - component: {fileID: 997031105}
   - component: {fileID: 997031104}
   m_Layer: 5
-  m_Name: Button
+  m_Name: SinglePlayerPlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1130,7 +1130,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1268130961}
   m_TextComponent: {fileID: 936285489}
   m_Placeholder: {fileID: 8632624}
@@ -1690,7 +1690,7 @@ GameObject:
   - component: {fileID: 1870889197}
   - component: {fileID: 1870889196}
   m_Layer: 5
-  m_Name: PlayerButton
+  m_Name: MultiplayerPlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1754,7 +1754,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1870889197}
   m_OnClick:
     m_PersistentCalls:
@@ -2102,6 +2102,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3853429878310556860, guid: 7947115ce40d4dd428f48d007dab7f87,
+        type: 3}
+      propertyPath: playButton
+      value: 
+      objectReference: {fileID: 997031104}
     - target: {fileID: 3853429878310556860, guid: 7947115ce40d4dd428f48d007dab7f87,
         type: 3}
       propertyPath: openingAnim

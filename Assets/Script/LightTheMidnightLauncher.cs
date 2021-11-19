@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
@@ -18,6 +19,7 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject progressLabel;
     [SerializeField] private VideoPlayer openingAnim;
     [SerializeField] private GameObject videoObject;
+    [SerializeField] private Button playButton;
 
     #endregion
     
@@ -116,6 +118,7 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
 
     public void ConnectSinglePlayer()
     {
+        playButton.interactable = false;
         PhotonNetwork.OfflineMode = true;
         videoObject.SetActive(true);
         openingAnim.Play();
