@@ -321,19 +321,22 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (other.gameObject.CompareTag("Battery"))
             {
                 //When the player hits a battery pickup, this sets the active weapon's battery level to maximum. Then destroys the battery
+                Pickups pickedUpItem = other.GetComponent<Pickups>();
+                pickedUpItem.Item();
                 activeWeapon.batteryLevel = activeWeapon.batteryLevelMax;
                 activeWeapon.flashLightEmitter.range = activeWeapon.maxFlashlightRange;
                 playerAS.PlayOneShot(Sounds[1]);
-                PickedUpItem();
+                
             }
 
             if (other.gameObject.CompareTag("Health"))
             {
                 if(health < maxHealth)
                 {
+                    Pickups pickedUpItem = other.GetComponent<Pickups>();
+                    pickedUpItem.Item();
                     health += 1;
                     OnHealthChangedPositive();
-                    PickedUpItem();                    
                 }
                 
 

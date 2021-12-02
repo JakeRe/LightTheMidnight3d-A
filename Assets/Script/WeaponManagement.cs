@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Photon.Realtime;
 using Photon.Pun;
+using TMPro;
+using UnityEngine.UI;
 using ExitGames.Client.Photon;
 using Cinemachine;
 
@@ -19,12 +21,20 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     [SerializeField] public List<GameObject> weaponObjects;
     [SerializeField] private PhotonView weaponPV;
 
+    [SerializeField] private TextMeshProUGUI weaponName;
+    [SerializeField] private string Name;
+    [SerializeField] public Image selectedItem;
+    [SerializeField] private bool selected = false;
+    [SerializeField] private GameObject weaponWheel;
+    [SerializeField] private Animator weaponWheelAnim;
+
     
   
     public const byte WeaponSwitchEventCode = 1;
     private void Awake()
     {
-        
+        weaponWheelAnim = weaponWheel.GetComponent<Animator>();
+        weaponWheel.SetActive(false);
         playerController = GetComponent<PlayerController>();
         weaponPV = playerController.GetComponent<PhotonView>();
         foreach(Transform weapon in transform)
@@ -40,6 +50,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     private void Update()
     {
         WeaponChange();
+        WeaponWheel();
 
     }
 
@@ -107,7 +118,21 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
 
     }
 
-
+    public void WeaponWheel()
+    {
+        if(weaponWheel != null)
+        {
+            if (Input.GetKey(KeyCode.Q))
+            {
+                weaponWheel.SetActive(true);
+            }
+            else
+            {
+                weaponWheel.SetActive(false);
+            }
+        }
+      
+    }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

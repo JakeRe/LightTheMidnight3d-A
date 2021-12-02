@@ -31,7 +31,7 @@ public class Pickups : MonoBehaviour
         PlayerController.PickedUpItem -= Item;
     }
 
-    void Item()
+    public void Item()
     {
         StartCoroutine(PickedUp());
     }
@@ -40,6 +40,7 @@ public class Pickups : MonoBehaviour
     {
         activeAndReady = !activeAndReady;
         PickupActive();
+        Debug.Log("Entered Coroutine");
         yield return new WaitForSecondsRealtime(coolDown);
         activeAndReady = !activeAndReady;
         PickupActive();
@@ -49,7 +50,7 @@ public class Pickups : MonoBehaviour
 
     public void PickupActive()
     {
-        if (!activeAndReady)
+        if (this.activeAndReady == false)
         {
             pickupMat.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, alpha);
         }
