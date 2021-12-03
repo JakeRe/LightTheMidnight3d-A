@@ -36,9 +36,9 @@ public class WeaponWheelButtons : MonoBehaviour
     public void Selected()
     {
         selected = true;
-        weaponManage.activeWeapon = Weapon;
         weaponManage.selectedWeapon = Weapon;
         weaponManage.SelectedWeapon();
+        Debug.Log(weaponManage.activeWeapon);
         Debug.Log("Weapon Changed");
     }
 

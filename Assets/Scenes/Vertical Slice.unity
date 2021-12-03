@@ -3522,6 +3522,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.01069821, y: 0.0043558897, z: 0.0051957457}
   m_Center: {x: 0.00009586266, y: 0.010897208, z: 0.000012165401}
+--- !u!114 &920826472 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1172187453}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72e029ed2eefa84dbd2a21477d9664e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &926456945
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4976,6 +4988,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 25.000006, y: 18.6877, z: 23.83855}
   m_Center: {x: 12.500033, y: 9.34385, z: -11.919271}
+--- !u!95 &1332610853 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6957651498046828057, guid: 355a14bde4ceb944eabf9a31569c921f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1768356138}
+  m_PrefabAsset: {fileID: 0}
 --- !u!65 &1337833483
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6791,11 +6809,36 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3079683906101431345, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3504949724082564824, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}
       propertyPath: m_SortingOrder
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 5029779579053015861, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -109
+      objectReference: {fileID: 0}
+    - target: {fileID: 5029779579053015861, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526881562290741476, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 920826472}
+    - target: {fileID: 5526881562290741476, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: buttonAnim
+      value: 
+      objectReference: {fileID: 1332610853}
     - target: {fileID: 5790221111721809918, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}
       propertyPath: m_AnchorMax.y
