@@ -27,6 +27,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     [SerializeField] private bool selected = false;
     [SerializeField] private GameObject weaponWheel;
     [SerializeField] private Animator weaponWheelAnim;
+    [SerializeField] public int activeWeapon;
 
     
   
@@ -57,35 +58,34 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     
     public void SelectedWeapon()
     {
-        int i = 0;
-
-        foreach(Transform weapon in transform)
-        {
-            if(i == selectedWeapon)
+            foreach (Transform weapon in transform)
             {
-                weapon.gameObject.SetActive(true);
-                playerController.activeWeapon = weapon.gameObject.GetComponent<Weapons>();
-                Weapons activeWeapon = weapon.gameObject.GetComponent<Weapons>();
-                activeWeapon.BatteryUpdate();
+                if (activeWeapon == selectedWeapon)
+                {
+                    weapon.gameObject.SetActive(true);
+                    playerController.activeWeapon = weapon.gameObject.GetComponent<Weapons>();
+                    Weapons activeWeapon = weapon.gameObject.GetComponent<Weapons>();
+                    activeWeapon.BatteryUpdate();
 
+                }
+                else
+                {
+                    weapon.gameObject.SetActive(false);
+                }
+                activeWeapon++;
             }
-            else
-            {
-                weapon.gameObject.SetActive(false);
-            }
-            i++;
-        }
 
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent(WeaponSwitchEventCode, i, raiseEventOptions, SendOptions.SendReliable);
-
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            PhotonNetwork.RaiseEvent(WeaponSwitchEventCode, activeWeapon, raiseEventOptions, SendOptions.SendReliable);
     }
 
     public void WeaponChange()
     {
-        if (playerController.photonView.IsMine)
+        int previousWeaponSelection = selectedWeapon;
+        if (playerController.photonView.IsMine && weaponWheel.gameObject.activeInHierarchy == false)
         {
-            int previousWeaponSelection = selectedWeapon;
+            activeWeapon = 0;
+           
 
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)
             {
@@ -110,10 +110,11 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
                     selectedWeapon--;
                 }
             }
-            if (previousWeaponSelection != selectedWeapon)
-            {
-                SelectedWeapon();
-            }
+            
+        }
+        if (previousWeaponSelection != selectedWeapon)
+        {
+            SelectedWeapon();
         }
 
     }
@@ -125,10 +126,12 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
             if (Input.GetKey(KeyCode.Q))
             {
                 weaponWheel.SetActive(true);
+                Time.timeScale = .5f;
             }
             else
             {
                 weaponWheel.SetActive(false);
+                Time.timeScale = 1f;
             }
         }
       
