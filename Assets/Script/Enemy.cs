@@ -19,7 +19,8 @@ public class Enemy : MonoBehaviour
     private GameObject deathFX;
     [SerializeField]
     private GameObject enemyModel;
-    private bool isAlive;
+    private bool isDead;
+    private bool givePoints = true;
 
     public NavMeshAgent enemyAgent;
 
@@ -110,9 +111,14 @@ public class Enemy : MonoBehaviour
             MoveTowardTarget(TargetPosition(null));
             deathFX.GetComponent<ParticleSystem>().Play();
             enemyModel.GetComponent<MeshRenderer>().enabled = false;
-            GameObject.Find("Player").GetComponent<PlayerController>().playerPoints += enemyValue;
             Destroy(gameObject, 1f);
+            isDead = true;
+        }
+        if (isDead && givePoints)
+        {
+            PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerScript.playerPoints += enemyValue;
+            givePoints = false;
         }
     }
-
 }

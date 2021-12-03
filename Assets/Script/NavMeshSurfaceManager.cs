@@ -8,6 +8,7 @@ public class NavMeshSurfaceManager : MonoBehaviour
 {
     public List<NavMeshSurface> surfaces;
 
+    public float updateCountdown;
     void Start()
     {
         UpdateNavSurface();
@@ -15,14 +16,31 @@ public class NavMeshSurfaceManager : MonoBehaviour
 
     void Update()
     {
-        
+        FindBarriers();
     }
 
     public void UpdateNavSurface()
     {
         for (int i = 0; i < surfaces.Count; i++)
         {
+            Debug.Log("NavMesh updated.");
             surfaces[i].BuildNavMesh();
+        }
+    }
+
+    private void FindBarriers()
+    {
+        GameObject[] barriers;
+        barriers = GameObject.FindGameObjectsWithTag("UnlockBarrier");
+
+        for (int i = 0; i < barriers.Length - 1; i++)
+        {
+            WorldArea area = barriers[i].GetComponentInParent<WorldArea>();
+            if (area.isUnlocked && !area.navUpdated)
+            {
+                UpdateNavSurface();
+                area.navUpdated = true;
+            }
         }
     }
 }
