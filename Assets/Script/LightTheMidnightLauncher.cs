@@ -116,6 +116,14 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
     }
     #endregion
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            PhotonNetwork.LoadLevel("Vertical Slice");
+        }
+    }
+
     public void ConnectSinglePlayer()
     {
         playButton.interactable = false;

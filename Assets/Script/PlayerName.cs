@@ -49,9 +49,12 @@ public class PlayerName : MonoBehaviour
 
             if (playerNameText != null)
             {
-                if (target.photonView.Owner.NickName != null)
+                if (target.photonView.Owner.NickName != null && PhotonNetwork.OfflineMode != true)
                 {
                     playerNameText.text = target.photonView.Owner.NickName;
+
+                }
+                else{
 
                 }
             }

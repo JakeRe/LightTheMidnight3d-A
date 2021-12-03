@@ -110,19 +110,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisWeaponPv: {fileID: 0}
+  weaponName: Heavy Flashlight
+  weaponID: 1
   flashlightHitBox: {fileID: 2210707076281747017}
   flashLightEmitter: {fileID: 2803078226977388672}
   player: {fileID: 48720126169169683, guid: dfbf3c738fc74a2418f575f82156099c, type: 3}
   isReady: 1
+  isOn: 0
   lightColor: {r: 0, g: 0.9715028, b: 1, a: 1}
   maxFlashlightRange: 200
-  isActive: 0
   playerUI: {fileID: 0}
   canRecharge: 0
   batteryLevel: 200
   batteryLevelMax: 200
   batteryDrain: 4
+  batteryRecharge: 0
   weight: 25
+  damageRate: 0
+  moveSpeed: 0
 --- !u!114 &5472905469567500042
 MonoBehaviour:
   m_ObjectHideFlags: 0
