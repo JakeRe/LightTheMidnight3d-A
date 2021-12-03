@@ -128,15 +128,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         //This is for player UI instantiation, if the UI prefab isn't null, then it will print a debug message. If not, then it will send a message that sets the target. 
 
-        if (PlayerUIPrefab != null)
-        {
-            GameObject _uiGo = Instantiate(PlayerUIPrefab);
-            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
-        }
-        else
-        {
-            Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
-        }
+        //if (PlayerUIPrefab != null && PhotonNetwork.OfflineMode != true)
+        //{
+        //    GameObject _uiGo = Instantiate(PlayerUIPrefab);
+        //    _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
+        //}
 
        
         }
@@ -219,8 +219,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             transform.position = new Vector3(0f, 5f, 0f);
         }
 
-        GameObject _uiGo = Instantiate(this.PlayerUIPrefab);
-        _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+        //GameObject _uiGo = Instantiate(this.PlayerUIPrefab);
+        //_uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
     }
 
     public override void OnDisable()
@@ -321,19 +321,22 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (other.gameObject.CompareTag("Battery"))
             {
                 //When the player hits a battery pickup, this sets the active weapon's battery level to maximum. Then destroys the battery
+                Pickups pickedUpItem = other.GetComponent<Pickups>();
+                pickedUpItem.Item();
                 activeWeapon.batteryLevel = activeWeapon.batteryLevelMax;
                 activeWeapon.flashLightEmitter.range = activeWeapon.maxFlashlightRange;
                 playerAS.PlayOneShot(Sounds[1]);
-                PickedUpItem();
+                
             }
 
             if (other.gameObject.CompareTag("Health"))
             {
                 if(health < maxHealth)
                 {
+                    Pickups pickedUpItem = other.GetComponent<Pickups>();
+                    pickedUpItem.Item();
                     health += 1;
                     OnHealthChangedPositive();
-                    PickedUpItem();                    
                 }
                 
 

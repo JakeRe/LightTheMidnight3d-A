@@ -11,6 +11,9 @@ public class Weapons : MonoBehaviour
     [Header("Photon View")]
     [SerializeField] private PhotonView thisWeaponPv;
 
+    [SerializeField] private string weaponName;
+    [SerializeField] public int weaponID;
+
     [Header("Flashlight")]
     [Tooltip("Hitbox for the flashlight")]
     [SerializeField] private GameObject flashlightHitBox;
