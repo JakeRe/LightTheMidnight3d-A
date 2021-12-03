@@ -24,7 +24,9 @@ public class WeaponWheelButtons : MonoBehaviour
         weapon = weaponPrefab.GetComponent<Weapons>();
         weaponManage = FindObjectOfType<WeaponManagement>();
         Weapon = weapon.weaponID;
-        
+        itemText.text = null;
+
+
     }
 
     // Update is called once per frame
