@@ -68,7 +68,7 @@ public class TestPlayer : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //areaScript.UnlockArea(darkCurrency);
+            areaScript.UnlockArea(darkCurrency);
             if (areaScript.unlockCost <= darkCurrency)
                 darkCurrency -= areaScript.unlockCost;
         }

@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Player Point Management
     [Header("Player Point Management")]
-    [SerializeField] public float playerPoints;
+    [SerializeField] public int playerPoints;
     #endregion
 
     #region Components 
@@ -342,28 +342,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
             }
         }
-
-        //Used for area unlocking.
-        /*if (other.gameObject.CompareTag("UnlockBarrier"))
-        {
-            UnlockTransactionEnter(other.gameObject);
-        }*/
     }
 
-    void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("UnlockBarrier"))
-        {
-            Debug.Log("Standing in unlock area.");
-            WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
-            
-            if (DoesPlayerInteract())
-                area.UnlockArea(playerPoints);
-        }
-
-    }
-
-    void OnCollisionEnter(Collision enemy)
+    private void OnCollisionEnter(Collision enemy)
     {
         if (enemy.gameObject.CompareTag("Enemy") && canBeDamaged)
         {
@@ -401,15 +382,5 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
      
     }
 
-    private bool DoesPlayerInteract()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("Pressed *Interact*");
-            return true;
-        }
-
-        return false;
-    }
 }
 
