@@ -7770,19 +7770,6 @@ BoxCollider:
   m_EditorClassIdentifier: 
   surfaces:
   - {fileID: 1888666883}
---- !u!65 &1891371443
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8528943618944756620}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 100.00006, y: 100, z: 100.00006}
-  m_Center: {x: -0.00048828125, y: 49.999996, z: 0.0014648438}
 --- !u!1 &1908960564
 GameObject:
   m_ObjectHideFlags: 0
