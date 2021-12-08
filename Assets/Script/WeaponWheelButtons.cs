@@ -24,7 +24,9 @@ public class WeaponWheelButtons : MonoBehaviour
         weapon = weaponPrefab.GetComponent<Weapons>();
         weaponManage = FindObjectOfType<WeaponManagement>();
         Weapon = weapon.weaponID;
-        
+        itemText.text = null;
+
+
     }
 
     // Update is called once per frame
@@ -36,9 +38,9 @@ public class WeaponWheelButtons : MonoBehaviour
     public void Selected()
     {
         selected = true;
-        weaponManage.activeWeapon = Weapon;
         weaponManage.selectedWeapon = Weapon;
         weaponManage.SelectedWeapon();
+        Debug.Log(weaponManage.activeWeapon);
         Debug.Log("Weapon Changed");
     }
 
