@@ -58,9 +58,9 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     
     public void SelectedWeapon()
     {
-            foreach (Transform weapon in transform)
+            foreach (GameObject weapon in weaponObjects)
             {
-                if (activeWeapon == selectedWeapon)
+                if (selectedWeapon == weapon.GetComponent<Weapons>().weaponID)
                 {
                     weapon.gameObject.SetActive(true);
                     playerController.activeWeapon = weapon.gameObject.GetComponent<Weapons>();
@@ -72,8 +72,9 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
                 {
                     weapon.gameObject.SetActive(false);
                 }
-                activeWeapon++;
+            activeWeapon++;
             }
+        
 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
             PhotonNetwork.RaiseEvent(WeaponSwitchEventCode, activeWeapon, raiseEventOptions, SendOptions.SendReliable);
