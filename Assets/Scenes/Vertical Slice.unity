@@ -6812,7 +6812,12 @@ PrefabInstance:
     - target: {fileID: 3079683906101431345, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3
+      value: -49.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079683906101431345, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 153.5
       objectReference: {fileID: 0}
     - target: {fileID: 3504949724082564824, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}
@@ -6884,6 +6889,16 @@ PrefabInstance:
       propertyPath: weaponPrefab
       value: 
       objectReference: {fileID: 132551086}
+    - target: {fileID: 7473854089757161392, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 73
+      objectReference: {fileID: 0}
+    - target: {fileID: 7473854089757161392, guid: 355a14bde4ceb944eabf9a31569c921f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 153
+      objectReference: {fileID: 0}
     - target: {fileID: 7839593623122956705, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}
       propertyPath: m_Layer
