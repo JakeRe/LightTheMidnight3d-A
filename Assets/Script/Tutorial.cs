@@ -18,48 +18,59 @@ public class Tutorial : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
         dialoguePassed = 1;
         dialogueBoxes[1].SetActive(false);
-        StartCoroutine(CheckDialogue());
-        
     }
     public void IncrementDialoguePassed()
     {
         dialoguePassed++;
     }
 
-   IEnumerator CheckDialogue()
+
+    public void Update()
     {
-        while(dialoguePassed < maxDialogue)
-        {
-            switch (dialoguePassed)
-            {
-                case 1:
-                    dialogueBoxes[0].SetActive(true);
-                    playDirect.playableAsset = tutorials[0];
-                    playDirect.Play();
-                    yield return new WaitUntil(() => dialoguePassed > 1);
-                    break;
-                case 2:
-                    Debug.Log("Second Dialogue Ready!");
-                    if (player.health < player.maxHealth)
-                    {
-                        dialogueBoxes[1].SetActive(true);
-                        playDirect.playableAsset = tutorials[1];
-                        playDirect.Play();
-                    }
-                    break;
-                case 3:
-                    Debug.Log("Third Dialogue Ready!");
-                    if (player.playerPoints > 0)
-                    {
-                        playDirect.playableAsset = tutorials[2];
-                        playDirect.Play();
-                    }
-                    break;
-                default:
-                    Debug.Log("No Dialogue has Played");
-                    break;
-            }
-        }
-        
+        CheckDialogue(playDirect);
     }
+
+    private void OnEnable()
+    {
+        playDirect.stopped += CheckDialogue;
+    }
+
+    private void OnDisable()
+    {
+        playDirect.stopped += CheckDialogue;
+    }
+
+    public void CheckDialogue(PlayableDirector director)
+    {
+        switch (dialoguePassed)
+        {
+            case 1:
+                dialogueBoxes[0].SetActive(true);
+                playDirect.playableAsset = tutorials[0];
+                playDirect.Play();
+                break;
+            case 2:
+                Debug.Log("Second Dialogue Ready!");
+                if (player.health < player.maxHealth)
+                {
+                    dialogueBoxes[1].SetActive(true);
+                    playDirect.playableAsset = tutorials[1];
+                    playDirect.Play();
+                }
+                break;
+            case 3:
+                Debug.Log("Third Dialogue Ready!");
+                if (player.playerPoints > 0)
+                {
+                    playDirect.playableAsset = tutorials[2];
+                    playDirect.Play();
+                }
+                break;
+            default:
+                Debug.Log("No Dialogue has Played");
+                break;
+        }
+    }
+
+    
 }
