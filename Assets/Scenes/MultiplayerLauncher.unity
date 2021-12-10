@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2242,6 +2242,11 @@ PrefabInstance:
       propertyPath: playButton
       value: 
       objectReference: {fileID: 997031104}
+    - target: {fileID: 3853429878310556860, guid: 7947115ce40d4dd428f48d007dab7f87,
+        type: 3}
+      propertyPath: loadingText
+      value: 
+      objectReference: {fileID: 2059737971}
     - target: {fileID: 3853429878310556860, guid: 7947115ce40d4dd428f48d007dab7f87,
         type: 3}
       propertyPath: openingAnim
