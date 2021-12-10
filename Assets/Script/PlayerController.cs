@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Health Management")]
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
-    [SerializeField] private float maxHealth;
+    [SerializeField] public float maxHealth;
     [Tooltip("How Much Time In Invincibility The Player has After Taking Damage")]
     [SerializeField] public float invincibilityTime;
     [Tooltip("This player can be damaged")]
