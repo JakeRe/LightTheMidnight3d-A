@@ -344,10 +344,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
             }
 
-            if (other.gameObject.CompareTag("Shop"))
-            {
-                inShop = true;
-            }
+          
         }
 
         //Used for area unlocking.
@@ -357,13 +354,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }*/
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Shop"))
-        {
-            inShop = false;
-        }
-    }
+   
 
     void OnTriggerStay(Collider other)
     {
@@ -376,6 +367,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 area.UnlockArea(playerPoints);
         }
 
+        if (other.gameObject.CompareTag("Shop"))
+        {
+            if (DoesPlayerInteract())
+            {
+                inShop = !inShop;
+            }
+        }
     }
 
     void OnCollisionEnter(Collision enemy)

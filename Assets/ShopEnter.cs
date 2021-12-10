@@ -9,6 +9,7 @@ public class ShopEnter : MonoBehaviour
     [SerializeField] private PlayableAsset[] shopCutscenes;
     [SerializeField] private bool insideShop;
     [SerializeField] private PlayerController player;
+    [SerializeField] private bool cutsceneFinished;
 
     private void Start()
     {
@@ -25,18 +26,27 @@ public class ShopEnter : MonoBehaviour
 
     void CheckPlayerInShop()
     {
-       
-      
+        if (insideShop)
+        {
+            shopDirector.playableAsset = shopCutscenes[1];
+            shopDirector.Play();
+            StartCoroutine(WaitForCutsceneToFinish());
+        }      
     }
 
     IEnumerator WaitForCutsceneToFinish()
     {
-        yield return new WaitUntil(() => insideShop == false);
+        yield return new WaitUntil(() => cutsceneFinished == true);
     }
     public void InsideShop()
     {
         shopDirector.playableAsset = shopCutscenes[1];
         insideShop = !insideShop;
+    }
+
+    public void CutsceneFinish()
+    {
+
     }
 
 }
