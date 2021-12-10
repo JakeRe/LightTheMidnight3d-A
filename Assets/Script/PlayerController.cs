@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private Renderer playerRenderer;
     [SerializeField] private Color playerNormal;
     [SerializeField] private Material playerMaterial;
+    [SerializeField] public bool inShop;
+
     public delegate void ChangeHealth();
     public static event ChangeHealth OnHealthChangedPositive;
     public static event ChangeHealth OnHealthChangedNegative;
@@ -341,6 +343,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 
 
             }
+
+            if (other.gameObject.CompareTag("Shop"))
+            {
+                inShop = true;
+            }
         }
 
         //Used for area unlocking.
@@ -348,6 +355,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             UnlockTransactionEnter(other.gameObject);
         }*/
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Shop"))
+        {
+            inShop = false;
+        }
     }
 
     void OnTriggerStay(Collider other)

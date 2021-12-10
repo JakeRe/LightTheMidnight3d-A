@@ -8039,7 +8039,7 @@ GameObject:
   - component: {fileID: 1365009159}
   - component: {fileID: 1365009158}
   m_Layer: 0
-  m_Name: CM vcam1
+  m_Name: PlayerVCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11376,7 +11376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1799239026
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12857,8 +12857,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1967879569}
-  m_LocalRotation: {x: 0.01049968, y: 0.0059997714, z: -0.000063243555, w: 0.99992687}
-  m_LocalPosition: {x: -115.016136, y: 1.0787109, z: 20.534258}
+  m_LocalRotation: {x: 0.48370457, y: 0.0065640076, z: -0.0036278001, w: 0.8751992}
+  m_LocalPosition: {x: -0.27997914, y: 10.559999, z: -11.692155}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -13704,12 +13704,12 @@ GameObject:
   - component: {fileID: 2109066832}
   - component: {fileID: 2109066831}
   m_Layer: 0
-  m_Name: CM vcam2
+  m_Name: ShopVCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2109066831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14181,9 +14181,13 @@ GameObject:
   - component: {fileID: 2133607595}
   - component: {fileID: 2133607594}
   - component: {fileID: 2133607600}
+  - component: {fileID: 2133607602}
+  - component: {fileID: 2133607601}
+  - component: {fileID: 2133607603}
+  - component: {fileID: 2133607604}
   m_Layer: 0
   m_Name: ShopDoor
-  m_TagString: Untagged
+  m_TagString: Shop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14721,13 +14725,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133607593}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.44, y: 2.24, z: 30.79}
+  m_LocalRotation: {x: -0, y: 0.70710576, z: -0, w: 0.70710784}
+  m_LocalPosition: {x: 11.54, y: 2.24, z: -0.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 31
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
 --- !u!65 &2133607600
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14741,6 +14745,97 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6.955247, y: 4.2156806, z: 4.158828}
   m_Center: {x: 0.12824559, y: 0, z: -1.5101705}
+--- !u!114 &2133607601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133607593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86eea4615396c03439667f29c60f6fb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopDirector: {fileID: 0}
+  shopCutscenes:
+  - {fileID: 11400000, guid: 1e77ec547da6ccf4199bccfaaa62fef1, type: 2}
+  - {fileID: 11400000, guid: c5869c1538ef3e449b8cca584ff96a89, type: 2}
+  insideShop: 0
+  player: {fileID: 0}
+--- !u!320 &2133607602
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133607593}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 1e77ec547da6ccf4199bccfaaa62fef1, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 8619163168393989966, guid: 1e77ec547da6ccf4199bccfaaa62fef1, type: 2}
+    value: {fileID: 2133607603}
+  - key: {fileID: 9207832974821635578, guid: 1e77ec547da6ccf4199bccfaaa62fef1, type: 2}
+    value: {fileID: 1967879573}
+  - key: {fileID: -7933372371892117218, guid: 1e77ec547da6ccf4199bccfaaa62fef1, type: 2}
+    value: {fileID: 2133607604}
+  m_ExposedReferences:
+    m_References:
+    - e43ea2e2e1352ff41badfcc76c7b8c9f: {fileID: 1365009158}
+    - 37d90ef72650650459e2bb86a5e454ff: {fileID: 2109066831}
+--- !u!95 &2133607603
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133607593}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2133607604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133607593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 4d58cfc362348c14c9fea9cf6d3e9b1f, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2133607601}
+          m_MethodName: InsideShop
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!65 &2146611757
 BoxCollider:
   m_ObjectHideFlags: 0
