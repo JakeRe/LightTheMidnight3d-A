@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,8 +13,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float attackRate;
     [SerializeField]
-    private float enemyHealth;
-    [SerializeField]
     private int enemyValue;
     [SerializeField]
     private GameObject deathFX;
@@ -22,14 +21,24 @@ public class Enemy : MonoBehaviour
     private bool isDead;
     private bool givePoints = true;
 
-    public NavMeshAgent enemyAgent;
+    /// <summary>
+    /// The following fields are used to manage the health of the Enemy,
+    /// as well as the UI elements that display the health.
+    /// </summary>
+    [SerializeField] private float currentHealth;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private GameObject enemyUI;
+    [SerializeField] private Camera uiCam;
 
-    //public enum EnemyState { CHASING, ATTACKING, COOLDOWN }
-    //public EnemyState state;
+    public NavMeshAgent enemyAgent;
 
     void Start()
     {
         deathFX.GetComponentInChildren<ParticleSystem>();
+        currentHealth = maxHealth;
+        uiCam = Camera.main;
+        givePoints = true;
     }
 
     void Update()
@@ -43,6 +52,8 @@ public class Enemy : MonoBehaviour
             MoveTowardTarget(TargetPosition(null));
         }
 
+        enemyUI.transform.rotation = uiCam.transform.rotation;
+        healthSlider.value = HealthBarCheck();
         CheckHealth();
     }
 
@@ -52,17 +63,9 @@ public class Enemy : MonoBehaviour
         {
             //Destroy(this.gameObject);
             Weapons weaponScript = other.gameObject.GetComponentInParent<Weapons>();
-            enemyHealth -= weaponScript.damageRate;
+            currentHealth -= weaponScript.damageRate;
         }
     }
-
-   /* private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-        }
-    }*/
 
     private bool CloseToPlayer()
     {
@@ -91,12 +94,6 @@ public class Enemy : MonoBehaviour
         enemyAgent.SetDestination(targetPos);
     }
 
-    /*private void Attack()
-    {
-        TestPlayer playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<TestPlayer>();
-        playerScript.health -= 1;
-    }*/
-
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -106,9 +103,10 @@ public class Enemy : MonoBehaviour
 
     private void CheckHealth()
     {
-        if (enemyHealth <= 0)
+        if (currentHealth <= 0)
         {
             MoveTowardTarget(TargetPosition(null));
+            enemyUI.SetActive(false);
             deathFX.GetComponent<ParticleSystem>().Play();
             enemyModel.GetComponent<MeshRenderer>().enabled = false;
             Destroy(gameObject, 1f);
@@ -120,5 +118,10 @@ public class Enemy : MonoBehaviour
             playerScript.playerPoints += enemyValue;
             givePoints = false;
         }
+    }
+
+    float HealthBarCheck()
+    {
+        return currentHealth / maxHealth;
     }
 }

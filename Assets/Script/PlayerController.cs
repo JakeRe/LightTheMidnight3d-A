@@ -356,11 +356,22 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             Debug.Log("Standing in unlock area.");
             WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
+            area.unlockCanvas.enabled = true;
             
             if (DoesPlayerInteract())
                 area.UnlockArea(playerPoints);
         }
 
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("UnlockBarrier"))
+        {
+            WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
+            area.unlockCanvas.enabled = false;
+            area.unlockText.text = area.defaultText;
+        }
     }
 
     void OnCollisionEnter(Collision enemy)

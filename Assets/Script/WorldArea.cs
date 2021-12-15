@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class WorldArea : MonoBehaviour
 {
@@ -26,6 +28,10 @@ public class WorldArea : MonoBehaviour
     [SerializeField] public bool isUnlocked;
     [SerializeField] public bool navUpdated;
 
+    [SerializeField] public Canvas unlockCanvas;
+    [SerializeField] public TextMeshProUGUI unlockText;
+    public string defaultText;
+
     WaveSystem WaveManager;
     [SerializeField] NavMeshSurfaceManager NavManager;
 
@@ -34,6 +40,8 @@ public class WorldArea : MonoBehaviour
         WaveManager = GameObject.FindGameObjectWithTag("Waves").GetComponent<WaveSystem>();
         //NavManager = GameObject.FindGameObjectWithTag("Nav").GetComponent<NavMeshSurfaceManager>();
         isUnlocked = false;
+        defaultText = string.Format("Would you like to unlock the {0} area using {1} Obscuraplasm?", areaName, unlockCost.ToString());
+        unlockCanvas.enabled = false;
     }
 
     void Update()
@@ -46,11 +54,12 @@ public class WorldArea : MonoBehaviour
         if (!isUnlocked)
         {
             Debug.Log("Area is locked.");
-            // Display randomized unlock dialogue, including price and area name.
+            unlockText.text = defaultText;
 
             if (playerCurrency >= unlockCost)
             {
                 // Display successful purchase dialogue from Dr.
+                unlockText.text = string.Format("Welcome to the {0} area!", areaName);
                 Debug.Log("Unlock successful!");
                 isUnlocked = true;
 
@@ -59,12 +68,14 @@ public class WorldArea : MonoBehaviour
                     WaveManager.spawnPoints.Add(areaSpawns[i]);
                 }
 
+                Destroy(unlockCanvas);
                 Destroy(areaParticles);
                 Destroy(areaEntrance);
             }
             else
             {
                 // Display "not enough points" dialogue from Dr.
+                unlockText.text = string.Format("Fool! You need {0} Obscuraplasm to bypass this barrier!", unlockCost.ToString());
                 Debug.Log("Not enough points.");
             }
 

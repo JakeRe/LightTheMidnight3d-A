@@ -9,6 +9,10 @@ public class NavMeshSurfaceManager : MonoBehaviour
     public List<NavMeshSurface> surfaces;
 
     public float updateCountdown;
+
+    /// <summary>
+    /// This script will automatically update the NavMesh once on Start to ensure that it is up to date.
+    /// </summary>
     void Start()
     {
         UpdateNavSurface();
