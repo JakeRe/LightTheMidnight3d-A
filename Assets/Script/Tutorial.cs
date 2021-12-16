@@ -16,6 +16,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private PlayableDirector playDirect;
     [SerializeField] private GameObject firstDoor;
     [SerializeField] private GameObject activeDialogueBox;
+    [SerializeField] private bool foodTutorialComplete;
 
     private void Start()
     {
@@ -30,6 +31,10 @@ public class Tutorial : MonoBehaviour
         dialoguePassed+=1;
     }
 
+    public void FoodTutorialComplete()
+    {
+        foodTutorialComplete = true;
+    }
 
     public void Update()
     {
@@ -50,7 +55,7 @@ public class Tutorial : MonoBehaviour
                 StartCoroutine(WaitForDialogueToFinish());
                 break;
             case 2:
-                if (player.health < player.maxHealth)
+                if (player.health < player.maxHealth && dialogueBoxes[0].activeInHierarchy == false)
                 {
                     playDirect.playableAsset = tutorials[1];
                     dialogueBoxes[1].SetActive(true);
@@ -62,7 +67,7 @@ public class Tutorial : MonoBehaviour
                 StartCoroutine(WaitForDialogueToFinish());
                 break;
             case 3:
-                if (player.playerPoints > 0)
+                if (player.playerPoints > 500 && foodTutorialComplete)
                 {
                     playDirect.playableAsset = tutorials[2];
                     dialogueBoxes[2].SetActive(true);
@@ -73,8 +78,9 @@ public class Tutorial : MonoBehaviour
                 StartCoroutine(WaitForDialogueToFinish());
                 break;
             case 4:
-                if(firstDoor = null)
+                if(firstDoor == null)
                 {
+                    Debug.Log("Initiate 4th Dialogue");
                     playDirect.playableAsset = tutorials[3];
                     dialogueBoxes[3].SetActive(true);
                     playDirect.Play();
