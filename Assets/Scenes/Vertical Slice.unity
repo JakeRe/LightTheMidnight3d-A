@@ -2164,7 +2164,7 @@ PlayableDirector:
   m_GameObject: {fileID: 298632776}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: b04fed62351c112419239cd45e896956, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: f1a5b3b5afc7cc04bb37a771b9db5f34, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -2244,6 +2244,8 @@ PlayableDirector:
     value: {fileID: 158564947}
   - key: {fileID: 754351181547263574, guid: b04fed62351c112419239cd45e896956, type: 2}
     value: {fileID: 1799239025}
+  - key: {fileID: 2097461596998565495, guid: d83657b47d0f6a640a0e40e44e0d6787, type: 2}
+    value: {fileID: 298632780}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &298632779
@@ -2275,11 +2277,25 @@ MonoBehaviour:
   m_Events:
     m_Signals:
     - {fileID: 11400000, guid: 8094a7b48449a8449a168cccd6360f22, type: 2}
+    - {fileID: 11400000, guid: ab34ddfea23824e4e9aa1ba05c93be40, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 298632781}
           m_MethodName: IncrementDialoguePassed
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 298632781}
+          m_MethodName: FoodTutorialComplete
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2315,7 +2331,9 @@ MonoBehaviour:
   currentDialogue: 0
   player: {fileID: 0}
   playDirect: {fileID: 298632778}
-  firstDoor: {fileID: 0}
+  firstDoor: {fileID: 1650470451}
+  activeDialogueBox: {fileID: 0}
+  foodTutorialComplete: 0
 --- !u!43 &325929151
 Mesh:
   m_ObjectHideFlags: 0
@@ -14291,7 +14309,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1799239026
 RectTransform:
   m_ObjectHideFlags: 0
