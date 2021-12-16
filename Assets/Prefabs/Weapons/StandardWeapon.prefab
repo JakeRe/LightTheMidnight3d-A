@@ -188,19 +188,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisWeaponPv: {fileID: 0}
+  weaponName: Standard Flashlight
+  weaponID: 0
   flashlightHitBox: {fileID: 8023462376318219397}
   flashLightEmitter: {fileID: 6545203067312216260}
   player: {fileID: 0}
   isReady: 0
+  isOn: 0
   lightColor: {r: 1, g: 0.9831135, b: 0.41037738, a: 0}
   maxFlashlightRange: 50
-  isActive: 0
   playerUI: {fileID: 0}
   canRecharge: 1
   batteryLevel: 50
   batteryLevelMax: 50
   batteryDrain: 2
+  batteryRecharge: 0
   weight: 2
+  damageRate: 0
+  moveSpeed: 0
 --- !u!114 &2513537923958909253
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,15 +12,33 @@ public class Enemy : MonoBehaviour
     private float attackRange;
     [SerializeField]
     private float attackRate;
+    [SerializeField]
+    private int enemyValue;
+    [SerializeField]
+    private GameObject deathFX;
+    [SerializeField]
+    private GameObject enemyModel;
+    private bool isDead;
+    private bool givePoints = true;
+
+    /// <summary>
+    /// The following fields are used to manage the health of the Enemy,
+    /// as well as the UI elements that display the health.
+    /// </summary>
+    [SerializeField] private float currentHealth;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private GameObject enemyUI;
+    [SerializeField] private Camera uiCam;
 
     public NavMeshAgent enemyAgent;
 
-    //public enum EnemyState { CHASING, ATTACKING, COOLDOWN }
-    //public EnemyState state;
-
     void Start()
     {
-
+        deathFX.GetComponentInChildren<ParticleSystem>();
+        currentHealth = maxHealth;
+        uiCam = Camera.main;
+        givePoints = true;
     }
 
     void Update()
@@ -32,23 +51,21 @@ public class Enemy : MonoBehaviour
         {
             MoveTowardTarget(TargetPosition(null));
         }
+
+        enemyUI.transform.rotation = uiCam.transform.rotation;
+        healthSlider.value = HealthBarCheck();
+        CheckHealth();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("HitBox"))
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            Weapons weaponScript = other.gameObject.GetComponentInParent<Weapons>();
+            currentHealth -= weaponScript.damageRate;
         }
     }
-
-   /* private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-        }
-    }*/
 
     private bool CloseToPlayer()
     {
@@ -77,16 +94,34 @@ public class Enemy : MonoBehaviour
         enemyAgent.SetDestination(targetPos);
     }
 
-    /*private void Attack()
-    {
-        TestPlayer playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<TestPlayer>();
-        playerScript.health -= 1;
-    }*/
-
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.DrawLine(transform.position, TargetPosition("Player"));
+    }
+
+    private void CheckHealth()
+    {
+        if (currentHealth <= 0)
+        {
+            MoveTowardTarget(TargetPosition(null));
+            enemyUI.SetActive(false);
+            deathFX.GetComponent<ParticleSystem>().Play();
+            enemyModel.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(gameObject, 1f);
+            isDead = true;
+        }
+        if (isDead && givePoints)
+        {
+            PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerScript.playerPoints += enemyValue;
+            givePoints = false;
+        }
+    }
+
+    float HealthBarCheck()
+    {
+        return currentHealth / maxHealth;
     }
 }
