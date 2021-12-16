@@ -25,13 +25,14 @@ public class Tutorial : MonoBehaviour
     }
     public void IncrementDialoguePassed()
     {
-       dialoguePassed++;
+        dialoguePassed+=1;
     }
 
 
     public void Update()
     {
         CheckDialogue();
+        Debug.Log($"Current Dialogue is {currentDialogue}");
     }
 
    
@@ -43,8 +44,8 @@ public class Tutorial : MonoBehaviour
                 dialogueBoxes[0].SetActive(true);
                 playDirect.playableAsset = tutorials[0];
                 playDirect.Play();
-                StartCoroutine(WaitForDialogueToFinish());
                 currentDialogue++;
+                StartCoroutine(WaitForDialogueToFinish());
                 break;
             case 2:
                 if (player.health < player.maxHealth)
@@ -53,8 +54,11 @@ public class Tutorial : MonoBehaviour
                     playDirect.playableAsset = tutorials[1];
                     playDirect.Play();
                     StartCoroutine(WaitForDialogueToFinish());
-                    currentDialogue++;
-                    dialogueBoxes[1].SetActive(false);
+                    //dialogueBoxes[1].SetActive(false);
+                    if(currentDialogue <= 2)
+                    {
+                        currentDialogue += 1;
+                    }
                 }
                 break;
             case 3:
@@ -64,9 +68,13 @@ public class Tutorial : MonoBehaviour
                     playDirect.playableAsset = tutorials[2];
                     playDirect.Play();
                     StartCoroutine(WaitForDialogueToFinish());
-                    currentDialogue++;
                     dialogueBoxes[2].SetActive(false);
+                    if (currentDialogue <= 3)
+                    {
+                        currentDialogue += 1;
+                    }
                 }
+                
                 break;
             case 4:
                 if(firstDoor = null)
@@ -75,9 +83,13 @@ public class Tutorial : MonoBehaviour
                     playDirect.playableAsset = tutorials[3];
                     playDirect.Play();
                     StartCoroutine(WaitForDialogueToFinish());
-                    currentDialogue++;
                     dialogueBoxes[3].SetActive(false);
+                    if (currentDialogue <= 2)
+                    {
+                        currentDialogue += 1;
+                    }
                 }
+               
                 break;
             default:
                 Debug.Log("No Dialogue has Played");
