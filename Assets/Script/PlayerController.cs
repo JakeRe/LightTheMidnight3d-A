@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Health Management")]
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
-    [SerializeField] private float maxHealth;
+    [SerializeField] public float maxHealth;
     [Tooltip("How Much Time In Invincibility The Player has After Taking Damage")]
     [SerializeField] public float invincibilityTime;
     [Tooltip("This player can be damaged")]
@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private Renderer playerRenderer;
     [SerializeField] private Color playerNormal;
     [SerializeField] private Material playerMaterial;
+    [SerializeField] public bool inShop;
+
     public delegate void ChangeHealth();
     public static event ChangeHealth OnHealthChangedPositive;
     public static event ChangeHealth OnHealthChangedNegative;
@@ -341,6 +343,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 
 
             }
+
+          
         }
 
         //Used for area unlocking.
@@ -349,6 +353,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             UnlockTransactionEnter(other.gameObject);
         }*/
     }
+
+   
 
     void OnTriggerStay(Collider other)
     {
@@ -361,6 +367,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 area.UnlockArea(playerPoints);
         }
 
+        if (other.gameObject.CompareTag("Shop"))
+        {
+            if (DoesPlayerInteract())
+            {
+                inShop = !inShop;
+            }
+        }
     }
 
     void OnCollisionEnter(Collision enemy)

@@ -12,6 +12,7 @@ TagManager:
   - UnlockBarrier
   - Waves
   - Nav
+  - Shop
   layers:
   - Default
   - TransparentFX
