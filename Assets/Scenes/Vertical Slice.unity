@@ -5916,6 +5916,71 @@ PrefabInstance:
       propertyPath: playerPoints
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 256249817111424059, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 256249817111424059, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 256249817111424059, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.017805455
+      objectReference: {fileID: 0}
+    - target: {fileID: 256249817111424059, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 3.4004505
+      objectReference: {fileID: 0}
+    - target: {fileID: 953406461112770908, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059227400701480605, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: m_Range
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059227400701480605, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059227400701480605, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: m_SpotAngle
+      value: 64.402664
+      objectReference: {fileID: 0}
+    - target: {fileID: 4059227400701480605, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 34.587383
+      objectReference: {fileID: 0}
+    - target: {fileID: 5550192154498209720, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: damageRate
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: shotDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: chargeDuration
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8508193075589860757, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
       propertyPath: weaponWheel
@@ -6839,7 +6904,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.6013072, y: 1}
+    m_SensorSize: {x: 1.5998135, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
