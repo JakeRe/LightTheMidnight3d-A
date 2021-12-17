@@ -2494,7 +2494,7 @@ PlayableDirector:
   m_GameObject: {fileID: 298632776}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: f1a5b3b5afc7cc04bb37a771b9db5f34, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: d83657b47d0f6a640a0e40e44e0d6787, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -10273,7 +10273,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.6, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -12851,6 +12851,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2342035135974743659, guid: 856caa7d724c8134c98606da62d05a31,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3651566531799975168, guid: 856caa7d724c8134c98606da62d05a31,
         type: 3}
       propertyPath: m_IsActive
@@ -12946,6 +12951,11 @@ PrefabInstance:
       propertyPath: unlockCanvas
       value: 
       objectReference: {fileID: 1650470449}
+    - target: {fileID: 5969726740265896222, guid: 856caa7d724c8134c98606da62d05a31,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8108423271215247693, guid: 856caa7d724c8134c98606da62d05a31,
         type: 3}
       propertyPath: m_AnchorMax.x

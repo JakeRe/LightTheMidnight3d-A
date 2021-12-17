@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Slider healthSlider;
     [SerializeField] private GameObject enemyUI;
     [SerializeField] private Camera uiCam;
+    [SerializeField] private BoxCollider boxCollider;
 
     [Header("Sound Materials")]
     [SerializeField] private AudioSource roakSoundSource;
@@ -42,6 +43,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        boxCollider = GetComponent<BoxCollider>();
         roakSoundSource = GetComponent<AudioSource>();
         deathFX.GetComponentInChildren<ParticleSystem>();
         currentHealth = maxHealth;
@@ -130,6 +132,7 @@ public class Enemy : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            boxCollider.enabled = false;
             MoveTowardTarget(TargetPosition(null));
             enemyUI.SetActive(false);
             deathFX.GetComponent<ParticleSystem>().Play();
