@@ -59,6 +59,17 @@ public class Weapons : MonoBehaviour
     [SerializeField] private AudioClip[] flashlightSounds;
   
 
+
+    //Spotlight properties
+    [SerializeField] private bool isCharging;
+    [SerializeField] private bool isFiring;
+    [SerializeField] private float chargeStartedTime;
+    [SerializeField] private float chargeDuration;
+    [SerializeField] private float shotStartedTime;
+    [SerializeField] private float shotDuration;
+    [SerializeField] private float currentTime;
+
+
     private void OnEnable()
     {
         PlayerUI.batteryUpdate += ActiveWeapon;
@@ -71,6 +82,12 @@ public class Weapons : MonoBehaviour
         thisWeaponPv = GetComponent<PhotonView>();
         weaponSoundSource = GetComponent<AudioSource>();
         playerUI = FindObjectOfType<PlayerUI>();
+        if (weaponID == 1)
+        {
+            isOn = false;
+            flashLightEmitter.gameObject.SetActive(false);
+            flashlightHitBox.gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -81,11 +98,17 @@ public class Weapons : MonoBehaviour
             //this.Attack();
             this.WeightCheck();
             this.ToggleFlashlight();
-            this.FlashlightManagement();
+            if (weaponID == 0)
+                this.FlashlightManagement();
+            if (weaponID == 1)
+                if (isOn && isReady)
+                    StartCoroutine("SpotLightShot");
             this.BatteryUpdate();
             
             
         }
+
+        currentTime = Time.time;
     }
     void BatteryManagement()
     {
@@ -206,7 +229,7 @@ public class Weapons : MonoBehaviour
                 weaponSoundSource.PlayOneShot(flashlightSounds[0]);
                 isOn = true;
             }
-            else if (isOn)
+            else if (isOn && !isCharging && !isFiring)
             {
                 weaponSoundSource.PlayOneShot(flashlightSounds[1]);
                 isOn = false;
@@ -240,6 +263,64 @@ public class Weapons : MonoBehaviour
                 if (flashLightEmitter.range <= maxFlashlightRange)
                     flashLightEmitter.range += batteryRecharge / 2 * Time.deltaTime;
             }
+        }
+    }
+
+    void SpotLightAttack()
+    {
+        if (isOn && !isCharging)
+        {
+            isCharging = true;
+            chargeStartedTime = Time.time;
+            player.canMove = false;
+
+            if (Time.time - chargeStartedTime >= chargeDuration)
+            {
+                player.canRotate = false;
+                shotStartedTime = Time.time;
+                isFiring = true;
+                flashLightEmitter.gameObject.SetActive(true);
+                flashlightHitBox.gameObject.SetActive(true);
+                
+                if (Time.time - shotStartedTime >= shotDuration)
+                {
+                    isOn = false;
+                    isCharging = false;
+                    isFiring = false;
+                }
+            }
+        }
+        else if (!isOn)
+        {
+            flashLightEmitter.gameObject.SetActive(false);
+            flashlightHitBox.gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator SpotLightShot()
+    {
+        if (!isCharging && !isFiring)
+        {
+            isReady = false;
+            isCharging = true;
+            player.canMove = false;
+            yield return new WaitForSeconds(chargeDuration);
+            flashLightEmitter.gameObject.SetActive(true);
+            flashlightHitBox.gameObject.SetActive(true);
+            isCharging = false;
+            isFiring = true;
+            player.canRotate = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            yield return new WaitForSeconds(shotDuration);
+            flashLightEmitter.gameObject.SetActive(false);
+            flashlightHitBox.gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            isFiring = false;
+            isOn = false;
+            isReady = true;
+            player.canRotate = true;
+            player.canMove = true;
+            yield break;
         }
     }
 }

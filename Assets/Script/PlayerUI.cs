@@ -52,8 +52,6 @@ public class PlayerUI : MonoBehaviour
         health = player.health;
         playerPoints.text = points.ToString();
 
-        //playerPoints.text = player.playerPoints.ToString();
-
 
         for (int i = 0; i<hearts.Length; i++)
         {
