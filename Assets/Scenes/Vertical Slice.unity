@@ -8429,6 +8429,21 @@ PrefabInstance:
       propertyPath: playerPoints
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 48720126169169683, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: Sounds.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 48720126169169683, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: Sounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: f25b34409b20e8d43aa0753cea20cf03, type: 3}
+    - target: {fileID: 48720126169169683, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: Sounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7ebcbb2a8a2192048bca11c8a066089e, type: 3}
     - target: {fileID: 5550192154498209727, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
       propertyPath: weaponSoundSource

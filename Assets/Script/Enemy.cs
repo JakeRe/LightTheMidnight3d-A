@@ -31,10 +31,17 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject enemyUI;
     [SerializeField] private Camera uiCam;
 
+    [Header("Sound Materials")]
+    [SerializeField] private AudioSource roakSoundSource;
+    [SerializeField] private AudioClip[] roakGrowlSounds;
+    [SerializeField] private AudioClip takingDamage;
+    [SerializeField] private bool isplaying;
+
     public NavMeshAgent enemyAgent;
 
     void Start()
     {
+        roakSoundSource = GetComponent<AudioSource>();
         deathFX.GetComponentInChildren<ParticleSystem>();
         currentHealth = maxHealth;
         uiCam = Camera.main;
@@ -61,8 +68,10 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.CompareTag("HitBox"))
         {
-            //Destroy(this.gameObject);
             Weapons weaponScript = other.gameObject.GetComponentInParent<Weapons>();
+            //Destroy(this.gameObject);
+            roakSoundSource.PlayOneShot(takingDamage);
+            roakSoundSource.loop = true;
             currentHealth -= weaponScript.damageRate;
         }
     }

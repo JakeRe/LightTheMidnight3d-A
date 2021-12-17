@@ -131,8 +131,8 @@ MonoBehaviour:
   moveSpeed: 0
   weaponSoundSource: {fileID: 0}
   flashlightSounds:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 588bda43da955c9408919127b251ec0b, type: 3}
+  - {fileID: 8300000, guid: f731d032452586e409266a3ad05b61e3, type: 3}
 --- !u!114 &5472905469567500042
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -339,6 +339,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                     pickedUpItem.Item();
                     health += 1;
                     OnHealthChangedPositive();
+                    playerAS.PlayOneShot(Sounds[3]);
                 }
                 
 
