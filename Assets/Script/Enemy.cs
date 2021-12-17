@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip[] roakGrowlSounds;
     [SerializeField] private AudioClip takingDamage;
     [SerializeField] private bool isplaying;
+    [SerializeField] private float damageTime;
 
     public NavMeshAgent enemyAgent;
 
@@ -70,10 +71,16 @@ public class Enemy : MonoBehaviour
         {
             Weapons weaponScript = other.gameObject.GetComponentInParent<Weapons>();
             //Destroy(this.gameObject);
-            roakSoundSource.PlayOneShot(takingDamage);
-            roakSoundSource.loop = true;
+            //StartCoroutine(PlaySound());
             currentHealth -= weaponScript.damageRate;
         }
+    }
+
+    IEnumerator PlaySound()
+    {
+        roakSoundSource.PlayOneShot(takingDamage);
+        yield return new WaitForSeconds(damageTime);
+        roakSoundSource.PlayOneShot(takingDamage);
     }
 
     private bool CloseToPlayer()
