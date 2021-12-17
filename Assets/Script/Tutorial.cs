@@ -39,7 +39,6 @@ public class Tutorial : MonoBehaviour
     public void Update()
     {
         CheckDialogue();
-        Debug.Log($"Current Dialogue is {currentDialogue}");
     }
 
    
@@ -80,7 +79,6 @@ public class Tutorial : MonoBehaviour
             case 4:
                 if(firstDoor == null)
                 {
-                    Debug.Log("Initiate 4th Dialogue");
                     playDirect.playableAsset = tutorials[3];
                     dialogueBoxes[3].SetActive(true);
                     playDirect.Play();
@@ -90,14 +88,12 @@ public class Tutorial : MonoBehaviour
                 StartCoroutine(WaitForDialogueToFinish());
                 break;
             default:
-                Debug.Log("No Dialogue has Played");
                 break;
         }
     }
 
     IEnumerator WaitForDialogueToFinish()
     {
-        Debug.Log("Coroutine Entered");
         yield return new WaitUntil(() => dialoguePassed == currentDialogue);
     }
     
