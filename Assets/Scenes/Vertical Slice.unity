@@ -10273,7 +10273,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.6, y: 1}
+    m_SensorSize: {x: 1.5988373, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -12846,6 +12846,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AreaUnlock
       objectReference: {fileID: 0}
+    - target: {fileID: 1254249399159443412, guid: 856caa7d724c8134c98606da62d05a31,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1341415447524857632, guid: 856caa7d724c8134c98606da62d05a31,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -12946,6 +12951,41 @@ PrefabInstance:
       propertyPath: unlockCanvas
       value: 
       objectReference: {fileID: 1650470449}
+    - target: {fileID: 4931629030893524684, guid: 856caa7d724c8134c98606da62d05a31,
+        type: 3}
+      propertyPath: areaSpawns.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4931629030893524684, guid: 856caa7d724c8134c98606da62d05a31,
+        type: 3}
+      propertyPath: areaSpawns.Array.data[0]
+      value: 
+      objectReference: {fileID: 1339974859}
+    - target: {fileID: 4931629030893524684, guid: 856caa7d724c8134c98606da62d05a31,
+        type: 3}
+      propertyPath: areaSpawns.Array.data[1]
+      value: 
+      objectReference: {fileID: 1861495824}
+    - target: {fileID: 4931629030893524684, guid: 856caa7d724c8134c98606da62d05a31,
+        type: 3}
+      propertyPath: areaSpawns.Array.data[2]
+      value: 
+      objectReference: {fileID: 2129595622}
+    - target: {fileID: 4931629030893524684, guid: 856caa7d724c8134c98606da62d05a31,
+        type: 3}
+      propertyPath: areaSpawns.Array.data[3]
+      value: 
+      objectReference: {fileID: 1339974859}
+    - target: {fileID: 4931629030893524684, guid: 856caa7d724c8134c98606da62d05a31,
+        type: 3}
+      propertyPath: areaSpawns.Array.data[4]
+      value: 
+      objectReference: {fileID: 1861495824}
+    - target: {fileID: 4931629030893524684, guid: 856caa7d724c8134c98606da62d05a31,
+        type: 3}
+      propertyPath: areaSpawns.Array.data[5]
+      value: 
+      objectReference: {fileID: 2129595622}
     - target: {fileID: 8108423271215247693, guid: 856caa7d724c8134c98606da62d05a31,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -15035,7 +15075,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.25
+  m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 58c26f55b60731548b7a8fd684459cab, type: 2}
   m_BuildHeightMesh: 0
@@ -15369,7 +15409,7 @@ MeshCollider:
   m_GameObject: {fileID: 1911890828}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
