@@ -28,7 +28,7 @@ TagManager:
   - Obstacle
   - Pickup
   - Unwalkable
-  - 
+  - NavIgnore
   - 
   - 
   - 

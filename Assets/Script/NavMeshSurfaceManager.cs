@@ -27,8 +27,8 @@ public class NavMeshSurfaceManager : MonoBehaviour
     {
         for (int i = 0; i < surfaces.Count; i++)
         {
-            Debug.Log("NavMesh updated.");
             surfaces[i].BuildNavMesh();
+            Debug.Log("NavMesh updated.");
         }
     }
 
