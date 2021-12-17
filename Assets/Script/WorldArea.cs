@@ -37,6 +37,7 @@ public class WorldArea : MonoBehaviour
 
     void Start()
     {
+        
         WaveManager = GameObject.FindGameObjectWithTag("Waves").GetComponent<WaveSystem>();
         //NavManager = GameObject.FindGameObjectWithTag("Nav").GetComponent<NavMeshSurfaceManager>();
         isUnlocked = false;
