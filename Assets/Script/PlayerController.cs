@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private GameObject player;
     [Tooltip("This is the player's UI Prefab")]
     [SerializeField] public GameObject PlayerUIPrefab;
+
+    private Weapons weapon;
     #endregion
     #region Navigation Management
     [Header("Navigation")]
@@ -39,6 +41,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private float sensitivity;
 
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] public bool canMove;
+    [SerializeField] public bool canRotate;
     #endregion 
     #region Player Health Management
     [Header("Health Management")]
@@ -109,6 +113,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             playerNormal = playerRenderer.material.color;
             playerMaterial = playerRenderer.material;
             canBeDamaged = true;
+            canMove = true;
+            canRotate = true;
         }
 
         DontDestroyOnLoad(gameObject);
@@ -167,8 +173,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         //This handles the players movement if the photon view is registered as theirs. 
         if (photonView.IsMine)
         {
-            this.Movement();
-
+            if (canMove)
+                this.Movement();
+            if (playerCam != null)
+            {
+                if (canRotate)
+                    Aim();
+            }
         }
 
     }
@@ -258,15 +269,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         else
         {
             
-        }
-
-        if(playerCam != null)
-        {
-            // This is the old mouse look code, may be able to remove in the future.
-            // movementControl.x += Input.GetAxis("Mouse X") * sensitivity;
-            // transform.localRotation = Quaternion.Euler(0, movementControl.x, 0);
-            
-            Aim();
         }
         
     }
