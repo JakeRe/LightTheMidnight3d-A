@@ -57,6 +57,7 @@ public class Weapons : MonoBehaviour
     [Header("Sound Materials")]
     [SerializeField] private AudioSource weaponSoundSource;
     [SerializeField] private AudioClip[] flashlightSounds;
+    [SerializeField] private AudioClip[] spotlightSounds;
   
 
 
@@ -224,16 +225,23 @@ public class Weapons : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            if (!isOn)
-            {
-                weaponSoundSource.PlayOneShot(flashlightSounds[0]);
-                isOn = true;
-            }
-            else if (isOn && !isCharging && !isFiring)
-            {
-                weaponSoundSource.PlayOneShot(flashlightSounds[1]);
-                isOn = false;
-            }
+                if (!isOn)
+                {
+                  isOn = true;
+                if(weaponID != 1) {
+                    weaponSoundSource.PlayOneShot(flashlightSounds[0]);
+                }
+                 
+                   
+                }
+                else if (isOn && !isCharging && !isFiring)
+                {
+                  isOn = false;
+                if(weaponID != 1)
+                {
+                    weaponSoundSource.PlayOneShot(flashlightSounds[1]);
+                }   
+                }
         }
     }
 
@@ -305,6 +313,7 @@ public class Weapons : MonoBehaviour
             isCharging = true;
             player.canMove = false;
             yield return new WaitForSeconds(chargeDuration);
+            weaponSoundSource.PlayOneShot(spotlightSounds[0]);
             flashLightEmitter.gameObject.SetActive(true);
             flashlightHitBox.gameObject.SetActive(true);
             isCharging = false;
@@ -312,6 +321,7 @@ public class Weapons : MonoBehaviour
             player.canRotate = false;
             Cursor.lockState = CursorLockMode.Locked;
             yield return new WaitForSeconds(shotDuration);
+            weaponSoundSource.PlayOneShot(spotlightSounds[1]);
             flashLightEmitter.gameObject.SetActive(false);
             flashlightHitBox.gameObject.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
