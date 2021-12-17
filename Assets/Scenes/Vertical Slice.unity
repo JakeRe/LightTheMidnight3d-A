@@ -9330,12 +9330,12 @@ PrefabInstance:
     - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
       propertyPath: shotDuration
-      value: 3
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
       propertyPath: chargeDuration
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
