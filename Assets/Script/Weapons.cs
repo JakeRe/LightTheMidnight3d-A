@@ -54,6 +54,12 @@ public class Weapons : MonoBehaviour
     [SerializeField] private float moveSpeed;
 
 
+    [Header("Sound Materials")]
+    [SerializeField] private AudioSource weaponSoundSource;
+    [SerializeField] private AudioClip[] flashlightSounds;
+  
+
+
     //Spotlight properties
     [SerializeField] private bool isCharging;
     [SerializeField] private bool isFiring;
@@ -74,6 +80,7 @@ public class Weapons : MonoBehaviour
     {
         player = GetComponentInParent<PlayerController>();
         thisWeaponPv = GetComponent<PhotonView>();
+        weaponSoundSource = GetComponent<AudioSource>();
         playerUI = FindObjectOfType<PlayerUI>();
         if (weaponID == 1)
         {
@@ -219,10 +226,12 @@ public class Weapons : MonoBehaviour
         {
             if (!isOn)
             {
+                weaponSoundSource.PlayOneShot(flashlightSounds[0]);
                 isOn = true;
             }
             else if (isOn && !isCharging && !isFiring)
             {
+                weaponSoundSource.PlayOneShot(flashlightSounds[1]);
                 isOn = false;
             }
         }

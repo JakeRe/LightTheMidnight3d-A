@@ -340,6 +340,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                     Pickups pickedUpItem = other.GetComponent<Pickups>();
                     pickedUpItem.Item();
                     health += 1;
+                    playerAS.PlayOneShot(Sounds[3]);
                     OnHealthChangedPositive();
                 }
                 
