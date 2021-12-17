@@ -119,6 +119,15 @@ public class Enemy : MonoBehaviour
 
     private void CheckHealth()
     {
+        if (currentHealth == maxHealth)
+        {
+            enemyUI.SetActive(false);
+        }
+        else if (currentHealth < maxHealth)
+        {
+            enemyUI.SetActive(true);
+        }
+
         if (currentHealth <= 0)
         {
             MoveTowardTarget(TargetPosition(null));
