@@ -130,9 +130,17 @@ MonoBehaviour:
   damageRate: 0
   moveSpeed: 0
   weaponSoundSource: {fileID: 0}
-  flashlightSounds:
+  flashlightSounds: []
+  spotlightSounds:
   - {fileID: 8300000, guid: 588bda43da955c9408919127b251ec0b, type: 3}
   - {fileID: 8300000, guid: f731d032452586e409266a3ad05b61e3, type: 3}
+  isCharging: 0
+  isFiring: 0
+  chargeStartedTime: 0
+  chargeDuration: 0
+  shotStartedTime: 0
+  shotDuration: 0
+  currentTime: 0
 --- !u!114 &5472905469567500042
 MonoBehaviour:
   m_ObjectHideFlags: 0

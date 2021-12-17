@@ -9103,6 +9103,46 @@ PrefabInstance:
       propertyPath: weaponSoundSource
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: shotDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: chargeDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: spotlightSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: flashlightSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: spotlightSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 588bda43da955c9408919127b251ec0b, type: 3}
+    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: spotlightSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: f731d032452586e409266a3ad05b61e3, type: 3}
+    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: flashlightSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 588bda43da955c9408919127b251ec0b, type: 3}
+    - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: flashlightSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: f731d032452586e409266a3ad05b61e3, type: 3}
     - target: {fileID: 8508193075589860757, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
       propertyPath: weaponWheel
