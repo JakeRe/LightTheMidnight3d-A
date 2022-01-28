@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private GameObject player;
     [Tooltip("This is the player's UI Prefab")]
     [SerializeField] public GameObject PlayerUIPrefab;
+    [SerializeField] private CinemachineVirtualCamera shopCam;
+    [SerializeField] private CinemachineVirtualCamera playCam;
+
 
     private Weapons weapon;
     #endregion
@@ -115,6 +118,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             canBeDamaged = true;
             canMove = true;
             canRotate = true;
+            playCam.gameObject.SetActive(false);
         }
 
         DontDestroyOnLoad(gameObject);
@@ -376,6 +380,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (DoesPlayerInteract())
             {
                 inShop = !inShop;
+                EnterShop();
             }
         }
     }
@@ -412,6 +417,19 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     #endregion
+
+    void EnterShop()
+    {
+        if (inShop)
+        {
+            playCam.gameObject.SetActive(false);
+            shopCam.gameObject.SetActive(true);
+        }
+        else
+        {
+            playCam.gameObject.SetActive(true);
+        }
+    }
 
 
     void ChangeAlpha()
