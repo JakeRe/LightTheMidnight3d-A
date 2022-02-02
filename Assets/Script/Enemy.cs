@@ -38,11 +38,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip takingDamage;
     [SerializeField] private bool isplaying;
     [SerializeField] private float damageTime;
+    [SerializeField] public bool isTargetable;
 
     public NavMeshAgent enemyAgent;
 
     void Start()
     {
+        isTargetable = true;
         boxCollider = GetComponent<BoxCollider>();
         roakSoundSource = GetComponent<AudioSource>();
         deathFX.GetComponentInChildren<ParticleSystem>();
@@ -109,7 +111,14 @@ public class Enemy : MonoBehaviour
 
     private void MoveTowardTarget(Vector3 targetPos)
     {
-        enemyAgent.SetDestination(targetPos);
+        if (isTargetable)
+        {
+            enemyAgent.SetDestination(targetPos);
+        }
+        else
+        {
+            enemyAgent.SetDestination(Vector3.zero);
+        }
     }
 
     void OnDrawGizmos()

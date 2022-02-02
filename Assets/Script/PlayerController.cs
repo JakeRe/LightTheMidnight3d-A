@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             canBeDamaged = true;
             canMove = true;
             canRotate = true;
-            playCam.gameObject.SetActive(false);
+            shopCam.gameObject.SetActive(false);
         }
 
         DontDestroyOnLoad(gameObject);
@@ -422,12 +422,27 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (inShop)
         {
-            playCam.gameObject.SetActive(false);
+            
             shopCam.gameObject.SetActive(true);
+            playCam.gameObject.SetActive(false);
+            var enemy_in_map = GameObject.FindObjectsOfType<Enemy>();
+            
+            foreach (Enemy enemy in enemy_in_map)
+            {
+                enemy.isTargetable = false;
+            }
         }
         else
         {
             playCam.gameObject.SetActive(true);
+            shopCam.gameObject.SetActive(false);
+
+            var enemy_in_map = GameObject.FindObjectsOfType<Enemy>();
+
+            foreach (Enemy enemy in enemy_in_map)
+            {
+                enemy.isTargetable = true;
+            }
         }
     }
 
