@@ -26,7 +26,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
 
     [SerializeField] private TextMeshProUGUI playerPoints;
-    [SerializeField] private float points;
+    [SerializeField] public float points;
 
     public delegate void EquippedWeapon();
     public static event EquippedWeapon batteryUpdate;

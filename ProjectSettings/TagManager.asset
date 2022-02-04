@@ -13,6 +13,7 @@ TagManager:
   - Waves
   - Nav
   - Shop
+  - Player UI
   layers:
   - Default
   - TransparentFX

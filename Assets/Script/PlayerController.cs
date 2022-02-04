@@ -20,9 +20,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private GameObject player;
     [Tooltip("This is the player's UI Prefab")]
     [SerializeField] public GameObject PlayerUIPrefab;
-    [SerializeField] private CinemachineVirtualCamera shopCam;
-    [SerializeField] private CinemachineVirtualCamera playCam;
-
+    
 
     private Weapons weapon;
     #endregion
@@ -119,7 +117,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             canBeDamaged = true;
             canMove = true;
             canRotate = true;
-            shopCam.gameObject.SetActive(false);
         }
 
         DontDestroyOnLoad(gameObject);
@@ -383,11 +380,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         if (other.gameObject.CompareTag("Shop"))
         {
-            if (DoesPlayerInteract())
+            Debug.Log("Standing In Shop");
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 inShop = !inShop;
                 canMove = !canMove;
             }
+               
+            
         }
     }
 
