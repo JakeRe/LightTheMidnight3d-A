@@ -55,14 +55,17 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (!CloseToPlayer())
-        {
-            MoveTowardTarget(TargetPosition("Player"));
-        }
-        else if (CloseToPlayer())
-        {
-            MoveTowardTarget(TargetPosition(null));
-        }
+       
+         if (!CloseToPlayer())
+         {
+                MoveTowardTarget(TargetPosition("Player"));
+         }
+         else if (CloseToPlayer())
+         {
+                MoveTowardTarget(TargetPosition(null));
+         }
+        
+       
 
         enemyUI.transform.rotation = uiCam.transform.rotation;
         healthSlider.value = HealthBarCheck();
@@ -111,14 +114,12 @@ public class Enemy : MonoBehaviour
 
     private void MoveTowardTarget(Vector3 targetPos)
     {
-        if (isTargetable)
+        if(enemyAgent.enabled == true)
         {
             enemyAgent.SetDestination(targetPos);
         }
-        else
-        {
-            enemyAgent.SetDestination(Vector3.zero);
-        }
+      
+      
     }
 
     void OnDrawGizmos()

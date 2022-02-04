@@ -7,6 +7,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine.UI;
+using UnityEngine.AI;
 using Cinemachine;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
@@ -175,7 +176,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     void FixedUpdate()
     {
         //This handles the players movement if the photon view is registered as theirs. 
-        if (photonView.IsMine)
+        if (photonView.IsMine && !inShop)
         {
             if (canMove)
                 this.Movement();
@@ -238,6 +239,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         //GameObject _uiGo = Instantiate(this.PlayerUIPrefab);
         //_uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        
     }
 
     public override void OnDisable()
@@ -316,6 +323,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     #endregion
 
+    
     #region Colission Detection
     private void OnTriggerEnter(Collider other)
     {
@@ -361,8 +369,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }*/
     }
 
-   
-
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("UnlockBarrier"))
@@ -380,7 +386,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (DoesPlayerInteract())
             {
                 inShop = !inShop;
-                EnterShop();
+                canMove = !canMove;
             }
         }
     }
@@ -417,34 +423,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     #endregion
-
-    void EnterShop()
-    {
-        if (inShop)
-        {
-            
-            shopCam.gameObject.SetActive(true);
-            playCam.gameObject.SetActive(false);
-            var enemy_in_map = GameObject.FindObjectsOfType<Enemy>();
-            
-            foreach (Enemy enemy in enemy_in_map)
-            {
-                enemy.isTargetable = false;
-            }
-        }
-        else
-        {
-            playCam.gameObject.SetActive(true);
-            shopCam.gameObject.SetActive(false);
-
-            var enemy_in_map = GameObject.FindObjectsOfType<Enemy>();
-
-            foreach (Enemy enemy in enemy_in_map)
-            {
-                enemy.isTargetable = true;
-            }
-        }
-    }
 
 
     void ChangeAlpha()

@@ -8,8 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: TrainObjects
-    second: {fileID: -8759559094904540688, guid: e4e956fd3db88f045ba32f4ee60ede06,
-      type: 3}
+    second: {instanceID: 0}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
