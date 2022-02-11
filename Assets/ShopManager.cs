@@ -30,6 +30,7 @@ public class ShopManager : MonoBehaviour
 
     void Start()
     {
+       //This locates all of the components that are required for methods
        player = FindObjectOfType<PlayerController>();
        playerUI = FindObjectOfType<PlayerUI>();
        shopDirector = GetComponent<PlayableDirector>();
@@ -43,6 +44,18 @@ public class ShopManager : MonoBehaviour
         OnShopEntered();
     }
 
+
+    #region Opening and Closing
+    /// <summary>
+    ///  When the player presses the Interact key while standing inside of the shop collider the following happens
+    ///  The player UI is turned off 
+    ///  The shop UI is turned on
+    ///  The playable director plays the transition going from the player camera to the shop camera
+    ///  Enemies are then detected and there is a brief waiting period for the director to finish
+    ///  
+    ///  If the player is already inside, it does the inverse and activates the nav meshes of the enemies so that the 
+    ///  game may continue.
+    /// </summary>
     void OnShopEntered()
     {
         if(player.inShop == true)
@@ -87,6 +100,8 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+
+    //This keeps the UI for the player's points updated.
     void StatsUpdated()
     {
         this.points = playerUI.points;
@@ -97,4 +112,5 @@ public class ShopManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(.04f);
     }
+    #endregion
 }

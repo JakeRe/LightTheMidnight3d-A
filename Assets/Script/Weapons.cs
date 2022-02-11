@@ -79,8 +79,7 @@ public class Weapons : MonoBehaviour
     { 
         if (player.photonView.IsMine)
         {
-            //this.BatteryManagement();
-            //this.Attack();
+          
             this.WeightCheck();
             this.ToggleFlashlight();
             if (weaponID != 1)
@@ -92,37 +91,6 @@ public class Weapons : MonoBehaviour
 
        
     }
-    void BatteryManagement()
-    {
-        if (this.batteryLevel <= 0)
-        {
-            this.isReady = false;
-            this.flashlightHitBox.gameObject.SetActive(false);
-            this.flashLightEmitter.gameObject.SetActive(false);
-        }
-
-        if (batteryLevel <= batteryLevelMax && !isReady && canRecharge)
-        {
-            StartCoroutine("FlashLightCoolDown");
-        }
-    }
-
-   /* void Attack()
-    {
-        if (Input.GetButton("Fire1") && batteryLevel >= 0 && isReady)
-        {
-            playerUI.weaponBattery.maxValue = batteryLevelMax;
-            //isActive = true;
-            flashLightEmitter.gameObject.SetActive(true);
-            batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
-            flashlightHitBox.gameObject.SetActive(true);
-            flashLightEmitter.range -= flashLightEmitter.range * Time.deltaTime;
-            playerUI.weaponBattery.value = batteryLevel;
-
-        }
-
-    }*/
-
     public void BatteryUpdate()
     {
         playerUI.weaponBattery.maxValue = batteryLevelMax;

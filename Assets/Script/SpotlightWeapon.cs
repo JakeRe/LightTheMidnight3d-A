@@ -23,13 +23,18 @@ public class SpotlightWeapon : Weapons
     [SerializeField] private float maxShotCount;
     #endregion
 
+    void Start()
+    {
+        shotCount = maxShotCount;   
+    }
+
     void Update()
     {
-        if(this.gameObject.activeSelf == true && Input.GetButtonDown("Fire1"))
+        if(this.gameObject.activeSelf == true && Input.GetButtonDown("Fire1") && shotCount != 0)
         {
-             ToggleFlashlight();
-             StartCoroutine(SpotLightShot());
-             currentTime = Time.time;
+           ToggleFlashlight();
+           StartCoroutine(SpotLightShot());
+           currentTime = Time.time;
         }
     }
 
@@ -59,6 +64,7 @@ public class SpotlightWeapon : Weapons
             isReady = true;
             player.canRotate = true;
             player.canMove = true;
+            shotCount -= 1;
             yield break;
         }
     }

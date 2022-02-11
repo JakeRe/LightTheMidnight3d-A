@@ -5833,8 +5833,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  shopCam: {fileID: 1148413841}
-  playCam: {fileID: 1365009158}
   playerUI: {fileID: 0}
   ShopCanvas: {fileID: 362397145}
   playerPoints: {fileID: 2081037091}
@@ -10588,6 +10586,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1172187459}
+    - target: {fileID: 6053103317818251352, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: maxShotCount
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
       propertyPath: shotDuration
