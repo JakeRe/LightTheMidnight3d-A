@@ -18,9 +18,9 @@ public class SpotlightWeapon : Weapons
     [Tooltip("What the current time in relation to when the weapon was fired")]
     [SerializeField] protected float currentTime;
     [Tooltip("How many shots this weapon has")]
-    [SerializeField] private float shotCount;
+    [SerializeField] public float shotCount;
     [Tooltip("The maximum amount of shots this weapon can hold")]
-    [SerializeField] private float maxShotCount;
+    [SerializeField] public float maxShotCount;
     #endregion
 
     void Start()

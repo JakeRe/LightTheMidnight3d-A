@@ -21,11 +21,12 @@ public class ShopManager : MonoBehaviour
     [Tooltip("Text element that displays the players points")]
     [SerializeField] private TextMeshProUGUI playerPoints;
     [Tooltip("The amount of points the player has")]
-    [SerializeField] private float points;
+    [SerializeField] protected float points;
     [Tooltip("Playable director for camera control")]
     [SerializeField] private PlayableDirector shopDirector;
     [Tooltip("Array of playable assets that are accessed by the shop director")]
     [SerializeField] private PlayableAsset[] transitions;
+    [SerializeField] protected float cost;
     #endregion
 
     void Start()
@@ -35,7 +36,7 @@ public class ShopManager : MonoBehaviour
        playerUI = FindObjectOfType<PlayerUI>();
        shopDirector = GetComponent<PlayableDirector>();
        this.points = playerUI.points;
-        playerPoints.text = points.ToString();
+       playerPoints.text = points.ToString();
     }
 
     // Update is called once per frame
@@ -43,7 +44,6 @@ public class ShopManager : MonoBehaviour
     {
         OnShopEntered();
     }
-
 
     #region Opening and Closing
     /// <summary>
