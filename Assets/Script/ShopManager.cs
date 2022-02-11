@@ -113,4 +113,24 @@ public class ShopManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(.04f);
     }
     #endregion
+
+    #region Purchases
+    public void SpotCannonRefill()
+    {
+        SpotlightWeapon weapon = FindObjectOfType<SpotlightWeapon>();
+
+        if (weapon != null && weapon.shotCount != weapon.maxShotCount && points >= cost)
+        {
+            weapon.shotCount += 1;
+            points -= cost;
+            Debug.Log($"Refilled weapon to {weapon.shotCount}");
+        }
+        else
+        {
+            Debug.Log("You don't have the money for this");
+        }
+    }
+
+
+    #endregion
 }

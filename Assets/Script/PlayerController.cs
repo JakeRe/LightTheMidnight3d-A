@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     #region Player Point Management
     [Header("Player Point Management")]
     [SerializeField] public float playerPoints;
+    [SerializeField] private float debugPoints;
     #endregion
 
     #region Components 
@@ -153,15 +154,22 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     void Update()
         {
 
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            playerPoints += debugPoints;
+        }
+
         //If the photon view is registered as the players then when the health is equal to or less than zero, the player will be sent back to the main menu.
 
         if (photonView.IsMine)
         {
            
-            if (this.health < 0f)
+            if (this.health <= 0f)
             {
                 GameManager.Instance.LeaveRoom();
             }
+
+           
         }
         else
         {
