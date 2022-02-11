@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1407624729266100029}
   - component: {fileID: 1407624729266100034}
   - component: {fileID: 1407624729266100035}
-  - component: {fileID: 4657794704833229165}
   - component: {fileID: 5472905469567500042}
   - component: {fileID: 1905261203280596847}
+  - component: {fileID: 5382712492215365189}
+  - component: {fileID: 7518149971066722690}
   m_Layer: 0
   m_Name: HeavyWeapon
   m_TagString: Heavy
@@ -99,50 +100,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4657794704833229165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1407624729266100033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f72e029ed2eefa84dbd2a21477d9664e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisWeaponPv: {fileID: 0}
-  weaponName: Heavy Flashlight
-  weaponID: 1
-  flashlightHitBox: {fileID: 2210707076281747017}
-  flashLightEmitter: {fileID: 2803078226977388672}
-  player: {fileID: 48720126169169683, guid: dfbf3c738fc74a2418f575f82156099c, type: 3}
-  isReady: 1
-  isOn: 0
-  lightColor: {r: 0, g: 0.9715028, b: 1, a: 1}
-  maxFlashlightRange: 200
-  playerUI: {fileID: 0}
-  canRecharge: 0
-  batteryLevel: 200
-  batteryLevelMax: 200
-  batteryDrain: 4
-  batteryRecharge: 0
-  weight: 25
-  damageRate: 0
-  moveSpeed: 0
-  weaponSoundSource: {fileID: 0}
-  flashlightSounds: []
-  spotlightSounds:
-  - {fileID: 8300000, guid: 60db99f4e6ba8e744a888c041513575b, type: 3}
-  - {fileID: 8300000, guid: b948c60f7c3ccf24082ee28e50e3c587, type: 3}
-  - {fileID: 8300000, guid: f731d032452586e409266a3ad05b61e3, type: 3}
-  isCharging: 0
-  isFiring: 0
-  chargeStartedTime: 0
-  chargeDuration: 0
-  shotStartedTime: 0
-  shotDuration: 0
-  currentTime: 0
 --- !u!114 &5472905469567500042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +212,73 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5382712492215365189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407624729266100033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8064e1eba36965447a379d874cca6b11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisWeaponPv: {fileID: 7518149971066722690}
+  weaponName: Spot Cannon
+  weaponID: 1
+  flashlightHitBox: {fileID: 2210707076281747017}
+  flashLightEmitter: {fileID: 2803078226977388672}
+  player: {fileID: 0}
+  isReady: 1
+  isOn: 0
+  lightColor: {r: 1, g: 0, b: 0, a: 1}
+  maxFlashlightRange: 50
+  playerUI: {fileID: 0}
+  canRecharge: 0
+  batteryLevel: 200
+  batteryLevelMax: 200
+  batteryDrain: 10
+  batteryRecharge: 2.5
+  weight: 25
+  damageRate: 2.5
+  moveSpeed: 2
+  weaponSoundSource: {fileID: 1905261203280596847}
+  flashlightSounds: []
+  spotlightSounds:
+  - {fileID: 8300000, guid: 60db99f4e6ba8e744a888c041513575b, type: 3}
+  - {fileID: 8300000, guid: 588bda43da955c9408919127b251ec0b, type: 3}
+  - {fileID: 8300000, guid: f731d032452586e409266a3ad05b61e3, type: 3}
+  isCharging: 0
+  isFiring: 0
+  chargeStartedTime: 0
+  chargeDuration: 1
+  shotStartedTime: 0
+  shotDuration: 1.25
+  currentTime: 0
+--- !u!114 &7518149971066722690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407624729266100033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5472905469567500042}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2210707076281747017
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,8 +32,7 @@ public class PlayerUI : MonoBehaviour
     public static event EquippedWeapon batteryUpdate;
 
     public static bool isPaused;
-    //public delegate void ManageBattery();
-    //public static event ManageBattery BatteryLevelUpdate;
+   
     private void Awake()
     {
         player = FindObjectOfType<PlayerController>();

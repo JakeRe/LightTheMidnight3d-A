@@ -16,11 +16,11 @@ public class Weapons : MonoBehaviour
 
     [Header("Flashlight")]
     [Tooltip("Hitbox for the flashlight")]
-    [SerializeField] private GameObject flashlightHitBox;
+    [SerializeField] protected GameObject flashlightHitBox;
     [Tooltip("The light gameobject used to cast the Flashlight beam")]
     [SerializeField] public Light flashLightEmitter;
     [Tooltip("The controller of the Player")]
-    [SerializeField] private PlayerController player;
+    [SerializeField] protected PlayerController player;
 
     [Header("Light Management")]
     [Tooltip("Tells if the flashlight is ready for use")]
@@ -31,23 +31,22 @@ public class Weapons : MonoBehaviour
     [SerializeField] private Color lightColor;
     [Tooltip("Flashlight maximum range")]
     [SerializeField] public float maxFlashlightRange;
-    //[Tooltip("If the flashlight is in Use")]
-    //[SerializeField] public bool isActive;
+
 
     [Header("Weapon Specifics")]
-    [SerializeField] private PlayerUI playerUI;
+    [SerializeField] protected PlayerUI playerUI;
     [Tooltip("Determines if the weapon can recharge")]
-    [SerializeField] private bool canRecharge;
+    [SerializeField] protected bool canRecharge;
     [Tooltip("Current Battery Level of Flashlight")]
     [SerializeField] public float batteryLevel;
     [Tooltip("Maximum Battery Life for Flashlight")]
     [SerializeField] public float batteryLevelMax;
     [Tooltip("Rate by which the battery for the flashlight drains")]
-    [SerializeField] private float batteryDrain;
+    [SerializeField] protected float batteryDrain;
     [Tooltip("Rate by which the battery for the flashlight recharges")]
-    [SerializeField] private float batteryRecharge;
+    [SerializeField] protected float batteryRecharge;
     [Tooltip("The Weight of the Equipped Weapon")]
-    [SerializeField] private float weight;
+    [SerializeField] protected float weight;
     [Tooltip("This weapon's damage value")]
     [SerializeField] public float damageRate;
 
@@ -55,27 +54,12 @@ public class Weapons : MonoBehaviour
 
 
     [Header("Sound Materials")]
-    [SerializeField] private AudioSource weaponSoundSource;
-    [SerializeField] private AudioClip[] flashlightSounds;
-    [SerializeField] private AudioClip[] spotlightSounds;
-  
+    [SerializeField] protected AudioSource weaponSoundSource;
+    [SerializeField] protected AudioClip[] flashlightSounds;
+    [SerializeField] protected AudioClip[] spotlightSounds;
 
-
-    //Spotlight properties
-    [SerializeField] private bool isCharging;
-    [SerializeField] private bool isFiring;
-    [SerializeField] private float chargeStartedTime;
-    [SerializeField] private float chargeDuration;
-    [SerializeField] private float shotStartedTime;
-    [SerializeField] private float shotDuration;
-    [SerializeField] private float currentTime;
-
-
-    private void OnEnable()
-    {
-        PlayerUI.batteryUpdate += ActiveWeapon;
-
-    }
+    [SerializeField] protected bool isCharging;
+    [SerializeField] protected bool isFiring;
 
     void Awake()
     {
@@ -99,17 +83,14 @@ public class Weapons : MonoBehaviour
             //this.Attack();
             this.WeightCheck();
             this.ToggleFlashlight();
-            if (weaponID == 0)
+            if (weaponID != 1)
                 this.FlashlightManagement();
-            if (weaponID == 1)
-                if (isOn && isReady)
-                    StartCoroutine("SpotLightShot");
             this.BatteryUpdate();
             
             
         }
 
-        currentTime = Time.time;
+       
     }
     void BatteryManagement()
     {
@@ -155,19 +136,6 @@ public class Weapons : MonoBehaviour
 
     void WeightCheck()
     {
-        /*
-         * This code can probably be removed. I changed it so the player's movement speed
-         * is automatically set to the speed provided by the weapon. Easier to change in
-         * the inspector and avoids having hard-coded values.
-        if(gameObject.tag == "Heavy")
-        {
-            player.movementSpeed = 4;
-        }
-        else
-        {
-            player.movementSpeed = 12;
-        }
-        */
 
         player.movementSpeed = moveSpeed;
     }
@@ -211,17 +179,12 @@ public class Weapons : MonoBehaviour
         }
     }
 
-    public void ActiveWeapon()
-    {
-        
-    }
-
     /// <summary>
     /// This method will toggle the flashlight on or off when the left mouse button is clicked.
     /// When checking if it can toggle on, the method will also see if the flashlight is ready
     /// (if it's not in a cooldown state) otherwise it won't turn on.
     /// </summary>
-    void ToggleFlashlight()
+    protected void ToggleFlashlight()
     {
         if (Input.GetButtonDown("Fire1"))
         {
@@ -274,65 +237,5 @@ public class Weapons : MonoBehaviour
         }
     }
 
-    void SpotLightAttack()
-    {
-        if (isOn && !isCharging)
-        {
-            isCharging = true;
-            chargeStartedTime = Time.time;
-            player.canMove = false;
-
-            if (Time.time - chargeStartedTime >= chargeDuration)
-            {
-                player.canRotate = false;
-                shotStartedTime = Time.time;
-                isFiring = true;
-                flashLightEmitter.gameObject.SetActive(true);
-                flashlightHitBox.gameObject.SetActive(true);
-                
-                if (Time.time - shotStartedTime >= shotDuration)
-                {
-                    isOn = false;
-                    isCharging = false;
-                    isFiring = false;
-                }
-            }
-        }
-        else if (!isOn)
-        {
-            flashLightEmitter.gameObject.SetActive(false);
-            flashlightHitBox.gameObject.SetActive(false);
-        }
-    }
-
-    IEnumerator SpotLightShot()
-    {
-        if (!isCharging && !isFiring)
-        {
-            isReady = false;
-            isCharging = true;
-            player.canMove = false;
-            weaponSoundSource.PlayOneShot(spotlightSounds[0]);
-            yield return new WaitForSeconds(chargeDuration);
-            weaponSoundSource.PlayOneShot(spotlightSounds[1]);
-            flashLightEmitter.gameObject.SetActive(true);
-            flashlightHitBox.gameObject.SetActive(true);
-            isCharging = false;
-            isFiring = true;
-            player.canRotate = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            yield return new WaitForSeconds(shotDuration);
-            weaponSoundSource.PlayOneShot(spotlightSounds[2]);
-            flashLightEmitter.gameObject.SetActive(false);
-            flashlightHitBox.gameObject.SetActive(false);
-            Cursor.lockState = CursorLockMode.None;
-            isFiring = false;
-            isOn = false;
-            isReady = true;
-            player.canRotate = true;
-            player.canMove = true;
-            yield break;
-        }
-    }
 }
 

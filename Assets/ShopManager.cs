@@ -11,19 +11,22 @@ using UnityEngine.Playables;
 public class ShopManager : MonoBehaviour
 {
     // Start is called before the first frame update
-
-    public delegate void OnEnterShop();
-    public static event OnEnterShop OnEnteredShop;
+    #region Variables
+    [Tooltip("The Player Active in the Scene")]
     [SerializeField] private PlayerController player;
-    [SerializeField] private CinemachineVirtualCamera shopCam;
-    [SerializeField] private CinemachineVirtualCamera playCam;
+    [Tooltip("The player's user interface")]
     [SerializeField] private PlayerUI playerUI;
+    [Tooltip("The canvas used to display the shop's menu")]
     [SerializeField] private Canvas ShopCanvas;
+    [Tooltip("Text element that displays the players points")]
     [SerializeField] private TextMeshProUGUI playerPoints;
+    [Tooltip("The amount of points the player has")]
     [SerializeField] private float points;
+    [Tooltip("Playable director for camera control")]
     [SerializeField] private PlayableDirector shopDirector;
+    [Tooltip("Array of playable assets that are accessed by the shop director")]
     [SerializeField] private PlayableAsset[] transitions;
-
+    #endregion
 
     void Start()
     {
