@@ -12,6 +12,8 @@ TagManager:
   - UnlockBarrier
   - Waves
   - Nav
+  - Shop
+  - Player UI
   layers:
   - Default
   - TransparentFX
@@ -25,8 +27,8 @@ TagManager:
   - HitBox
   - Player
   - Obstacle
-  - 
-  - 
+  - Pickup
+  - Unwalkable
   - 
   - 
   - 

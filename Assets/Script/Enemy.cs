@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,44 +12,83 @@ public class Enemy : MonoBehaviour
     private float attackRange;
     [SerializeField]
     private float attackRate;
+    [SerializeField]
+    private int enemyValue;
+    [SerializeField]
+    private GameObject deathFX;
+    [SerializeField]
+    private GameObject enemyModel;
+    private bool isDead;
+    private bool givePoints = true;
+
+    /// <summary>
+    /// The following fields are used to manage the health of the Enemy,
+    /// as well as the UI elements that display the health.
+    /// </summary>
+    [SerializeField] private float currentHealth;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private GameObject enemyUI;
+    [SerializeField] private Camera uiCam;
+    [SerializeField] private BoxCollider boxCollider;
+
+    [Header("Sound Materials")]
+    [SerializeField] private AudioSource roakSoundSource;
+    [SerializeField] private AudioClip[] roakGrowlSounds;
+    [SerializeField] private AudioClip takingDamage;
+    [SerializeField] private bool isplaying;
+    [SerializeField] private float damageTime;
+    [SerializeField] public bool isTargetable;
 
     public NavMeshAgent enemyAgent;
 
-    //public enum EnemyState { CHASING, ATTACKING, COOLDOWN }
-    //public EnemyState state;
-
     void Start()
     {
-
+        isTargetable = true;
+        boxCollider = GetComponent<BoxCollider>();
+        roakSoundSource = GetComponent<AudioSource>();
+        deathFX.GetComponentInChildren<ParticleSystem>();
+        currentHealth = maxHealth;
+        uiCam = Camera.main;
+        givePoints = true;
     }
 
     void Update()
     {
-        if (!CloseToPlayer())
-        {
-            MoveTowardTarget(TargetPosition("Player"));
-        }
-        else if (CloseToPlayer())
-        {
-            MoveTowardTarget(TargetPosition(null));
-        }
+       
+         if (!CloseToPlayer())
+         {
+                MoveTowardTarget(TargetPosition("Player"));
+         }
+         else if (CloseToPlayer())
+         {
+                MoveTowardTarget(TargetPosition(null));
+         }
+        
+       
+
+        enemyUI.transform.rotation = uiCam.transform.rotation;
+        healthSlider.value = HealthBarCheck();
+        CheckHealth();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("HitBox"))
         {
-            Destroy(this.gameObject);
+            Weapons weaponScript = other.gameObject.GetComponentInParent<Weapons>();
+            //Destroy(this.gameObject);
+            //StartCoroutine(PlaySound());
+            currentHealth -= weaponScript.damageRate;
         }
     }
 
-   /* private void OnCollisionEnter(Collision collision)
+    IEnumerator PlaySound()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-        }
-    }*/
+        roakSoundSource.PlayOneShot(takingDamage);
+        yield return new WaitForSeconds(damageTime);
+        roakSoundSource.PlayOneShot(takingDamage);
+    }
 
     private bool CloseToPlayer()
     {
@@ -74,19 +114,52 @@ public class Enemy : MonoBehaviour
 
     private void MoveTowardTarget(Vector3 targetPos)
     {
-        enemyAgent.SetDestination(targetPos);
+        if(enemyAgent.enabled == true)
+        {
+            enemyAgent.SetDestination(targetPos);
+        }
+      
+      
     }
-
-    /*private void Attack()
-    {
-        TestPlayer playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<TestPlayer>();
-        playerScript.health -= 1;
-    }*/
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.DrawLine(transform.position, TargetPosition("Player"));
+    }
+
+    private void CheckHealth()
+    {
+        if (currentHealth == maxHealth)
+        {
+            enemyUI.SetActive(false);
+        }
+        else if (currentHealth < maxHealth)
+        {
+            enemyUI.SetActive(true);
+        }
+
+        if (currentHealth <= 0)
+        {
+            boxCollider.enabled = false;
+            MoveTowardTarget(TargetPosition(null));
+            enemyUI.SetActive(false);
+            deathFX.GetComponent<ParticleSystem>().Play();
+            enemyModel.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(gameObject, 1f);
+            isDead = true;
+        }
+        if (isDead && givePoints)
+        {
+            PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerScript.playerPoints += enemyValue;
+            givePoints = false;
+        }
+    }
+
+    float HealthBarCheck()
+    {
+        return currentHealth / maxHealth;
     }
 }

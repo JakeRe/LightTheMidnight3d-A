@@ -7,6 +7,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine.UI;
+using UnityEngine.AI;
 using Cinemachine;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
@@ -19,6 +20,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private GameObject player;
     [Tooltip("This is the player's UI Prefab")]
     [SerializeField] public GameObject PlayerUIPrefab;
+    
+
+    private Weapons weapon;
     #endregion
     #region Navigation Management
     [Header("Navigation")]
@@ -38,12 +42,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("How fast the player rotates in accordance with mouse location")]
     [SerializeField] private float sensitivity;
 
+    [SerializeField] private LayerMask groundMask;
+    [SerializeField] public bool canMove;
+    [SerializeField] public bool canRotate;
     #endregion 
     #region Player Health Management
     [Header("Health Management")]
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
-    [SerializeField] private float maxHealth;
+    [SerializeField] public float maxHealth;
     [Tooltip("How Much Time In Invincibility The Player has After Taking Damage")]
     [SerializeField] public float invincibilityTime;
     [Tooltip("This player can be damaged")]
@@ -53,6 +60,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private Renderer playerRenderer;
     [SerializeField] private Color playerNormal;
     [SerializeField] private Material playerMaterial;
+    [SerializeField] public bool inShop;
+
     public delegate void ChangeHealth();
     public static event ChangeHealth OnHealthChangedPositive;
     public static event ChangeHealth OnHealthChangedNegative;
@@ -63,7 +72,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Player Point Management
     [Header("Player Point Management")]
-    [SerializeField] private float Points;
+    [SerializeField] public float playerPoints;
+    [SerializeField] private float debugPoints;
     #endregion
 
     #region Components 
@@ -106,6 +116,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             playerNormal = playerRenderer.material.color;
             playerMaterial = playerRenderer.material;
             canBeDamaged = true;
+            canMove = true;
+            canRotate = true;
         }
 
         DontDestroyOnLoad(gameObject);
@@ -127,30 +139,37 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         //This is for player UI instantiation, if the UI prefab isn't null, then it will print a debug message. If not, then it will send a message that sets the target. 
 
-        if (PlayerUIPrefab != null)
-        {
-            GameObject _uiGo = Instantiate(PlayerUIPrefab);
-            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
-        }
-        else
-        {
-            Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
-        }
+        //if (PlayerUIPrefab != null && PhotonNetwork.OfflineMode != true)
+        //{
+        //    GameObject _uiGo = Instantiate(PlayerUIPrefab);
+        //    _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
+        //}
 
        
         }
     void Update()
         {
 
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            playerPoints += debugPoints;
+        }
+
         //If the photon view is registered as the players then when the health is equal to or less than zero, the player will be sent back to the main menu.
 
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
            
-            if (this.health < 0f)
+            if (this.health <= 0f)
             {
                 GameManager.Instance.LeaveRoom();
             }
+
+           
         }
         else
         {
@@ -162,10 +181,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     void FixedUpdate()
     {
         //This handles the players movement if the photon view is registered as theirs. 
-        if (photonView.IsMine)
+        if (photonView.IsMine && !inShop)
         {
-            this.Movement();
-           
+            if (canMove)
+                this.Movement();
+            if (playerCam != null)
+            {
+                if (canRotate)
+                    Aim();
+            }
         }
 
     }
@@ -218,8 +242,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             transform.position = new Vector3(0f, 5f, 0f);
         }
 
-        GameObject _uiGo = Instantiate(this.PlayerUIPrefab);
-        _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+        //GameObject _uiGo = Instantiate(this.PlayerUIPrefab);
+        //_uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        
     }
 
     public override void OnDisable()
@@ -256,16 +286,41 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             
         }
-
-        if(playerCam != null)
-        {
-            movementControl.x += Input.GetAxis("Mouse X") * sensitivity;
-            transform.localRotation = Quaternion.Euler(0, movementControl.x, 0);
-        }
         
     }
 
+    void Aim()
+    {
+        var (success, position) = GetMousePosition();
 
+        if (success)
+        {
+            // Calculate the direction
+            var direction = position - transform.position;
+
+            // Ignore the height difference
+            direction.y = 0;
+
+            // Make the transform look in the direction
+            transform.forward = direction;
+        }
+    }
+
+    private (bool success, Vector3 position) GetMousePosition()
+    {
+        var ray = playerCam.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, groundMask))
+        {
+            // The Raycast hit something, return with the position.
+            return (success: true, position: hitInfo.point);
+        }
+        else
+        {
+            // The Raycast did not hit anything.
+            return (success: false, position: Vector3.zero);
+        }
+    }
   
 
     
@@ -273,6 +328,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     #endregion
 
+    
     #region Colission Detection
     private void OnTriggerEnter(Collider other)
     {
@@ -286,32 +342,79 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             if (other.gameObject.CompareTag("Battery"))
             {
                 //When the player hits a battery pickup, this sets the active weapon's battery level to maximum. Then destroys the battery
+                Pickups pickedUpItem = other.GetComponent<Pickups>();
+                pickedUpItem.Item();
                 activeWeapon.batteryLevel = activeWeapon.batteryLevelMax;
+                activeWeapon.flashLightEmitter.range = activeWeapon.maxFlashlightRange;
                 playerAS.PlayOneShot(Sounds[1]);
-                PickedUpItem();
+                
             }
 
             if (other.gameObject.CompareTag("Health"))
             {
                 if(health < maxHealth)
                 {
+                    Pickups pickedUpItem = other.GetComponent<Pickups>();
+                    pickedUpItem.Item();
                     health += 1;
+                    playerAS.PlayOneShot(Sounds[3]);
                     OnHealthChangedPositive();
-                    PickedUpItem();                    
                 }
                 
 
             }
+
+          
+        }
+
+        //Used for area unlocking.
+        /*if (other.gameObject.CompareTag("UnlockBarrier"))
+        {
+            UnlockTransactionEnter(other.gameObject);
+        }*/
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("UnlockBarrier"))
+        {
+            Debug.Log("Standing in unlock area.");
+            WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
+            area.unlockCanvas.enabled = true;
+            
+            if (DoesPlayerInteract())
+                area.UnlockArea(playerPoints);
+        }
+
+        if (other.gameObject.CompareTag("Shop"))
+        {
+            Debug.Log("Standing In Shop");
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                inShop = !inShop;
+                canMove = !canMove;
+            }
+               
+            
         }
     }
 
-    private void OnCollisionEnter(Collision enemy)
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("UnlockBarrier"))
+        {
+            WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
+            area.unlockCanvas.enabled = false;
+            area.unlockText.text = area.defaultText;
+        }
+    }
+
+    void OnCollisionEnter(Collision enemy)
     {
         if (enemy.gameObject.CompareTag("Enemy") && canBeDamaged)
         {
             Debug.Log("enemy hit player");
             health -= 1;
-            OnHealthChangedNegative();
             playerAS.PlayOneShot(Sounds[0]);
             StartCoroutine(Invincibility());
         }
@@ -342,6 +445,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             playerMaterial.color = playerNormal;
         }
      
+    }
+
+    private bool DoesPlayerInteract()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("Pressed *Interact*");
+            return true;
+        }
+
+        return false;
     }
 }
 

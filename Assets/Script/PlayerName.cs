@@ -49,9 +49,12 @@ public class PlayerName : MonoBehaviour
 
             if (playerNameText != null)
             {
-                if (target.photonView.Owner.NickName != null)
+                if (target.photonView.Owner.NickName != null && PhotonNetwork.OfflineMode != true)
                 {
                     playerNameText.text = target.photonView.Owner.NickName;
+
+                }
+                else{
 
                 }
             }
@@ -63,7 +66,8 @@ public class PlayerName : MonoBehaviour
 
     void Awake()
     {
-        this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
+        
+        this.transform.SetParent(GameObject.Find("LIght The Midnight UI").GetComponent<Transform>(), false);
 
         _canvasGroup = this.GetComponent<CanvasGroup>();
     }

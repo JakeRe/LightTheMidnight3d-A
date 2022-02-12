@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
@@ -15,6 +18,10 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
     [SerializeField]  private GameObject controlPanel;
     [Tooltip("The UI Label to inform the user that the connection is in progress")]
     [SerializeField] private GameObject progressLabel;
+    [SerializeField] private GameObject loadingText;
+    [SerializeField] private VideoPlayer openingAnim;
+    [SerializeField] private GameObject videoObject;
+    [SerializeField] private Button playButton;
 
     #endregion
     
@@ -74,11 +81,15 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+        openingAnim.Prepare();
+        openingAnim.loopPointReached += CheckVideo;
+        videoObject.SetActive(false);
     }
 
     private void Start()
     {
         progressLabel.SetActive(false);
+        loadingText.SetActive(false);
         controlPanel.SetActive(true);
     }
     #endregion
@@ -108,11 +119,45 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    public void ConnectSinglePlayer()
+    private void Update()
     {
-        PhotonNetwork.OfflineMode = true;
-        PhotonNetwork.LoadLevel("Vertical Slice");
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            PhotonNetwork.LoadLevel("Vertical Slice");
+        }
     }
 
-  
+    public void ConnectSinglePlayer()
+    {
+        playButton.interactable = false;
+        PhotonNetwork.OfflineMode = true;
+        videoObject.SetActive(true);
+        openingAnim.Play();
+        loadingText.SetActive(true);
+        //StartCoroutine(LoadAsync("Vertical Slice"));
+
+      
+        
+    }
+
+    void CheckVideo(UnityEngine.Video.VideoPlayer vp)
+    {
+
+        PhotonNetwork.LoadLevel("Vertical Slice");
+
+    }
+
+    IEnumerator LoadAsync(string level)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync($"{level}");
+
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / .9f);
+            Debug.Log(operation.progress);
+
+            yield return null;
+        }
+    }
+
 }
