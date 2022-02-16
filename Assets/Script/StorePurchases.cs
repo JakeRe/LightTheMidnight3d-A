@@ -60,4 +60,15 @@ public class StorePurchases : ShopManager
             Purchase();
         }
     }
+
+    public void HealthRefill()
+    {
+        cost = healthRefill;
+
+        if(player != null && points >= cost)
+        {
+            player.health += 1;
+            Purchase();
+        }
+    }
 }
