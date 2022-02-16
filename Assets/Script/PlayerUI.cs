@@ -47,6 +47,7 @@ public class PlayerUI : MonoBehaviour
 
     private void Update()
     {
+        numOfHearts = player.maxHealth;
         points = player.playerPoints;
         health = player.health;
         playerPoints.text = points.ToString();

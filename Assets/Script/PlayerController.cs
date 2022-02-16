@@ -358,7 +358,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                     pickedUpItem.Item();
                     health += 1;
                     playerAS.PlayOneShot(Sounds[3]);
-                    OnHealthChangedPositive();
                 }
                 
 
@@ -378,7 +377,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (other.gameObject.CompareTag("UnlockBarrier"))
         {
-            Debug.Log("Standing in unlock area.");
             WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
             area.unlockCanvas.enabled = true;
             
@@ -388,7 +386,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         if (other.gameObject.CompareTag("Shop"))
         {
-            Debug.Log("Standing In Shop");
             if (Input.GetKeyDown(KeyCode.E))
             {
                 inShop = !inShop;
