@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public LightTheMidnightLauncher LTML;
 
 
-   
+
 
 
 
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         Instance = this;
-       
+
 
         if (PhotonNetwork.OfflineMode == false)
         {
@@ -131,15 +131,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel("MultiplayerLauncher");
     }
-    
+
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
     }
 
-   
 
-    #endregion 
+
+    #endregion
 
     #region Private Methods 
 
@@ -151,9 +151,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         Debug.LogFormat("PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount);
         PhotonNetwork.LoadLevel("Room for " + PhotonNetwork.CurrentRoom.PlayerCount);
-        
+
     }
 
+
+
+    #endregion
+
+    #region Pause Management
     public void Pause()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
@@ -175,12 +180,10 @@ public class GameManager : MonoBehaviourPunCallbacks
             controller.canMove = false;
             controller.canRotate = false;
             var enemy_in_map = FindObjectsOfType<Enemy>();
-            Debug.Log($"{enemy_in_map}");
 
 
             foreach (Enemy enemy in enemy_in_map)
             {
-                Debug.Log("Enemy Pinged");
                 NavMeshAgent enemyNavmesh = enemy.enemyAgent;
                 enemyNavmesh.enabled = false;
             }
@@ -202,9 +205,5 @@ public class GameManager : MonoBehaviourPunCallbacks
             pauseMenu.SetActive(false);
         }
     }
-
     #endregion
-
-
-
 }
