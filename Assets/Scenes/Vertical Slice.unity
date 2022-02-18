@@ -3563,7 +3563,7 @@ GameObject:
   - component: {fileID: 362397146}
   m_Layer: 5
   m_Name: Shop UI
-  m_TagString: Untagged
+  m_TagString: Player UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3582,7 +3582,6 @@ RectTransform:
   - {fileID: 1908094044}
   - {fileID: 2081037090}
   - {fileID: 884568725}
-  - {fileID: 1579288525}
   m_Father: {fileID: 409696606}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3994,7 +3993,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 409696606}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4015,6 +4014,7 @@ Transform:
   - {fileID: 1768356140}
   - {fileID: 1579195802}
   - {fileID: 362397142}
+  - {fileID: 1579288525}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6644,7 +6644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonAnim: {fileID: 657277073}
-  Weapon: 0
+  Weapon: 1
   ItemName: Spot Cannon
   itemText: {fileID: 1579195803}
   selectedItem: {fileID: 0}
@@ -6652,7 +6652,7 @@ MonoBehaviour:
   weaponManage: {fileID: 0}
   weaponPrefab: {fileID: 1407624729266100033, guid: b7a868d56595c4747ac00b2f5439bc3d,
     type: 3}
-  weapon: {fileID: 0}
+  weapon: {fileID: 1540294288}
 --- !u!1 &657714729
 GameObject:
   m_ObjectHideFlags: 0
@@ -13459,6 +13459,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0000002, y: 4, z: 5.9283032}
   m_Center: {x: -0.000005722052, y: 0, z: 1.6398008}
+--- !u!114 &1540294288 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6053103317818251352, guid: dfbf3c738fc74a2418f575f82156099c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1172187453}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8064e1eba36965447a379d874cca6b11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &1543731285
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14040,6 +14052,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5468967855921542512, guid: b8eefeac6337134488ce4e276a15fb44,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player UI
+      objectReference: {fileID: 0}
     - target: {fileID: 6024502604974687681, guid: b8eefeac6337134488ce4e276a15fb44,
         type: 3}
       propertyPath: weapon
@@ -14177,7 +14194,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3613147625074493179, guid: b8eefeac6337134488ce4e276a15fb44, type: 3}
-    - {fileID: 8051777877586076992, guid: b8eefeac6337134488ce4e276a15fb44, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b8eefeac6337134488ce4e276a15fb44, type: 3}
 --- !u!224 &1579195802 stripped
 RectTransform:
@@ -14383,11 +14399,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579288524}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 362397142}
+  m_Father: {fileID: 409696606}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1579288526
@@ -15755,7 +15771,7 @@ PrefabInstance:
     - target: {fileID: 256839663373952561, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Pause
+      value: UIPause
       objectReference: {fileID: 0}
     - target: {fileID: 256839663373952562, guid: 355a14bde4ceb944eabf9a31569c921f,
         type: 3}

@@ -159,10 +159,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             isPaused = !isPaused;
-
-
         }
 
+    }
+
+    public void UIPause()
+    {
+        isPaused = !isPaused;
     }
 
     public void detectEnemies()
