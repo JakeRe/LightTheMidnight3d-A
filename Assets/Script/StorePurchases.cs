@@ -53,12 +53,14 @@ public class StorePurchases : ShopManager
     {
         cost = healthUpgrade;
 
-        if(player != null && points >= cost)
+        if(player != null && points >= cost && player.maxHealth < player.maxHealthAbsolute)
         {
             player.maxHealth += 1;
             player.health = player.maxHealth;
             Purchase();
         }
+
+      
     }
 
     public void HealthRefill()

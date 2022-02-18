@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
     [SerializeField] public float maxHealth;
+    [SerializeField] public float maxHealthAbsolute;
     [Tooltip("How Much Time In Invincibility The Player has After Taking Damage")]
     [SerializeField] public float invincibilityTime;
     [Tooltip("This player can be damaged")]
@@ -76,6 +77,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private float debugPoints;
     #endregion
 
+    
     #region Components 
     [Header("Components")]
     [Tooltip("Local player Instance")]
@@ -101,8 +103,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Unity Callbacks
     void Awake()
-        { 
-
+        {
+       
         //If the photon view component registers as the users, then it makes the local player instance this game object 
         //Then it checks for the weapon manager in it's children.
         if (photonView.IsMine)
@@ -125,30 +127,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     void Start()
          {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-
-        //CameraWorkLTM _cameraWork = this.gameObject.GetComponent<CameraWorkLTM>();
-
-
-        //if (_cameraWork != null)
-        //{
-        //    if (photonView.IsMine)
-        //    {
-        //        _cameraWork.OnStartFollowing();
-        //    }
-        //}
-
-        //This is for player UI instantiation, if the UI prefab isn't null, then it will print a debug message. If not, then it will send a message that sets the target. 
-
-        //if (PlayerUIPrefab != null && PhotonNetwork.OfflineMode != true)
-        //{
-        //    GameObject _uiGo = Instantiate(PlayerUIPrefab);
-        //    _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
-        //}
-
        
         }
     void Update()
@@ -158,6 +136,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             playerPoints += debugPoints;
         }
+
+      
 
         //If the photon view is registered as the players then when the health is equal to or less than zero, the player will be sent back to the main menu.
 
@@ -386,10 +366,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         if (other.gameObject.CompareTag("Shop"))
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyUp(KeyCode.E))
             {
                 inShop = !inShop;
                 canMove = !canMove;
+                Debug.Log($"Player in shop = {inShop}");
             }
                
             
@@ -443,6 +424,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
      
     }
+
+   
 
     private bool DoesPlayerInteract()
     {

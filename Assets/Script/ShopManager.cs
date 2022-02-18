@@ -67,7 +67,13 @@ public class ShopManager : MonoBehaviour
             ShopCanvas.gameObject.SetActive(true);
             shopDirector.playableAsset = transitions[0];
             shopDirector.Play();
-            DetectEnemies();
+            var enemy_in_map = GameObject.FindObjectsOfType<Enemy>();
+
+            foreach (Enemy enemy in enemy_in_map)
+            {
+                NavMeshAgent enemyNavmesh = enemy.gameObject.GetComponent<NavMeshAgent>();
+                enemyNavmesh.enabled = false;
+            }
             StartCoroutine(WaitForTIme());
           
         }
@@ -83,25 +89,13 @@ public class ShopManager : MonoBehaviour
 
             foreach (Enemy enemy in enemy_in_map)
             {
-                NavMeshAgent enemyNavmesh = enemy.GetComponent<NavMeshAgent>();
+                NavMeshAgent enemyNavmesh = enemy.gameObject.GetComponent<NavMeshAgent>();
                 enemyNavmesh.enabled = true;
             }
         }
         StatsUpdated();
        
     }
-
-    void DetectEnemies()
-    {
-        var enemy_in_map = GameObject.FindObjectsOfType<Enemy>();
-
-        foreach (Enemy enemy in enemy_in_map)
-        {
-            NavMeshAgent enemyNavmesh = enemy.GetComponent<NavMeshAgent>();
-            enemyNavmesh.enabled = !enemyNavmesh.enabled;
-        }
-    }
-
 
     //This keeps the UI for the player's points updated.
     protected void StatsUpdated()

@@ -83,7 +83,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     public void WeaponChange()
     {
         int previousWeaponSelection = selectedWeapon;
-        if (playerController.photonView.IsMine && weaponWheel.gameObject.activeInHierarchy == false)
+        if (playerController.photonView.IsMine && weaponWheel.gameObject.activeInHierarchy == false && weaponWheel.gameObject != null)
         {
             activeWeapon = 0;
            
