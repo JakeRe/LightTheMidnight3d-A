@@ -12,6 +12,9 @@ public class WorldArea : MonoBehaviour
     [SerializeField] public string areaName;
     [SerializeField] public Transform[] areaSpawns;
 
+    [SerializeField] private PlayerController player;
+
+
     // The physical barrier preventing the player from entering an area.
     [Tooltip("The Game Object with a collider that prevents entities from entering this area.")]
     [SerializeField] private GameObject areaEntrance;
@@ -37,32 +40,44 @@ public class WorldArea : MonoBehaviour
 
     void Start()
     {
+        player = FindObjectOfType<PlayerController>();
+      
+        unlockCanvas = GetComponentInChildren<Canvas>();
+        unlockText = GetComponentInChildren<TextMeshProUGUI>();
         
         WaveManager = GameObject.FindGameObjectWithTag("Waves").GetComponent<WaveSystem>();
         //NavManager = GameObject.FindGameObjectWithTag("Nav").GetComponent<NavMeshSurfaceManager>();
         isUnlocked = false;
         defaultText = string.Format("Would you like to unlock the {0} area using {1} Obscuraplasm?", areaName, unlockCost.ToString());
         unlockCanvas.enabled = false;
+        unlockText.text = defaultText;
     }
 
     void Update()
     {
-
+        
     }
 
-    public void UnlockArea(float playerCurrency)
+    public void UnlockArea()
     {
+
         if (!isUnlocked)
         {
             Debug.Log("Area is locked.");
-            unlockText.text = defaultText;
+           
 
-            if (playerCurrency >= unlockCost)
+            if (player.playerPoints >= unlockCost)
             {
                 // Display successful purchase dialogue from Dr.
                 unlockText.text = string.Format("Welcome to the {0} area!", areaName);
                 Debug.Log("Unlock successful!");
                 isUnlocked = true;
+
+                Debug.Log("Player Points Spent");
+
+                 player.playerPoints -= unlockCost;
+
+                Debug.Log($"Player Currency is : {player.playerPoints}");
 
                 for (int i = 0; i < areaSpawns.Length; i++)
                 {

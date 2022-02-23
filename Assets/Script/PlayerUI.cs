@@ -40,9 +40,6 @@ public class PlayerUI : MonoBehaviour
         health = player.health;
         points = player.playerPoints;
         playerPoints.text = points.ToString();
-        //pauseMenu.SetActive(false);
-        //isPaused = false;
-        //playerHud.SetActive(true);
         numOfHearts = health;
     }
 

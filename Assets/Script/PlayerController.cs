@@ -364,10 +364,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         {
             WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
             area.unlockCanvas.enabled = true;
-            
-            if (DoesPlayerInteract())
-                area.UnlockArea(playerPoints);
+            area.unlockText.enabled = true;
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    area.UnlockArea();
+                }
         }
+              
 
         if (other.gameObject.CompareTag("Shop"))
         {
