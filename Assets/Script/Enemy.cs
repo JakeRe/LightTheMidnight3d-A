@@ -44,6 +44,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Animations")]
     [SerializeField] private Animator enemyAnimator;
+    [SerializeField] private SkinnedMeshRenderer roakSkin;
 
     void Start()
     {
@@ -52,6 +53,8 @@ public class Enemy : MonoBehaviour
         roakSoundSource = GetComponent<AudioSource>();
         deathFX.GetComponentInChildren<ParticleSystem>();
         enemyAnimator = GetComponentInChildren<Animator>();
+        roakSkin = GetComponentInChildren<SkinnedMeshRenderer>();
+
         currentHealth = maxHealth;
         uiCam = Camera.main;
         givePoints = true;
@@ -151,7 +154,7 @@ public class Enemy : MonoBehaviour
             MoveTowardTarget(TargetPosition(null));
             enemyUI.SetActive(false);
             deathFX.GetComponent<ParticleSystem>().Play();
-            enemyModel.GetComponent<MeshRenderer>().enabled = false;
+            roakSkin.enabled = false;
             Destroy(gameObject, 1f);
             isDead = true;
         }
