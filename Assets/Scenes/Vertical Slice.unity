@@ -10927,8 +10927,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 953406461112770908, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
+      propertyPath: m_Name
+      value: SpotShot
+      objectReference: {fileID: 0}
+    - target: {fileID: 953406461112770908, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 953406461112770908, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4059227400701480605, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
@@ -10985,6 +10995,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1172187459}
+    - target: {fileID: 6053103317818251352, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: weaponName
+      value: Spot Shot
+      objectReference: {fileID: 0}
     - target: {fileID: 6053103317818251352, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
       propertyPath: maxShotCount

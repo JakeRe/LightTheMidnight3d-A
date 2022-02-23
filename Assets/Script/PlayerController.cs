@@ -146,14 +146,19 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
            
             if (this.health <= 0f)
             {
-                GameManager.Instance.LeaveRoom();
+                GameManager.Instance.ReturnToMenuOffline();
+                Destroy(this.gameObject);
             }
 
-           
+
         }
         else
         {
-            //DoNothing
+            if(health <= 0f)
+            {
+                GameManager.Instance.ReturnToMenuOffline();
+                Destroy(this.gameObject);
+            }
         }
         
         }
