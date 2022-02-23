@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
-            weaponManagement = LocalPlayerInstance.GetComponent<WeaponManagement>();
+            weaponManagement = LocalPlayerInstance.GetComponentInChildren<WeaponManagement>();
             rb = LocalPlayerInstance.GetComponent<Rigidbody>();
             playerCam = GameObject.Find("Main Camera").GetComponent<Camera>();
             playerAS = LocalPlayerInstance.GetComponent<AudioSource>();

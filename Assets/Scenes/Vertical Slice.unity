@@ -8868,6 +8868,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &951471133 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 953406461112770908, guid: dfbf3c738fc74a2418f575f82156099c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1172187453}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &951492768
 GameObject:
   m_ObjectHideFlags: 0
@@ -11044,6 +11050,31 @@ PrefabInstance:
       propertyPath: flashlightSounds.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: f731d032452586e409266a3ad05b61e3, type: 3}
+    - target: {fileID: 7319179414311119480, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: weaponWheel
+      value: 
+      objectReference: {fileID: 1626747888}
+    - target: {fileID: 7319179414311119480, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: weaponWheelAnim
+      value: 
+      objectReference: {fileID: 1626747889}
+    - target: {fileID: 7319179414311119480, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: weaponObjects.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7319179414311119480, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: weaponObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 132551086}
+    - target: {fileID: 7319179414311119480, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: weaponObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 951471133}
     - target: {fileID: 8508193075589860757, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
       propertyPath: weaponWheel
@@ -13614,7 +13645,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1172187453}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 951471133}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8064e1eba36965447a379d874cca6b11, type: 3}
@@ -14805,6 +14836,12 @@ BoxCollider:
 --- !u!1 &1626747888 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4877348964440525628, guid: 355a14bde4ceb944eabf9a31569c921f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1768356138}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1626747889 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 564872715396563622, guid: 355a14bde4ceb944eabf9a31569c921f,
     type: 3}
   m_PrefabInstance: {fileID: 1768356138}
   m_PrefabAsset: {fileID: 0}
