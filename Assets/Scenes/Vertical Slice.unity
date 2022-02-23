@@ -10984,6 +10984,21 @@ PrefabInstance:
       propertyPath: maxShotCount
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6053103317818251352, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: spotlightSounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053103317818251352, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: spotlightSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 60db99f4e6ba8e744a888c041513575b, type: 3}
+    - target: {fileID: 6053103317818251352, guid: dfbf3c738fc74a2418f575f82156099c,
+        type: 3}
+      propertyPath: spotlightSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: b948c60f7c3ccf24082ee28e50e3c587, type: 3}
     - target: {fileID: 6777920190647748464, guid: dfbf3c738fc74a2418f575f82156099c,
         type: 3}
       propertyPath: shotDuration
