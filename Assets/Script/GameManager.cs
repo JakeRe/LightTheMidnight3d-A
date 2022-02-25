@@ -130,6 +130,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void ReturnToMenuOffline()
     {
         PhotonNetwork.LoadLevel("MultiplayerLauncher");
+        Destroy(player);
     }
 
     public void LeaveRoom()
