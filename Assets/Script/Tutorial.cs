@@ -49,7 +49,7 @@ public class Tutorial : MonoBehaviour
     {
         if (!gameManage.isPaused)
         {
-            playDirect.Play();
+            
             switch (currentDialogue)
             {
                 case 1:
