@@ -77,7 +77,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private float debugPoints;
     #endregion
 
-    
+    #region Tutorial Block
+    [SerializeField] public Tutorial tutorial;
+    #endregion
+
     #region Components 
     [Header("Components")]
     [Tooltip("Local player Instance")]
@@ -113,6 +116,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             weaponManagement = LocalPlayerInstance.GetComponentInChildren<WeaponManagement>();
             rb = LocalPlayerInstance.GetComponent<Rigidbody>();
             playerCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+            tutorial = FindObjectOfType<Tutorial>();
             playerAS = LocalPlayerInstance.GetComponent<AudioSource>();
             playerRenderer = LocalPlayerInstance.GetComponent<Renderer>();
             playerNormal = playerRenderer.material.color;
@@ -125,7 +129,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         DontDestroyOnLoad(gameObject);
     }
     void Start()
-         {
+        {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
        
         }
@@ -360,12 +364,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("UnlockBarrier"))
+        if (other.gameObject.CompareTag("UnlockBarrier") && tutorial.dialogueBoxes[2].gameObject.activeInHierarchy == false && tutorial.currentDialogue > 3)
         {
+            
             WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
-            area.unlockCanvas.enabled = true;
-            area.unlockText.enabled = true;
-
+            if(area.unlockCanvas != null && !area.isUnlocked)
+            {
+                area.unlockCanvas.enabled = true;
+                area.unlockText.enabled = true;
+            }
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     area.UnlockArea();
@@ -388,7 +395,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("UnlockBarrier"))
+        if (other.gameObject.CompareTag("UnlockBarrier") && other.gameObject != null)
         {
             WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
             area.unlockCanvas.enabled = false;

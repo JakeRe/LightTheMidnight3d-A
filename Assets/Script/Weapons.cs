@@ -60,13 +60,16 @@ public class Weapons : MonoBehaviour
 
     [SerializeField] protected bool isCharging;
     [SerializeField] protected bool isFiring;
+    [SerializeField] protected GameManager gameManager;
 
     void Awake()
     {
+
         player = GetComponentInParent<PlayerController>();
         thisWeaponPv = GetComponent<PhotonView>();
         weaponSoundSource = GetComponent<AudioSource>();
         playerUI = FindObjectOfType<PlayerUI>();
+        gameManager = FindObjectOfType<GameManager>();
         if (weaponID == 1)
         {
             isOn = false;
@@ -77,7 +80,7 @@ public class Weapons : MonoBehaviour
 
     void Update()
     { 
-        if (player.photonView.IsMine)
+        if (player.photonView.IsMine && !gameManager.isPaused)
         {
           
             this.WeightCheck();

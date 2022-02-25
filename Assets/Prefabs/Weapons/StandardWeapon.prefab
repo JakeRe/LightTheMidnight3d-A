@@ -215,11 +215,7 @@ MonoBehaviour:
   spotlightSounds: []
   isCharging: 0
   isFiring: 0
-  chargeStartedTime: 0
-  chargeDuration: 0
-  shotStartedTime: 0
-  shotDuration: 0
-  currentTime: 0
+  gameManager: {fileID: 0}
 --- !u!114 &2513537923958909253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,7 +407,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 4df49f7f506acf946a6cc020c4f20a5d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.855
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4df49f7f506acf946a6cc020c4f20a5d,
         type: 3}
@@ -457,6 +453,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Base_Flashlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 4528533586825986717, guid: 4df49f7f506acf946a6cc020c4f20a5d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4528533586825986717, guid: 4df49f7f506acf946a6cc020c4f20a5d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4528533586825986717, guid: 4df49f7f506acf946a6cc020c4f20a5d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4df49f7f506acf946a6cc020c4f20a5d, type: 3}

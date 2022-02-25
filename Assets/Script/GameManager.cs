@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #region Pause Management
 
-    public static bool isPaused;
+    public bool isPaused;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject playerHud;
     [SerializeField] private PlayerController controller;

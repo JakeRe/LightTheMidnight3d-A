@@ -84,17 +84,19 @@ public class WorldArea : MonoBehaviour
                     WaveManager.spawnPoints.Add(areaSpawns[i]);
                 }
 
-                Destroy(unlockCanvas);
-                Destroy(areaParticles);
-                Destroy(areaEntrance);
+                unlockCanvas.enabled = false;
+                Destroy(areaParticles.gameObject);
+                Destroy(areaEntrance.gameObject);
             }
             else
             {
                 // Display "not enough points" dialogue from Dr.
-                unlockText.text = string.Format("Fool! You need {0} Obscuraplasm to bypass this barrier!", unlockCost.ToString());
+                unlockText.text = string.Format($"Fool! You need {unlockCost} Obscuraplasm to bypass this barrier!");
                 Debug.Log("Not enough points.");
             }
 
         }
+
+
     }
 }

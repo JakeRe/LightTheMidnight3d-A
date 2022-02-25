@@ -7,10 +7,10 @@ public class Tutorial : MonoBehaviour
 {
     [Header("Arrays for Tutorial Timelines and Dialogue")]
     [SerializeField] private PlayableAsset[] tutorials;
-    [SerializeField] private GameObject[] dialogueBoxes;
+    [SerializeField] public GameObject[] dialogueBoxes;
     [Header("Variables that track what dialogue has pased")] 
     [SerializeField] private int dialoguePassed;
-    [SerializeField] private int currentDialogue;
+    [SerializeField] public int currentDialogue;
     [Header("Dependant Components")]
     [SerializeField] private PlayerController player;
     [SerializeField] private PlayableDirector playDirect;
@@ -63,6 +63,16 @@ public class Tutorial : MonoBehaviour
                     currentDialogue += 1;
 
                 }
+                else if(player.health == player.maxHealth && dialogueBoxes[0].activeInHierarchy == false)
+                {
+                    StartCoroutine(TimeSkip());
+                    playDirect.playableAsset = tutorials[1];
+                    dialogueBoxes[1].SetActive(true);
+                    playDirect.Play();
+                    //dialogueBoxes[1].SetActive(false);
+                    currentDialogue += 1;
+                }
+                
                 StartCoroutine(WaitForDialogueToFinish());
                 break;
             case 3:
@@ -97,4 +107,8 @@ public class Tutorial : MonoBehaviour
         yield return new WaitUntil(() => dialoguePassed == currentDialogue);
     }
     
+    IEnumerator TimeSkip()
+    {
+        yield return new WaitForSecondsRealtime(10);
+    }
 }
