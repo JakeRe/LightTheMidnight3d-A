@@ -28,7 +28,8 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     [SerializeField] private GameObject weaponWheel;
     [SerializeField] public int activeWeapon;
 
-    
+    [SerializeField] public delegate void WeaponWheel();
+    [SerializeField] public static event WeaponWheel OnActive;
   
     public const byte WeaponSwitchEventCode = 1;
     private void Awake()
@@ -49,7 +50,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     private void Update()
     {
         WeaponChange();
-        WeaponWheel();
+        WeaponWheelControl();
 
     }
 
@@ -118,7 +119,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
 
     }
 
-    public void WeaponWheel()
+    void WeaponWheelControl()
     {
         if(weaponWheel != null)
         {

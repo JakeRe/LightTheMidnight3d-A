@@ -49,7 +49,8 @@ public class Tutorial : MonoBehaviour
     {
         if (!gameManage.isPaused)
         {
-            
+            playDirect.Resume();
+
             switch (currentDialogue)
             {
                 case 1:
@@ -107,10 +108,11 @@ public class Tutorial : MonoBehaviour
                     break;
             }
         }
-        else
+        else if(gameManage.isPaused)
         {
             playDirect.Pause();
         }
+       
        
     }
 

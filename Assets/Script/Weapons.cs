@@ -51,7 +51,7 @@ public class Weapons : MonoBehaviour
     [SerializeField] public float damageRate;
 
     [SerializeField] private float moveSpeed;
-
+    [SerializeField] private bool canFire;
 
     [Header("Sound Materials")]
     [SerializeField] protected AudioSource weaponSoundSource;
@@ -61,6 +61,16 @@ public class Weapons : MonoBehaviour
     [SerializeField] protected bool isCharging;
     [SerializeField] protected bool isFiring;
     [SerializeField] protected GameManager gameManager;
+
+    private void OnEnable()
+    {
+        WeaponManagement.OnActive += CanFire;
+    }
+
+    private void OnDisable()
+    {
+        WeaponManagement.OnActive -= CanFire;
+    }
 
     void Awake()
     {
@@ -86,7 +96,7 @@ public class Weapons : MonoBehaviour
             this.WeightCheck();
             this.ToggleFlashlight();
             if (weaponID != 1)
-                this.FlashlightManagement();
+            this.FlashlightManagement();
             this.BatteryUpdate();
             
             
@@ -134,21 +144,7 @@ public class Weapons : MonoBehaviour
         }
     }
 
-    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    if (stream.IsWriting)
-    //    {
-    //        stream.SendNext(batteryLevel);
-    //        stream.SendNext(lightColor);
-    //        stream.SendNext(gameObject.activeSelf);
-    //    }
-    //    else if (stream.IsReading)
-    //    {
-    //        this.batteryLevel = (float)stream.ReceiveNext();
-    //        this.lightColor = (Color)stream.ReceiveNext();
-    //        this.gameObject.SetActive((bool)stream.ReceiveNext());
-    //    }
-    //}
+    
 
     /// <summary>
     /// This method will toggle the flashlight on or off when the left mouse button is clicked.
@@ -157,7 +153,16 @@ public class Weapons : MonoBehaviour
     /// </summary>
     protected void ToggleFlashlight()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (this.gameObject.activeInHierarchy)
+        {
+            canFire = true;
+        }
+        else
+        {
+            canFire = false;
+        }
+
+        if (Input.GetButtonDown("Fire1") && canFire)
         {
                 if (!isOn)
                 {
@@ -208,5 +213,10 @@ public class Weapons : MonoBehaviour
         }
     }
 
+
+    void CanFire()
+    {
+        canFire = !canFire;
+    }
 }
 
