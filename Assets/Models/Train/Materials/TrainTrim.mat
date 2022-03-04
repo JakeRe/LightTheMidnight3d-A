@@ -81,8 +81,8 @@ Material:
     - Vector1_1E696BD6: 0.08
     - Vector1_21E758DB: 0.36
     - Vector1_5CAFA40D: 2.02
-    - Vector1_6FE1A05A: 0
-    - Vector1_D46D2C74: 0
+    - Vector1_6FE1A05A: 0.75
+    - Vector1_D46D2C74: 1
     - _AlphaClip: 1
     - _Blend: 0
     - _BumpScale: 1

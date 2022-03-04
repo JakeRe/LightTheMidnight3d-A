@@ -81,8 +81,8 @@ Material:
     - Vector1_1E696BD6: 0.09
     - Vector1_21E758DB: 1
     - Vector1_5CAFA40D: -0.26
-    - Vector1_6FE1A05A: 0
-    - Vector1_D46D2C74: 0
+    - Vector1_6FE1A05A: 0.75
+    - Vector1_D46D2C74: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -110,6 +110,6 @@ Material:
     - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Emission: {r: 0, g: 0, b: 0, a: 0}
+    - _Emission: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
