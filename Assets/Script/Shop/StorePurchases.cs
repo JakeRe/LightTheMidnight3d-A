@@ -10,12 +10,20 @@ public class StorePurchases : ShopManager
     [SerializeField] private float spotLightRefill;
     [SerializeField] private float healthUpgrade;
     [SerializeField] private float healthRefill;
-   
+    [SerializeField] private float laserSwordCost;
+
+    [SerializeField] private Vector3 weaponSpawnOffset;
+    [SerializeField] private WeaponManagement weaponManage;
+    [SerializeField] private GameObject weaponSpawn;
+
+    [SerializeField] private GameObject[] weapons;
 
 
     private new void Start()
     {
         base.Start();
+        weaponSpawn = GameObject.FindGameObjectWithTag("WeaponSpawn");
+        weaponManage = GameObject.FindObjectOfType<WeaponManagement>();
     }
 
     // Update is called once per frame
@@ -73,4 +81,19 @@ public class StorePurchases : ShopManager
             Purchase();
         }
     }
+
+    public void LaserSwordPurchase()
+    {
+        cost = laserSwordCost;
+
+        if(player != null && points >= cost)
+        {
+           player.playerPoints -= cost;
+           GameObject melee =  Instantiate(weapons[0], weaponSpawn.transform);
+           melee.transform.SetParent(weaponManage.transform);
+           melee.SetActive(false);
+           weaponManage.weaponObjects.Add(melee);
+        }
+    }
+
 }
