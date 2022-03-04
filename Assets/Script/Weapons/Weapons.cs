@@ -51,7 +51,7 @@ public class Weapons : MonoBehaviour
     [SerializeField] public float damageRate;
 
     [SerializeField] private float moveSpeed;
-    [SerializeField] private bool canFire;
+    [SerializeField] protected bool canFire;
 
     [Header("Sound Materials")]
     [SerializeField] protected AudioSource weaponSoundSource;
@@ -93,7 +93,6 @@ public class Weapons : MonoBehaviour
         if (player.photonView.IsMine && !gameManager.isPaused)
         {
           
-            this.WeightCheck();
             this.ToggleFlashlight();
             if (weaponID != 1)
             this.FlashlightManagement();
@@ -115,12 +114,7 @@ public class Weapons : MonoBehaviour
         }
     }
 
-    void WeightCheck()
-    {
-
-        player.movementSpeed = moveSpeed;
-    }
-
+   
     IEnumerator FlashLightCoolDown()
     {
         //Light waits for five seconds before recharging.
@@ -151,17 +145,9 @@ public class Weapons : MonoBehaviour
     /// When checking if it can toggle on, the method will also see if the flashlight is ready
     /// (if it's not in a cooldown state) otherwise it won't turn on.
     /// </summary>
-    protected void ToggleFlashlight()
+    public virtual void ToggleFlashlight()
     {
-        if (this.gameObject.activeInHierarchy)
-        {
-            canFire = true;
-        }
-        else
-        {
-            canFire = false;
-        }
-
+        CanFire();
         if (Input.GetButtonDown("Fire1") && canFire)
         {
                 if (!isOn)
@@ -216,7 +202,16 @@ public class Weapons : MonoBehaviour
 
     void CanFire()
     {
-        canFire = !canFire;
+        if (this.gameObject.activeInHierarchy)
+        {
+            canFire = true;
+        }
+        else
+        {
+            canFire = false;
+        }
+
+       
     }
 }
 
