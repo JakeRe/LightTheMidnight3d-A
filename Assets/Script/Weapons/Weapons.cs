@@ -65,6 +65,9 @@ public class Weapons : MonoBehaviour
     [SerializeField] protected bool isFiring;
     [SerializeField] protected GameManager gameManager;
 
+    [Header("UI for Weapons")]
+    [SerializeField] protected Slider weaponCharge;
+
     private void OnEnable()
     {
         WeaponManagement.OnActive += CanFire;
@@ -83,6 +86,7 @@ public class Weapons : MonoBehaviour
         weaponSoundSource = GetComponent<AudioSource>();
         playerUI = FindObjectOfType<PlayerUI>();
         gameManager = FindObjectOfType<GameManager>();
+        weaponCharge = GetComponentInChildren<Slider>();
 
         if (flashlightBeam != null)
         {
@@ -114,10 +118,20 @@ public class Weapons : MonoBehaviour
 
        
     }
-    public void BatteryUpdate()
+    public virtual void BatteryUpdate()
     {
-        playerUI.weaponBattery.maxValue = batteryLevelMax;
-        playerUI.weaponBattery.value = batteryLevel;
+
+        if (this.gameObject.activeSelf && weaponCharge != null)
+        {
+            weaponCharge.gameObject.SetActive(true);
+        }
+        else
+        {
+            weaponCharge.gameObject.SetActive(false);
+        }
+
+        weaponCharge.maxValue = batteryLevelMax;
+        weaponCharge.value = batteryLevel;
         
         if(batteryLevel <= 0)
         {

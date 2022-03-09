@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpotlightWeapon : Weapons
 
@@ -21,22 +22,52 @@ public class SpotlightWeapon : Weapons
     [SerializeField] public float shotCount;
     [Tooltip("The maximum amount of shots this weapon can hold")]
     [SerializeField] public float maxShotCount;
+    [SerializeField] public Image[] shotIcons;
+    [SerializeField] private Sprite fullCharge;
+    [SerializeField] private Sprite emptyCharge;
+
     #endregion
 
     void Start()
     {
         shotCount = maxShotCount;
         flashlightBeam.enabled = false;
+
+        foreach(Image icon in shotIcons)
+        {
+            icon.sprite = fullCharge;
+        }
     }
 
     void Update()
     {
-        if(this.gameObject.activeSelf == true && Input.GetButtonDown("Fire1") && shotCount != 0 && !gameManager.isPaused)
+
+        if (this.gameObject.activeInHierarchy == true)
         {
-           ToggleFlashlight();
+            foreach (Image icon in shotIcons)
+            {
+                icon.gameObject.SetActive(true);
+                
+            }
+        }
+        else
+        {
+            foreach (Image icon in shotIcons)
+            {
+                icon.gameObject.SetActive(false);
+            }
+        }
+
+        if (this.gameObject.activeSelf == true && Input.GetButtonDown("Fire1") && shotCount != 0 && !gameManager.isPaused)
+        {
+
+           
+            ToggleFlashlight();
            StartCoroutine(SpotLightShot());
+          
            currentTime = Time.time;
         }
+        
     }
 
     IEnumerator SpotLightShot()
@@ -68,7 +99,23 @@ public class SpotlightWeapon : Weapons
             //player.canRotate = true;
             //player.canMove = true;
             shotCount -= 1;
+            BatteryUpdate();
             yield break;
+        }
+    }
+
+    public override void BatteryUpdate()
+    {
+        for (int i = 0; i < shotIcons.Length; i++)
+        {
+            if (i < shotCount)
+            {
+                shotIcons[i].sprite = fullCharge;
+            }
+            else
+            {
+                shotIcons[i].sprite = emptyCharge;
+            }
         }
     }
 }
