@@ -22,6 +22,7 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
     [SerializeField] private VideoPlayer openingAnim;
     [SerializeField] private GameObject videoObject;
     [SerializeField] private Button playButton;
+    [SerializeField] private GameObject creditsPanel;
 
     #endregion
     
@@ -147,6 +148,22 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
 
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void OpenCredits()
+    {
+        creditsPanel.SetActive(true);
+        controlPanel.SetActive(false);
+    }
+
+    public void CloseCredits()
+    {
+        creditsPanel.SetActive(false);
+        controlPanel.SetActive(true);
+    }
     IEnumerator LoadAsync(string level)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync($"{level}");
