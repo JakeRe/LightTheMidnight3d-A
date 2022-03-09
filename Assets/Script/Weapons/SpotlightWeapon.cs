@@ -25,7 +25,8 @@ public class SpotlightWeapon : Weapons
 
     void Start()
     {
-        shotCount = maxShotCount;   
+        shotCount = maxShotCount;
+        flashlightBeam.enabled = false;
     }
 
     void Update()
@@ -50,6 +51,7 @@ public class SpotlightWeapon : Weapons
             weaponSoundSource.PlayOneShot(spotlightSounds[1]);
             flashLightEmitter.gameObject.SetActive(true);
             flashlightHitBox.gameObject.SetActive(true);
+            flashlightBeam.enabled = true;
             isCharging = false;
             isFiring = true;
             //player.canRotate = false;
@@ -58,6 +60,7 @@ public class SpotlightWeapon : Weapons
             weaponSoundSource.PlayOneShot(spotlightSounds[2]);
             flashLightEmitter.gameObject.SetActive(false);
             flashlightHitBox.gameObject.SetActive(false);
+            flashlightBeam.enabled = false;
             //Cursor.lockState = CursorLockMode.None;
             isFiring = false;
             isOn = false;

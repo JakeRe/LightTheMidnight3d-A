@@ -89,6 +89,7 @@ public class StorePurchases : ShopManager
         if(player != null && points >= cost)
         {
            player.playerPoints -= cost;
+           playerPoints.text = points.ToString();
            GameObject melee =  Instantiate(weapons[0], weaponSpawn.transform);
            melee.transform.SetParent(weaponManage.transform);
            melee.SetActive(false);

@@ -5,6 +5,7 @@ using ExitGames.Client.Photon;
 using UnityEngine.UI;
 using Photon.Realtime;
 using Photon.Pun;
+using VLB;
 
 public class Weapons : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class Weapons : MonoBehaviour
     [SerializeField] public Light flashLightEmitter;
     [Tooltip("The controller of the Player")]
     [SerializeField] protected PlayerController player;
+    [Tooltip("Volumetric Light Beam")]
+    [SerializeField] protected VolumetricLightBeam flashlightBeam;
 
     [Header("Light Management")]
     [Tooltip("Tells if the flashlight is ready for use")]
@@ -74,17 +77,25 @@ public class Weapons : MonoBehaviour
 
     void Awake()
     {
-
+        flashlightBeam = GetComponentInChildren<VolumetricLightBeam>();
         player = GetComponentInParent<PlayerController>();
         thisWeaponPv = GetComponent<PhotonView>();
         weaponSoundSource = GetComponent<AudioSource>();
         playerUI = FindObjectOfType<PlayerUI>();
         gameManager = FindObjectOfType<GameManager>();
+
+        if (flashlightBeam != null)
+        {
+            flashlightBeam.enabled = false;
+        }
+
         if (weaponID == 1)
         {
             isOn = false;
             flashLightEmitter.gameObject.SetActive(false);
             flashlightHitBox.gameObject.SetActive(false);
+            
+           
         }
     }
 
@@ -174,8 +185,13 @@ public class Weapons : MonoBehaviour
     {
         if (isOn && playerUI != null)
         {
+            if(flashlightBeam != null)
+            {
+                flashlightBeam.enabled = true;
+            }
             playerUI.weaponBattery.maxValue = batteryLevelMax;
             flashLightEmitter.gameObject.SetActive(true);
+            
             if (batteryLevel >= 0)
                 batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
             flashlightHitBox.gameObject.SetActive(true);
@@ -185,6 +201,13 @@ public class Weapons : MonoBehaviour
         }
         else if (!isOn && playerUI != null)
         {
+
+
+            if (flashlightBeam != null)
+            {
+                flashlightBeam.enabled = false;
+            }
+
             flashLightEmitter.gameObject.SetActive(false);
             flashlightHitBox.gameObject.SetActive(false);
             playerUI.weaponBattery.maxValue = batteryLevelMax;
