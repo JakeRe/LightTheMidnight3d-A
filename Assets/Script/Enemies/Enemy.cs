@@ -35,10 +35,12 @@ public class Enemy : MonoBehaviour
     [Header("Sound Materials")]
     [SerializeField] private AudioSource roakSoundSource;
     [SerializeField] private AudioClip[] roakGrowlSounds;
+    [SerializeField] private AudioClip[] roakAttackSounds;
     [SerializeField] private AudioClip takingDamage;
     [SerializeField] private bool isplaying;
     [SerializeField] private float damageTime;
     [SerializeField] public bool isTargetable;
+    [SerializeField] public int soundIndex;
 
     public NavMeshAgent enemyAgent;
 
@@ -55,6 +57,8 @@ public class Enemy : MonoBehaviour
         enemyAnimator = GetComponentInChildren<Animator>();
         roakSkin = GetComponentInChildren<SkinnedMeshRenderer>();
 
+        roakSoundSource.enabled = true;
+
         currentHealth = maxHealth;
         uiCam = Camera.main;
         givePoints = true;
@@ -62,7 +66,8 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-       
+        RandomizeSound();
+
          if (!CloseToPlayer())
          {
                 MoveTowardTarget(TargetPosition("Player"));
@@ -84,18 +89,21 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.CompareTag("HitBox"))
         {
             Weapons weaponScript = other.gameObject.GetComponentInParent<Weapons>();
-            //Destroy(this.gameObject);
-            //StartCoroutine(PlaySound());
             currentHealth -= weaponScript.damageRate;
+            roakSoundSource.clip = takingDamage;
+
+            if(roakSoundSource.isPlaying == false)
+            {
+                roakSoundSource.Play();
+            }
+        }
+        else
+        {
+            roakSoundSource.clip = roakGrowlSounds[0];
         }
     }
 
-    IEnumerator PlaySound()
-    {
-        roakSoundSource.PlayOneShot(takingDamage);
-        yield return new WaitForSeconds(damageTime);
-        roakSoundSource.PlayOneShot(takingDamage);
-    }
+  
 
     private bool CloseToPlayer()
     {
@@ -150,6 +158,7 @@ public class Enemy : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            roakSoundSource.Stop();
             boxCollider.enabled = false;
             MoveTowardTarget(TargetPosition(null));
             enemyUI.SetActive(false);
@@ -169,5 +178,22 @@ public class Enemy : MonoBehaviour
     float HealthBarCheck()
     {
         return currentHealth / maxHealth;
+    }
+
+    private void RandomizeSound()
+    {
+        if(roakSoundSource.isPlaying == false)
+        {
+            roakSoundSource.clip = roakGrowlSounds[Random.Range(0, roakGrowlSounds.Length)];
+            roakSoundSource.Play();
+        }
+      
+        StartCoroutine(SoundPause());
+      
+    }
+
+    IEnumerator SoundPause()
+    {
+        yield return new WaitForSecondsRealtime(5);
     }
 }

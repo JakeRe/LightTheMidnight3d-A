@@ -494,14 +494,30 @@ MonoBehaviour:
   enemyUI: {fileID: 1787931349923870629}
   uiCam: {fileID: 0}
   boxCollider: {fileID: 0}
-  roakSoundSource: {fileID: 0}
-  roakGrowlSounds: []
+  roakSoundSource: {fileID: -4406323136832127243}
+  roakGrowlSounds:
+  - {fileID: 8300000, guid: 20901fbba0084d4479d40773cc7e5e98, type: 3}
+  - {fileID: 8300000, guid: 22488a260564e5e468beb9fcda52ea1b, type: 3}
+  - {fileID: 8300000, guid: 4eab5c06df990fc49a4c03308c47d61e, type: 3}
+  - {fileID: 8300000, guid: 37eabe29239be6747b9a8f0f36fd4b9d, type: 3}
+  - {fileID: 8300000, guid: f927809d47916004ebbe9150010ed812, type: 3}
+  - {fileID: 8300000, guid: 57460478a96e5a1458a1149e30ad0944, type: 3}
+  - {fileID: 8300000, guid: ed4acff13b8ad5643aa01e41591222fd, type: 3}
+  - {fileID: 8300000, guid: a012944fae2ea6440b6ce9f2fa05ac55, type: 3}
+  - {fileID: 8300000, guid: b233ba58646b1e64ebf8f6a8fdd9b660, type: 3}
+  - {fileID: 8300000, guid: ee089881ad2e9464aa9abe72aa2f1d26, type: 3}
+  - {fileID: 8300000, guid: 9b5de58c03afd724fb1f2ae98714d44c, type: 3}
+  - {fileID: 8300000, guid: 808e7202df4b0004ea0585a90369e454, type: 3}
+  - {fileID: 8300000, guid: 1d312748803be96478e6758f8c5c9a00, type: 3}
+  roakAttackSounds: []
   takingDamage: {fileID: 8300000, guid: 1210e9db7c4d34b4f9b691ad90c3afbc, type: 3}
   isplaying: 0
   damageTime: 0
   isTargetable: 0
+  soundIndex: 0
   enemyAgent: {fileID: 1632055073798285410}
   enemyAnimator: {fileID: 0}
+  roakSkin: {fileID: 0}
 --- !u!195 &1632055073798285410
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -542,10 +558,10 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
+  Priority: 0
+  DopplerLevel: 2.24
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10.9
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
