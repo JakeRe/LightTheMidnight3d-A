@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4278539859932079875}
   - component: {fileID: 4278539859932079879}
   m_Layer: 0
-  m_Name: LaserBatton
+  m_Name: LaserBaton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,9 +70,10 @@ MonoBehaviour:
   thisWeaponPv: {fileID: 0}
   weaponName: 
   weaponID: 2
-  flashlightHitBox: {fileID: 0}
+  flashlightHitBox: {fileID: 7411144032930981889}
   flashLightEmitter: {fileID: 0}
   player: {fileID: 0}
+  flashlightBeam: {fileID: 0}
   isReady: 0
   isOn: 0
   lightColor: {r: 0, g: 0, b: 0, a: 0}
@@ -93,6 +94,7 @@ MonoBehaviour:
   isCharging: 0
   isFiring: 0
   gameManager: {fileID: 0}
+  weaponCharge: {fileID: 0}
   laserAnim: {fileID: 0}
 --- !u!82 &4278539859932079875
 AudioSource:
@@ -101,10 +103,10 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2546688145931078644}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 8185ec4e6628fd947b797d54f5fdfd4b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -112,7 +114,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

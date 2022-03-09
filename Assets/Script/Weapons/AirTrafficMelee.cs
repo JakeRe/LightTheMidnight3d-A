@@ -34,4 +34,9 @@ public class AirTrafficMelee : Weapons
             laserAnim.SetBool("IsAttacking", false);
         }
     }
+
+    public override void BatteryUpdate()
+    {
+        
+    }
 }
