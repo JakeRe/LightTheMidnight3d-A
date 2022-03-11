@@ -37,6 +37,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip[] roakGrowlSounds;
     [SerializeField] private AudioClip[] roakAttackSounds;
     [SerializeField] private AudioClip takingDamage;
+    [SerializeField] private float minRandomSoundTime;
+    [SerializeField] private float maxRandomSoundTime;
     [SerializeField] private bool isplaying;
     [SerializeField] private float damageTime;
     [SerializeField] public bool isTargetable;
@@ -64,11 +66,17 @@ public class Enemy : MonoBehaviour
         givePoints = true;
     }
 
+    private void OnAwake()
+    {
+       
+    }
+
     void Update()
     {
-        RandomizeSound();
 
-         if (!CloseToPlayer())
+        StartCoroutine(SoundPause());
+
+        if (!CloseToPlayer())
          {
                 MoveTowardTarget(TargetPosition("Player"));
          }
@@ -180,20 +188,14 @@ public class Enemy : MonoBehaviour
         return currentHealth / maxHealth;
     }
 
-    private void RandomizeSound()
+    IEnumerator SoundPause()
     {
-        if(roakSoundSource.isPlaying == false)
+        yield return new WaitForSecondsRealtime(Random.Range(minRandomSoundTime, maxRandomSoundTime));
+        if (roakSoundSource.isPlaying == false)
         {
             roakSoundSource.clip = roakGrowlSounds[Random.Range(0, roakGrowlSounds.Length)];
             roakSoundSource.Play();
         }
-      
-        StartCoroutine(SoundPause());
-      
-    }
-
-    IEnumerator SoundPause()
-    {
-        yield return new WaitForSecondsRealtime(5);
+        yield return new WaitForSecondsRealtime(Random.Range(minRandomSoundTime, maxRandomSoundTime));
     }
 }
