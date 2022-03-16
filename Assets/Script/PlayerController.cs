@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] public Tutorial tutorial;
     #endregion
 
+  
+
     #region Components 
     [Header("Components")]
     [Tooltip("Local player Instance")]
@@ -382,6 +384,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         if (other.gameObject.CompareTag("Shop"))
         {
+            
+
             if (Input.GetKeyUp(KeyCode.E))
             {
                 inShop = !inShop;
@@ -453,5 +457,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         return false;
     }
+
+   
 }
 

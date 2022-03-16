@@ -29,10 +29,14 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerPoints;
     [SerializeField] public float points;
 
+    [SerializeField] private GameObject interact;
+    [SerializeField] private TextMeshProUGUI interactText;
+
     public delegate void EquippedWeapon();
     public static event EquippedWeapon batteryUpdate;
 
     public static bool isPaused;
+
    
     private void Awake()
     {
@@ -72,4 +76,6 @@ public class PlayerUI : MonoBehaviour
             }
         }
     }
+
+    
 }

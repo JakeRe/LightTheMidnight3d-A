@@ -511,6 +511,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1d312748803be96478e6758f8c5c9a00, type: 3}
   roakAttackSounds: []
   takingDamage: {fileID: 8300000, guid: 1210e9db7c4d34b4f9b691ad90c3afbc, type: 3}
+  minRandomSoundTime: 0
+  maxRandomSoundTime: 0
   isplaying: 0
   damageTime: 0
   isTargetable: 0
