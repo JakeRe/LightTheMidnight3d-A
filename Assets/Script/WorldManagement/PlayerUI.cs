@@ -25,6 +25,7 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] private GameObject playerHud;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject deathMenu;
 
     [SerializeField] private TextMeshProUGUI playerPoints;
     [SerializeField] public float points;
@@ -48,6 +49,7 @@ public class PlayerUI : MonoBehaviour
         playerPoints.text = points.ToString();
         numOfHearts = health;
         interact.SetActive(false);
+        deathMenu.SetActive(false);
     }
 
     private void Update()
@@ -77,6 +79,19 @@ public class PlayerUI : MonoBehaviour
             {
                 hearts[i].enabled = false;
             }
+        }
+
+        Death();
+        
+    }
+
+    void Death()
+    {
+        if(player.health == 0)
+        {
+            playerHud.SetActive(false);
+            pauseMenu.SetActive(false);
+            deathMenu.SetActive(true);
         }
     }
 

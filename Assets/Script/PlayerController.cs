@@ -133,6 +133,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             canBeDamaged = true;
             canMove = true;
             canRotate = true;
+         
         }
 
         DontDestroyOnLoad(gameObject);
@@ -154,25 +155,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         //If the photon view is registered as the players then when the health is equal to or less than zero, the player will be sent back to the main menu.
 
-        if (photonView.IsMine)
-        {
-           
-            if (this.health <= 0f)
-            {
-                GameManager.Instance.ReturnToMenuOffline();
-                Destroy(this.gameObject);
-            }
-
-
-        }
-        else
-        {
-            if(health <= 0f)
-            {
-                GameManager.Instance.ReturnToMenuOffline();
-                Destroy(this.gameObject);
-            }
-        }
+       
+        if(health <= 0f){
+            canMove = false;
+            canRotate = false;
+            canBeDamaged = false;
+         }
+        
         
         }
 
