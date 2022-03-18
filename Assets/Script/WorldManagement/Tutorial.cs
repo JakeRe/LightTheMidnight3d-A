@@ -19,6 +19,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private bool foodTutorialComplete;
     [Header("Game Manager")]
     [SerializeField] private GameManager gameManage;
+    [SerializeField] private WaveSystem waveManager;
 
     private void Start()
     {
@@ -42,11 +43,7 @@ public class Tutorial : MonoBehaviour
     public void Update()
     {
         CheckDialogue();
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            currentDialogue = 5;
-            dialoguePassed = 4;
-        }
+        SkipTutorial();
     }
 
    
@@ -119,6 +116,19 @@ public class Tutorial : MonoBehaviour
         }
        
        
+    }
+
+    void SkipTutorial()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            currentDialogue = 4;
+            dialoguePassed = 3;
+            playDirect.Stop();
+            dialogueBoxes[0].SetActive(false);
+            waveManager.gameObject.SetActive(true);
+
+        }
     }
 
     IEnumerator WaitForDialogueToFinish()
