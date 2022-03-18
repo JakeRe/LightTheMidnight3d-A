@@ -151,6 +151,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             playerPoints += debugPoints;
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            health = 0;
+        }
       
 
         //If the photon view is registered as the players then when the health is equal to or less than zero, the player will be sent back to the main menu.

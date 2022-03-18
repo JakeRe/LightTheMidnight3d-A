@@ -35,14 +35,21 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private string DoorText;
     [SerializeField] private string ShopText;
 
+    [SerializeField] private TextMeshProUGUI wavesSurvived;
+    [SerializeField] private GameManager gameManage;
+
     public delegate void EquippedWeapon();
     public static event EquippedWeapon batteryUpdate;
+
+    [SerializeField] private WaveSystem wave;
 
     public static bool isPaused;
 
    
     private void Awake()
     {
+        wave = FindObjectOfType<WaveSystem>();
+        gameManage = FindObjectOfType<GameManager>();
         player = FindObjectOfType<PlayerController>();
         health = player.health;
         points = player.playerPoints;
@@ -89,9 +96,11 @@ public class PlayerUI : MonoBehaviour
     {
         if(player.health == 0)
         {
+            gameManage.isPaused = true;
             playerHud.SetActive(false);
             pauseMenu.SetActive(false);
             deathMenu.SetActive(true);
+            wavesSurvived.text = $"You Survived {wave.currentWave} Waves";
         }
     }
 
