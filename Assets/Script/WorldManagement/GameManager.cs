@@ -193,6 +193,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 NavMeshAgent enemyNavmesh = enemy.enemyAgent;
                 enemyNavmesh.enabled = false;
+                AudioSource audio = enemy.roakSoundSource;
+                audio.enabled = false;
             }
             playerHud.SetActive(false);
             pauseMenu.SetActive(true);
@@ -207,6 +209,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 NavMeshAgent enemyNavmesh = enemy.enemyAgent;
                 enemyNavmesh.enabled = true;
+                AudioSource audio = enemy.roakSoundSource;
+                audio.enabled = true;
             }
             playerHud.SetActive(true);
             pauseMenu.SetActive(false);

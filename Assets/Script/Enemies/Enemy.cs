@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private BoxCollider boxCollider;
 
     [Header("Sound Materials")]
-    [SerializeField] private AudioSource roakSoundSource;
+    [SerializeField] public AudioSource roakSoundSource;
     [SerializeField] private AudioClip[] roakGrowlSounds;
     [SerializeField] private AudioClip[] roakAttackSounds;
     [SerializeField] private AudioClip takingDamage;
