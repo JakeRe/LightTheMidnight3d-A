@@ -138,6 +138,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
+    public void Restart()
+    {
+        PhotonNetwork.LoadLevel("Vertical Slice");
+        Destroy(player);
+    }
+
 
 
     #endregion
