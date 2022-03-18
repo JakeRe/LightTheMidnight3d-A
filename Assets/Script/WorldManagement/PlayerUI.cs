@@ -31,6 +31,8 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] private GameObject interact;
     [SerializeField] private TextMeshProUGUI interactText;
+    [SerializeField] private string DoorText;
+    [SerializeField] private string ShopText;
 
     public delegate void EquippedWeapon();
     public static event EquippedWeapon batteryUpdate;
@@ -45,6 +47,7 @@ public class PlayerUI : MonoBehaviour
         points = player.playerPoints;
         playerPoints.text = points.ToString();
         numOfHearts = health;
+        interact.SetActive(false);
     }
 
     private void Update()
@@ -77,5 +80,34 @@ public class PlayerUI : MonoBehaviour
         }
     }
 
-    
+    private void OnEnable()
+    {
+        PlayerController.Door += ActiveInteract;
+        PlayerController.Shop += ActiveShop;
+        PlayerController.Disable += DisableInteract;
+    }
+
+    private void OnDisable()
+    {
+        PlayerController.Door -= ActiveInteract;
+        PlayerController.Shop -= ActiveShop;
+        PlayerController.Disable -= DisableInteract;
+    }
+
+    void ActiveInteract()
+    {
+        interact.SetActive(true);
+        interactText.text = DoorText;
+    }
+
+    void ActiveShop()
+    {
+        interact.SetActive(true);
+        interactText.text = ShopText;
+    }
+
+    void DisableInteract()
+    {
+        interact.SetActive(false);
+    }
 }

@@ -42,6 +42,11 @@ public class Tutorial : MonoBehaviour
     public void Update()
     {
         CheckDialogue();
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            currentDialogue = 5;
+            dialoguePassed = 4;
+        }
     }
 
    

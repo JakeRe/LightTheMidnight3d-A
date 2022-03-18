@@ -81,7 +81,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] public Tutorial tutorial;
     #endregion
 
-  
+    #region Delegates for Events 
+    public delegate void ActiveRegion();
+    public static event ActiveRegion Door;
+    public static event ActiveRegion Shop;
+    public static event ActiveRegion Disable;
+    #endregion
+
+
 
     #region Components 
     [Header("Components")]
@@ -368,33 +375,37 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (other.gameObject.CompareTag("UnlockBarrier") && tutorial.dialogueBoxes[2].gameObject.activeInHierarchy == false && tutorial.currentDialogue > 3)
         {
-            
+           
+
             WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
             if(area.unlockCanvas != null && !area.isUnlocked)
             {
+                Door();
                 area.unlockCanvas.enabled = true;
                 area.unlockText.enabled = true;
             }
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     area.UnlockArea();
+                   
                 }
         }
-              
-
-        if (other.gameObject.CompareTag("Shop"))
+        else if (other.gameObject.CompareTag("Shop"))
         {
-            
+            Shop();
 
             if (Input.GetKeyUp(KeyCode.E))
             {
                 inShop = !inShop;
                 canMove = !canMove;
                 Debug.Log($"Player in shop = {inShop}");
+                
             }
-               
-            
         }
+      
+       
+
+       
     }
 
     void OnTriggerExit(Collider other)
@@ -405,6 +416,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             area.unlockCanvas.enabled = false;
             area.unlockText.text = area.defaultText;
         }
+
+        Disable();
     }
 
     void OnCollisionEnter(Collision enemy)
