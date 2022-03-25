@@ -164,6 +164,10 @@ public class Enemy : MonoBehaviour
         // Find target object in scene and return its position.
         GameObject target = GameObject.FindGameObjectWithTag(targetTag);
 
+        // In case the target does not exist, return self
+        if(target == null)
+            return this.transform.position;
+
         return target.transform.position;
     }
 
