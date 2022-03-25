@@ -68,6 +68,7 @@ public class Enemy : MonoBehaviour
         uiCam = Camera.main;
         givePoints = true;
         triggerEvent = new TrackTrigger(gameObject);
+        SetRenderers(enemyModel, false);
     }
 
     private void OnAwake()
@@ -129,7 +130,7 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.CompareTag("HitBox")) 
         {
             // Turn off renderers on the roak
-            SetRenderers(enemyModel, false);
+            SetRenderers(enemyModel, true);
         }
     }
 
@@ -140,7 +141,7 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.CompareTag("HitBox"))
         {
             // Turn on all renderers on the roak
-            SetRenderers(enemyModel, true);
+            SetRenderers(enemyModel, false);
 
             // Reset to growl sound
             roakSoundSource.clip = roakGrowlSounds[0];
@@ -153,7 +154,14 @@ public class Enemy : MonoBehaviour
         var renderers = parent.GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in renderers)
         {
-            renderer.enabled = newState;
+            if (newState)
+            {
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+            else
+            {
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
         }
     }
 
@@ -191,8 +199,6 @@ public class Enemy : MonoBehaviour
         {
             enemyAgent.SetDestination(targetPos);
         }
-      
-      
     }
 
     void OnDrawGizmos()
