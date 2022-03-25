@@ -141,6 +141,9 @@ public class Enemy : MonoBehaviour
         {
             // Turn on all renderers on the roak
             SetRenderers(enemyModel, true);
+
+            // Reset to growl sound
+            roakSoundSource.clip = roakGrowlSounds[0];
         }
     }
 
