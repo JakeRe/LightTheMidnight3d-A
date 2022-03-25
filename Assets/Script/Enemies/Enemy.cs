@@ -49,7 +49,9 @@ public class Enemy : MonoBehaviour
     [Header("Animations")]
     [SerializeField] private Animator enemyAnimator;
     [SerializeField] private SkinnedMeshRenderer roakSkin;
-    
+
+    private TrackTrigger triggerEvent;
+
 
     void Start()
     {
@@ -65,11 +67,12 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         uiCam = Camera.main;
         givePoints = true;
+        triggerEvent = new TrackTrigger(gameObject);
     }
 
     private void OnAwake()
     {
-       
+        
     }
 
     void Update()
@@ -93,8 +96,14 @@ public class Enemy : MonoBehaviour
         CheckHealth();
     }
 
+    private void FixedUpdate()
+    {
+        triggerEvent.FixedUpdate();
+    }
+
     private void OnTriggerStay(Collider other)
     {
+        triggerEvent.TriggerUpdate(other);
         // If Inside of Weapon Hitbox
         if (other.gameObject.CompareTag("HitBox"))
         {
@@ -115,6 +124,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        triggerEvent.AddTrigger(other, OnTriggerExit);
         // Check if player's weapon trigger
         if (other.gameObject.CompareTag("HitBox")) 
         {
@@ -125,6 +135,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        triggerEvent.RemoveTrigger(other);
         // Check if player's weapon trigger
         if (other.gameObject.CompareTag("HitBox"))
         {

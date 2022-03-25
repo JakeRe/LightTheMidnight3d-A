@@ -28,10 +28,13 @@ public class TrackTrigger
     }
 
     /// <summary>
-    /// Hooked into the Physics Update loop. This will check the triggers to see if they need to be removed.
+    /// Hooked into the FixedUpdate loop. This will check the triggers to see if they need to be removed.
     /// </summary>
-    public void Update() 
+    public void FixedUpdate() 
     {
+        // Remove dead triggers first
+        Triggers.RemoveAll(x => x.removed);
+
         // Check Triggers. 
         foreach (var trigger in Triggers) 
         {
@@ -44,11 +47,6 @@ public class TrackTrigger
                     // And run a callback
                     TriggerCallback(trigger);
                     trigger.removed = true;
-                }
-                else 
-                {
-                    // If they need to be removed and havent been, remove them here.
-                    Triggers.Remove(trigger);
                 }
             }
             // Set all triggers to false.
