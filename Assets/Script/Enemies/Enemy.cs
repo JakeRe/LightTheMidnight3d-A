@@ -49,6 +49,7 @@ public class Enemy : MonoBehaviour
     [Header("Animations")]
     [SerializeField] private Animator enemyAnimator;
     [SerializeField] private SkinnedMeshRenderer roakSkin;
+    
 
     void Start()
     {
@@ -94,6 +95,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        // If Inside of Weapon Hitbox
         if (other.gameObject.CompareTag("HitBox"))
         {
             Weapons weaponScript = other.gameObject.GetComponentInParent<Weapons>();
@@ -111,7 +113,36 @@ public class Enemy : MonoBehaviour
         }
     }
 
-  
+    private void OnTriggerEnter(Collider other)
+    {
+        // Check if player's weapon trigger
+        if (other.gameObject.CompareTag("HitBox")) 
+        {
+            // Turn off renderers on the roak
+            SetRenderers(enemyModel, false);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // Check if player's weapon trigger
+        if (other.gameObject.CompareTag("HitBox"))
+        {
+            // Turn on all renderers on the roak
+            SetRenderers(enemyModel, true);
+        }
+    }
+
+    private void SetRenderers(GameObject parent, bool newState) 
+    {
+        // Turn on/off all renderers
+        var renderers = parent.GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in renderers)
+        {
+            renderer.enabled = newState;
+        }
+    }
+
 
     private bool CloseToPlayer()
     {
