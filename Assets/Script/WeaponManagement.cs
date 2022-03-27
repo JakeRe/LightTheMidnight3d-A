@@ -26,7 +26,6 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     [SerializeField] public Image selectedItem;
     [SerializeField] private bool selected = false;
     [SerializeField] private GameObject weaponWheel;
-    [SerializeField] private Animator weaponWheelAnim;
     [SerializeField] public int activeWeapon;
 
     
@@ -34,9 +33,8 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     public const byte WeaponSwitchEventCode = 1;
     private void Awake()
     {
-        weaponWheelAnim = weaponWheel.GetComponent<Animator>();
         weaponWheel.SetActive(false);
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponentInParent<PlayerController>();
         weaponPV = playerController.GetComponent<PhotonView>();
         foreach(Transform weapon in transform)
         {
@@ -83,7 +81,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     public void WeaponChange()
     {
         int previousWeaponSelection = selectedWeapon;
-        if (playerController.photonView.IsMine && weaponWheel.gameObject.activeInHierarchy == false)
+        if (playerController.photonView.IsMine && weaponWheel.gameObject.activeInHierarchy == false && weaponWheel.gameObject != null)
         {
             activeWeapon = 0;
            

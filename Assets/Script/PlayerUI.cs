@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using ExitGames.Client.Photon;
+using UnityEngine.AI;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -39,14 +40,12 @@ public class PlayerUI : MonoBehaviour
         health = player.health;
         points = player.playerPoints;
         playerPoints.text = points.ToString();
-        pauseMenu.SetActive(false);
-        isPaused = false;
-        playerHud.SetActive(true);
         numOfHearts = health;
     }
 
     private void Update()
     {
+        numOfHearts = player.maxHealth;
         points = player.playerPoints;
         health = player.health;
         playerPoints.text = points.ToString();
@@ -72,43 +71,5 @@ public class PlayerUI : MonoBehaviour
                 hearts[i].enabled = false;
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            isPaused = !isPaused;
-
-            Pause();
-        }
     }
-
-
-    public void Pause()
-    {
-        if (isPaused == true)
-        {
-            Time.timeScale = 0;
-            playerHud.SetActive(false);
-            pauseMenu.SetActive(true);
-        }
-
-        if (!isPaused)
-        {
-            Time.timeScale = 1;
-            playerHud.SetActive(true);
-            pauseMenu.SetActive(false);
-        }
-    }
-
-    //private void OnEnable()
-    //{
-    //    PlayerController.OnHealthChangedPositive += HealthChangePositive;
-    //    PlayerController.OnHealthChangedNegative += HealthChangeNegative;
-    //}
-
-    //private void OnDisable()
-    //{
-    //    PlayerController.OnHealthChangedNegative -= HealthChangeNegative;
-    //    PlayerController.OnHealthChangedPositive -= HealthChangePositive;
-    //}
-
 }

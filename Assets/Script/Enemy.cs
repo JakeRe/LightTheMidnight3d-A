@@ -42,12 +42,19 @@ public class Enemy : MonoBehaviour
 
     public NavMeshAgent enemyAgent;
 
+    [Header("Animations")]
+    [SerializeField] private Animator enemyAnimator;
+    [SerializeField] private SkinnedMeshRenderer roakSkin;
+
     void Start()
     {
         isTargetable = true;
         boxCollider = GetComponent<BoxCollider>();
         roakSoundSource = GetComponent<AudioSource>();
         deathFX.GetComponentInChildren<ParticleSystem>();
+        enemyAnimator = GetComponentInChildren<Animator>();
+        roakSkin = GetComponentInChildren<SkinnedMeshRenderer>();
+
         currentHealth = maxHealth;
         uiCam = Camera.main;
         givePoints = true;
@@ -95,6 +102,7 @@ public class Enemy : MonoBehaviour
         // Check if the distance between this object and the Player is less than or equal to the attack range.
         if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= attackRange)
         {
+            enemyAnimator.SetTrigger("Attack");
             return true;
         }
 
@@ -146,7 +154,7 @@ public class Enemy : MonoBehaviour
             MoveTowardTarget(TargetPosition(null));
             enemyUI.SetActive(false);
             deathFX.GetComponent<ParticleSystem>().Play();
-            enemyModel.GetComponent<MeshRenderer>().enabled = false;
+            roakSkin.enabled = false;
             Destroy(gameObject, 1f);
             isDead = true;
         }

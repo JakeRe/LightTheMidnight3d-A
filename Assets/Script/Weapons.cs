@@ -60,13 +60,16 @@ public class Weapons : MonoBehaviour
 
     [SerializeField] protected bool isCharging;
     [SerializeField] protected bool isFiring;
+    [SerializeField] protected GameManager gameManager;
 
     void Awake()
     {
+
         player = GetComponentInParent<PlayerController>();
         thisWeaponPv = GetComponent<PhotonView>();
         weaponSoundSource = GetComponent<AudioSource>();
         playerUI = FindObjectOfType<PlayerUI>();
+        gameManager = FindObjectOfType<GameManager>();
         if (weaponID == 1)
         {
             isOn = false;
@@ -77,7 +80,7 @@ public class Weapons : MonoBehaviour
 
     void Update()
     { 
-        if (player.photonView.IsMine)
+        if (player.photonView.IsMine && !gameManager.isPaused)
         {
           
             this.WeightCheck();
@@ -131,21 +134,21 @@ public class Weapons : MonoBehaviour
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(batteryLevel);
-            stream.SendNext(lightColor);
-            stream.SendNext(gameObject.activeSelf);
-        }
-        else if (stream.IsReading)
-        {
-            this.batteryLevel = (float)stream.ReceiveNext();
-            this.lightColor = (Color)stream.ReceiveNext();
-            this.gameObject.SetActive((bool)stream.ReceiveNext());
-        }
-    }
+    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    if (stream.IsWriting)
+    //    {
+    //        stream.SendNext(batteryLevel);
+    //        stream.SendNext(lightColor);
+    //        stream.SendNext(gameObject.activeSelf);
+    //    }
+    //    else if (stream.IsReading)
+    //    {
+    //        this.batteryLevel = (float)stream.ReceiveNext();
+    //        this.lightColor = (Color)stream.ReceiveNext();
+    //        this.gameObject.SetActive((bool)stream.ReceiveNext());
+    //    }
+    //}
 
     /// <summary>
     /// This method will toggle the flashlight on or off when the left mouse button is clicked.
@@ -178,7 +181,7 @@ public class Weapons : MonoBehaviour
 
     void FlashlightManagement()
     {
-        if (isOn)
+        if (isOn && playerUI != null)
         {
             playerUI.weaponBattery.maxValue = batteryLevelMax;
             flashLightEmitter.gameObject.SetActive(true);
@@ -189,7 +192,7 @@ public class Weapons : MonoBehaviour
                 flashLightEmitter.range -= batteryDrain/3.5f * Time.deltaTime;
             playerUI.weaponBattery.value = batteryLevel;
         }
-        else if (!isOn)
+        else if (!isOn && playerUI != null)
         {
             flashLightEmitter.gameObject.SetActive(false);
             flashlightHitBox.gameObject.SetActive(false);

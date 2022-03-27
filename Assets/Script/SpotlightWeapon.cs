@@ -30,7 +30,7 @@ public class SpotlightWeapon : Weapons
 
     void Update()
     {
-        if(this.gameObject.activeSelf == true && Input.GetButtonDown("Fire1") && shotCount != 0)
+        if(this.gameObject.activeSelf == true && Input.GetButtonDown("Fire1") && shotCount != 0 && !gameManager.isPaused)
         {
            ToggleFlashlight();
            StartCoroutine(SpotLightShot());
@@ -44,7 +44,7 @@ public class SpotlightWeapon : Weapons
         {
             isReady = false;
             isCharging = true;
-            player.canMove = false;
+            //player.canMove = false;
             weaponSoundSource.PlayOneShot(spotlightSounds[0]);
             yield return new WaitForSeconds(chargeDuration);
             weaponSoundSource.PlayOneShot(spotlightSounds[1]);
@@ -52,18 +52,18 @@ public class SpotlightWeapon : Weapons
             flashlightHitBox.gameObject.SetActive(true);
             isCharging = false;
             isFiring = true;
-            player.canRotate = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            //player.canRotate = false;
+            //Cursor.lockState = CursorLockMode.Locked;
             yield return new WaitForSeconds(shotDuration);
             weaponSoundSource.PlayOneShot(spotlightSounds[2]);
             flashLightEmitter.gameObject.SetActive(false);
             flashlightHitBox.gameObject.SetActive(false);
-            Cursor.lockState = CursorLockMode.None;
+            //Cursor.lockState = CursorLockMode.None;
             isFiring = false;
             isOn = false;
             isReady = true;
-            player.canRotate = true;
-            player.canMove = true;
+            //player.canRotate = true;
+            //player.canMove = true;
             shotCount -= 1;
             yield break;
         }

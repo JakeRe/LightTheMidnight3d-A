@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("Health of the Player Character")]
     [SerializeField] public float health;
     [SerializeField] public float maxHealth;
+    [SerializeField] public float maxHealthAbsolute;
     [Tooltip("How Much Time In Invincibility The Player has After Taking Damage")]
     [SerializeField] public float invincibilityTime;
     [Tooltip("This player can be damaged")]
@@ -74,6 +75,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Player Point Management")]
     [SerializeField] public float playerPoints;
     [SerializeField] private float debugPoints;
+    #endregion
+
+    #region Tutorial Block
+    [SerializeField] public Tutorial tutorial;
     #endregion
 
     #region Components 
@@ -101,16 +106,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Unity Callbacks
     void Awake()
-        { 
-
+        {
+       
         //If the photon view component registers as the users, then it makes the local player instance this game object 
         //Then it checks for the weapon manager in it's children.
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
-            weaponManagement = LocalPlayerInstance.GetComponent<WeaponManagement>();
+            weaponManagement = LocalPlayerInstance.GetComponentInChildren<WeaponManagement>();
             rb = LocalPlayerInstance.GetComponent<Rigidbody>();
             playerCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+            tutorial = FindObjectOfType<Tutorial>();
             playerAS = LocalPlayerInstance.GetComponent<AudioSource>();
             playerRenderer = LocalPlayerInstance.GetComponent<Renderer>();
             playerNormal = playerRenderer.material.color;
@@ -123,32 +129,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         DontDestroyOnLoad(gameObject);
     }
     void Start()
-         {
+        {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-
-        //CameraWorkLTM _cameraWork = this.gameObject.GetComponent<CameraWorkLTM>();
-
-
-        //if (_cameraWork != null)
-        //{
-        //    if (photonView.IsMine)
-        //    {
-        //        _cameraWork.OnStartFollowing();
-        //    }
-        //}
-
-        //This is for player UI instantiation, if the UI prefab isn't null, then it will print a debug message. If not, then it will send a message that sets the target. 
-
-        //if (PlayerUIPrefab != null && PhotonNetwork.OfflineMode != true)
-        //{
-        //    GameObject _uiGo = Instantiate(PlayerUIPrefab);
-        //    _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("<Color=Red><a>Missing</a></Color> PlayerUiPrefab reference on player Prefab.", this);
-        //}
-
        
         }
     void Update()
@@ -159,6 +141,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             playerPoints += debugPoints;
         }
 
+      
+
         //If the photon view is registered as the players then when the health is equal to or less than zero, the player will be sent back to the main menu.
 
         if (photonView.IsMine)
@@ -166,14 +150,19 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
            
             if (this.health <= 0f)
             {
-                GameManager.Instance.LeaveRoom();
+                GameManager.Instance.ReturnToMenuOffline();
+                Destroy(this.gameObject);
             }
 
-           
+
         }
         else
         {
-            //DoNothing
+            if(health <= 0f)
+            {
+                GameManager.Instance.ReturnToMenuOffline();
+                Destroy(this.gameObject);
+            }
         }
         
         }
@@ -358,7 +347,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                     pickedUpItem.Item();
                     health += 1;
                     playerAS.PlayOneShot(Sounds[3]);
-                    OnHealthChangedPositive();
                 }
                 
 
@@ -376,23 +364,29 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("UnlockBarrier"))
+        if (other.gameObject.CompareTag("UnlockBarrier") && tutorial.dialogueBoxes[2].gameObject.activeInHierarchy == false && tutorial.currentDialogue > 3)
         {
-            Debug.Log("Standing in unlock area.");
-            WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
-            area.unlockCanvas.enabled = true;
             
-            if (DoesPlayerInteract())
-                area.UnlockArea(playerPoints);
+            WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
+            if(area.unlockCanvas != null && !area.isUnlocked)
+            {
+                area.unlockCanvas.enabled = true;
+                area.unlockText.enabled = true;
+            }
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    area.UnlockArea();
+                }
         }
+              
 
         if (other.gameObject.CompareTag("Shop"))
         {
-            Debug.Log("Standing In Shop");
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyUp(KeyCode.E))
             {
                 inShop = !inShop;
                 canMove = !canMove;
+                Debug.Log($"Player in shop = {inShop}");
             }
                
             
@@ -401,7 +395,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("UnlockBarrier"))
+        if (other.gameObject.CompareTag("UnlockBarrier") && other.gameObject != null)
         {
             WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
             area.unlockCanvas.enabled = false;
@@ -446,6 +440,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
      
     }
+
+   
 
     private bool DoesPlayerInteract()
     {

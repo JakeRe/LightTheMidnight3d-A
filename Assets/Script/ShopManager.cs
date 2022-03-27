@@ -13,13 +13,13 @@ public class ShopManager : MonoBehaviour
     // Start is called before the first frame update
     #region Variables
     [Tooltip("The Player Active in the Scene")]
-    [SerializeField] private PlayerController player;
+    [SerializeField] protected PlayerController player;
     [Tooltip("The player's user interface")]
     [SerializeField] private PlayerUI playerUI;
     [Tooltip("The canvas used to display the shop's menu")]
     [SerializeField] private Canvas ShopCanvas;
     [Tooltip("Text element that displays the players points")]
-    [SerializeField] private TextMeshProUGUI playerPoints;
+    [SerializeField] protected TextMeshProUGUI playerPoints;
     [Tooltip("The amount of points the player has")]
     [SerializeField] protected float points;
     [Tooltip("Playable director for camera control")]
@@ -29,13 +29,13 @@ public class ShopManager : MonoBehaviour
     [SerializeField] protected float cost;
     #endregion
 
-    void Start()
+    protected void Start()
     {
        //This locates all of the components that are required for methods
        player = FindObjectOfType<PlayerController>();
        playerUI = FindObjectOfType<PlayerUI>();
        shopDirector = GetComponent<PlayableDirector>();
-       this.points = playerUI.points;
+       points = player.playerPoints;
        playerPoints.text = points.ToString();
     }
 
@@ -43,6 +43,8 @@ public class ShopManager : MonoBehaviour
     void Update()
     {
         OnShopEntered();
+        StatsUpdated();
+
     }
 
     #region Opening and Closing
@@ -65,7 +67,13 @@ public class ShopManager : MonoBehaviour
             ShopCanvas.gameObject.SetActive(true);
             shopDirector.playableAsset = transitions[0];
             shopDirector.Play();
-            DetectEnemies();
+            var enemy_in_map = GameObject.FindObjectsOfType<Enemy>();
+
+            foreach (Enemy enemy in enemy_in_map)
+            {
+                NavMeshAgent enemyNavmesh = enemy.gameObject.GetComponent<NavMeshAgent>();
+                enemyNavmesh.enabled = false;
+            }
             StartCoroutine(WaitForTIme());
           
         }
@@ -81,7 +89,7 @@ public class ShopManager : MonoBehaviour
 
             foreach (Enemy enemy in enemy_in_map)
             {
-                NavMeshAgent enemyNavmesh = enemy.GetComponent<NavMeshAgent>();
+                NavMeshAgent enemyNavmesh = enemy.gameObject.GetComponent<NavMeshAgent>();
                 enemyNavmesh.enabled = true;
             }
         }
@@ -89,22 +97,10 @@ public class ShopManager : MonoBehaviour
        
     }
 
-    void DetectEnemies()
-    {
-        var enemy_in_map = GameObject.FindObjectsOfType<Enemy>();
-
-        foreach (Enemy enemy in enemy_in_map)
-        {
-            NavMeshAgent enemyNavmesh = enemy.GetComponent<NavMeshAgent>();
-            enemyNavmesh.enabled = !enemyNavmesh.enabled;
-        }
-    }
-
-
     //This keeps the UI for the player's points updated.
-    void StatsUpdated()
+    protected void StatsUpdated()
     {
-        this.points = playerUI.points;
+        points = player.playerPoints;
         playerPoints.text = points.ToString();
     }
 
@@ -112,25 +108,5 @@ public class ShopManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(.04f);
     }
-    #endregion
-
-    #region Purchases
-    public void SpotCannonRefill()
-    {
-        SpotlightWeapon weapon = FindObjectOfType<SpotlightWeapon>();
-
-        if (weapon != null && weapon.shotCount != weapon.maxShotCount && points >= cost)
-        {
-            weapon.shotCount += 1;
-            points -= cost;
-            Debug.Log($"Refilled weapon to {weapon.shotCount}");
-        }
-        else
-        {
-            Debug.Log("You don't have the money for this");
-        }
-    }
-
-
     #endregion
 }
