@@ -80,7 +80,6 @@ public class SpotlightWeapon : Weapons
             weaponSoundSource.PlayOneShot(spotlightSounds[0]);
             yield return new WaitForSeconds(chargeDuration);
             weaponSoundSource.PlayOneShot(spotlightSounds[1]);
-            flashLightEmitter.gameObject.SetActive(true);
             flashlightHitBox.gameObject.SetActive(true);
             flashlightBeam.enabled = true;
             isCharging = false;
@@ -89,7 +88,6 @@ public class SpotlightWeapon : Weapons
             //Cursor.lockState = CursorLockMode.Locked;
             yield return new WaitForSeconds(shotDuration);
             weaponSoundSource.PlayOneShot(spotlightSounds[2]);
-            flashLightEmitter.gameObject.SetActive(false);
             flashlightHitBox.gameObject.SetActive(false);
             flashlightBeam.enabled = false;
             //Cursor.lockState = CursorLockMode.None;

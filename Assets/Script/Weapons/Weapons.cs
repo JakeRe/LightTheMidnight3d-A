@@ -18,8 +18,6 @@ public class Weapons : MonoBehaviour
     [Header("Flashlight")]
     [Tooltip("Hitbox for the flashlight")]
     [SerializeField] protected GameObject flashlightHitBox;
-    [Tooltip("The light gameobject used to cast the Flashlight beam")]
-    [SerializeField] public Light flashLightEmitter;
     [Tooltip("The controller of the Player")]
     [SerializeField] protected PlayerController player;
     [Tooltip("Volumetric Light Beam")]
@@ -30,8 +28,6 @@ public class Weapons : MonoBehaviour
     [SerializeField] public bool isReady;
     [Tooltip("Indicates if the flashlight is toggled on.")]
     [SerializeField] public bool isOn = false;
-    [Tooltip("Color emitted by flashlight")]
-    [SerializeField] private Color lightColor;
     [Tooltip("Flashlight maximum range")]
     [SerializeField] public float maxFlashlightRange;
 
@@ -96,7 +92,6 @@ public class Weapons : MonoBehaviour
         if (weaponID == 1)
         {
             isOn = false;
-            flashLightEmitter.gameObject.SetActive(false);
             flashlightHitBox.gameObject.SetActive(false);
             
            
@@ -149,8 +144,7 @@ public class Weapons : MonoBehaviour
         {
             //Battery is added to over the course of time
             batteryLevel += batteryDrain * Time.deltaTime;
-            flashLightEmitter.color += (lightColor) * Time.deltaTime;
-            flashLightEmitter.range = maxFlashlightRange;
+          
 
             //If the battery is full, then break the loop
             if (batteryLevel >= batteryLevelMax)
@@ -204,13 +198,11 @@ public class Weapons : MonoBehaviour
                 flashlightBeam.enabled = true;
             }
             playerUI.weaponBattery.maxValue = batteryLevelMax;
-            flashLightEmitter.gameObject.SetActive(true);
             
             if (batteryLevel >= 0)
                 batteryLevel = batteryLevel -= batteryDrain * Time.deltaTime;
             flashlightHitBox.gameObject.SetActive(true);
-            if (flashLightEmitter.range >= 0)
-                flashLightEmitter.range -= batteryDrain/3.5f * Time.deltaTime;
+          
             playerUI.weaponBattery.value = batteryLevel;
         }
         else if (!isOn && playerUI != null)
@@ -222,7 +214,6 @@ public class Weapons : MonoBehaviour
                 flashlightBeam.enabled = false;
             }
 
-            flashLightEmitter.gameObject.SetActive(false);
             flashlightHitBox.gameObject.SetActive(false);
             playerUI.weaponBattery.maxValue = batteryLevelMax;
             playerUI.weaponBattery.value = batteryLevel;
@@ -230,8 +221,7 @@ public class Weapons : MonoBehaviour
             {
                 if (batteryLevel <= batteryLevelMax)
                     batteryLevel += batteryRecharge * Time.deltaTime;
-                if (flashLightEmitter.range <= maxFlashlightRange)
-                    flashLightEmitter.range += batteryRecharge / 2 * Time.deltaTime;
+               
             }
         }
     }
