@@ -50,6 +50,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Animator enemyAnimator;
     [SerializeField] private SkinnedMeshRenderer roakSkin;
 
+    private TrackTrigger triggerEvent;
+
+
     void Start()
     {
         isTargetable = true;
@@ -64,11 +67,13 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         uiCam = Camera.main;
         givePoints = true;
+        triggerEvent = new TrackTrigger(gameObject);
+        SetRenderers(enemyModel, false);
     }
 
     private void OnAwake()
     {
-       
+        
     }
 
     void Update()
@@ -92,8 +97,15 @@ public class Enemy : MonoBehaviour
         CheckHealth();
     }
 
+    private void FixedUpdate()
+    {
+        triggerEvent.FixedUpdate();
+    }
+
     private void OnTriggerStay(Collider other)
     {
+        triggerEvent.TriggerUpdate(other);
+        // If Inside of Weapon Hitbox
         if (other.gameObject.CompareTag("HitBox"))
         {
             Weapons weaponScript = other.gameObject.GetComponentInParent<Weapons>();
@@ -111,7 +123,48 @@ public class Enemy : MonoBehaviour
         }
     }
 
-  
+    private void OnTriggerEnter(Collider other)
+    {
+        triggerEvent.AddTrigger(other, OnTriggerExit);
+        // Check if player's weapon trigger
+        if (other.gameObject.CompareTag("HitBox")) 
+        {
+            // Turn off renderers on the roak
+            SetRenderers(enemyModel, true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        triggerEvent.RemoveTrigger(other);
+        // Check if player's weapon trigger
+        if (other.gameObject.CompareTag("HitBox"))
+        {
+            // Turn on all renderers on the roak
+            SetRenderers(enemyModel, false);
+
+            // Reset to growl sound
+            roakSoundSource.clip = roakGrowlSounds[0];
+        }
+    }
+
+    private void SetRenderers(GameObject parent, bool newState) 
+    {
+        // Turn on/off all renderers
+        var renderers = parent.GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in renderers)
+        {
+            if (newState)
+            {
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+            else
+            {
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+        }
+    }
+
 
     private bool CloseToPlayer()
     {
@@ -133,6 +186,10 @@ public class Enemy : MonoBehaviour
         // Find target object in scene and return its position.
         GameObject target = GameObject.FindGameObjectWithTag(targetTag);
 
+        // In case the target does not exist, return self
+        if(target == null)
+            return this.transform.position;
+
         return target.transform.position;
     }
 
@@ -142,8 +199,6 @@ public class Enemy : MonoBehaviour
         {
             enemyAgent.SetDestination(targetPos);
         }
-      
-      
     }
 
     void OnDrawGizmos()
