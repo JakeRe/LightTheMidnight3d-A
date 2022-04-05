@@ -74,7 +74,7 @@ public class TrackTrigger
     /// <param name="other"></param>
     public void RemoveTrigger(Collider other) 
     {
-        Triggers.RemoveAll(x => x.collider.Equals(other));
+        Find(other).removed = true;
     }
 
     private void TriggerCallback(TriggerFrame frame) 
