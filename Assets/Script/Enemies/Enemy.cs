@@ -68,7 +68,6 @@ public class Enemy : MonoBehaviour
         uiCam = Camera.main;
         givePoints = true;
         triggerEvent = new TrackTrigger(gameObject);
-        SetRenderers(enemyModel, false);
     }
 
     private void OnAwake()
