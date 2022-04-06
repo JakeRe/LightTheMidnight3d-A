@@ -127,11 +127,7 @@ public class Enemy : MonoBehaviour
     {
         triggerEvent.AddTrigger(other, OnTriggerExit);
         // Check if player's weapon trigger
-        if (other.gameObject.CompareTag("HitBox")) 
-        {
-            // Turn off renderers on the roak
-            SetRenderers(enemyModel, true);
-        }
+       
     }
 
     private void OnTriggerExit(Collider other)
@@ -140,9 +136,6 @@ public class Enemy : MonoBehaviour
         // Check if player's weapon trigger
         if (other.gameObject.CompareTag("HitBox"))
         {
-            // Turn on all renderers on the roak
-            SetRenderers(enemyModel, false);
-
             // Reset to growl sound
             roakSoundSource.clip = roakGrowlSounds[0];
         }
