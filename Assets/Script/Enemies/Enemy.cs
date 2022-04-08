@@ -44,6 +44,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] public bool isTargetable;
     [SerializeField] public int soundIndex;
     [SerializeField] private float spaceBetweenSounds;
+    [SerializeField] private float minPitch;
+    [SerializeField] private float maxPitch;
 
     public NavMeshAgent enemyAgent;
 
@@ -239,12 +241,17 @@ public class Enemy : MonoBehaviour
 
     IEnumerator SoundPause()
     {
+        bool hasPlayedRecently;
+        hasPlayedRecently = false;
         yield return new WaitForSecondsRealtime(Random.Range(minRandomSoundTime, maxRandomSoundTime));
-        if (roakSoundSource.isPlaying == false)
+        if (roakSoundSource.isPlaying == false && !hasPlayedRecently)
         {
             roakSoundSource.clip = roakGrowlSounds[Random.Range(0, roakGrowlSounds.Length)];
+            roakSoundSource.pitch = Random.Range(minPitch, maxPitch);
             roakSoundSource.Play();
+            hasPlayedRecently = true;
         }
         yield return new WaitForSecondsRealtime(spaceBetweenSounds);
+        hasPlayedRecently = false;
     }
 }

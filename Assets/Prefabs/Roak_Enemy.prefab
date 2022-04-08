@@ -498,6 +498,8 @@ MonoBehaviour:
   isTargetable: 0
   soundIndex: 0
   spaceBetweenSounds: 30
+  minPitch: 0
+  maxPitch: 1
   enemyAgent: {fileID: 1632055073798285410}
   roakSkin:
   - {fileID: 8246031645505068322}
@@ -536,13 +538,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 20901fbba0084d4479d40773cc7e5e98, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
-  m_Pitch: 1
+  m_Volume: 0.206
+  m_Pitch: -0.01
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 153
+  Priority: 218
   DopplerLevel: 0.66
   MinDistance: 1
   MaxDistance: 10.93
