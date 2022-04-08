@@ -214,6 +214,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             playerHud.SetActive(true);
             pauseMenu.SetActive(false);
+
+            
         }
     }
     #endregion

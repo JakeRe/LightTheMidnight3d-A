@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float damageTime;
     [SerializeField] public bool isTargetable;
     [SerializeField] public int soundIndex;
+    [SerializeField] private float spaceBetweenSounds;
 
     public NavMeshAgent enemyAgent;
 
@@ -244,6 +245,6 @@ public class Enemy : MonoBehaviour
             roakSoundSource.clip = roakGrowlSounds[Random.Range(0, roakGrowlSounds.Length)];
             roakSoundSource.Play();
         }
-        yield return new WaitForSecondsRealtime(Random.Range(minRandomSoundTime, maxRandomSoundTime));
+        yield return new WaitForSecondsRealtime(spaceBetweenSounds);
     }
 }

@@ -562,7 +562,7 @@ PrefabInstance:
     - target: {fileID: 1947491332181461518, guid: f1ae1c47ccde08f4a899b509f77717d2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.95
+      value: 0.53
       objectReference: {fileID: 0}
     - target: {fileID: 1947491332181461518, guid: f1ae1c47ccde08f4a899b509f77717d2,
         type: 3}
@@ -641,6 +641,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5125297499534742137, guid: f1ae1c47ccde08f4a899b509f77717d2,
         type: 3}
+      propertyPath: fresnelPow
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125297499534742137, guid: f1ae1c47ccde08f4a899b509f77717d2,
+        type: 3}
+      propertyPath: fallOffStart
+      value: 5.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125297499534742137, guid: f1ae1c47ccde08f4a899b509f77717d2,
+        type: 3}
+      propertyPath: glareFrontal
+      value: 0.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125297499534742137, guid: f1ae1c47ccde08f4a899b509f77717d2,
+        type: 3}
+      propertyPath: coneRadiusStart
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125297499534742137, guid: f1ae1c47ccde08f4a899b509f77717d2,
+        type: 3}
       propertyPath: intensityInside
       value: 120
       objectReference: {fileID: 0}
@@ -648,6 +668,16 @@ PrefabInstance:
         type: 3}
       propertyPath: intensityOutside
       value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125297499534742137, guid: f1ae1c47ccde08f4a899b509f77717d2,
+        type: 3}
+      propertyPath: depthBlendDistance
+      value: 3.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125297499534742137, guid: f1ae1c47ccde08f4a899b509f77717d2,
+        type: 3}
+      propertyPath: _TrackChangesDuringPlaytime
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5361521601172712929, guid: f1ae1c47ccde08f4a899b509f77717d2,
         type: 3}
