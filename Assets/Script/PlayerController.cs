@@ -81,6 +81,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] public Tutorial tutorial;
     #endregion
 
+    #region Delegates for Events 
+    public delegate void ActiveRegion();
+    public static event ActiveRegion Door;
+    public static event ActiveRegion Shop;
+    public static event ActiveRegion Disable;
+    #endregion
+
+
+
     #region Components 
     [Header("Components")]
     [Tooltip("Local player Instance")]
@@ -124,6 +133,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             canBeDamaged = true;
             canMove = true;
             canRotate = true;
+         
         }
 
         DontDestroyOnLoad(gameObject);
@@ -141,29 +151,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             playerPoints += debugPoints;
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            health = 0;
+        }
       
 
         //If the photon view is registered as the players then when the health is equal to or less than zero, the player will be sent back to the main menu.
 
-        if (photonView.IsMine)
-        {
-           
-            if (this.health <= 0f)
-            {
-                GameManager.Instance.ReturnToMenuOffline();
-                Destroy(this.gameObject);
-            }
-
-
-        }
-        else
-        {
-            if(health <= 0f)
-            {
-                GameManager.Instance.ReturnToMenuOffline();
-                Destroy(this.gameObject);
-            }
-        }
+       
+        if(health <= 0f){
+            canMove = false;
+            canRotate = false;
+            canBeDamaged = false;
+         }
+        
         
         }
 
@@ -334,7 +336,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 Pickups pickedUpItem = other.GetComponent<Pickups>();
                 pickedUpItem.Item();
                 activeWeapon.batteryLevel = activeWeapon.batteryLevelMax;
-                activeWeapon.flashLightEmitter.range = activeWeapon.maxFlashlightRange;
                 playerAS.PlayOneShot(Sounds[1]);
                 
             }
@@ -366,31 +367,37 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (other.gameObject.CompareTag("UnlockBarrier") && tutorial.dialogueBoxes[2].gameObject.activeInHierarchy == false && tutorial.currentDialogue > 3)
         {
-            
+           
+
             WorldArea area = other.gameObject.GetComponentInParent<WorldArea>();
             if(area.unlockCanvas != null && !area.isUnlocked)
             {
+                Door();
                 area.unlockCanvas.enabled = true;
                 area.unlockText.enabled = true;
             }
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     area.UnlockArea();
+                   
                 }
         }
-              
-
-        if (other.gameObject.CompareTag("Shop"))
+        else if (other.gameObject.CompareTag("Shop"))
         {
+            Shop();
+
             if (Input.GetKeyUp(KeyCode.E))
             {
                 inShop = !inShop;
                 canMove = !canMove;
                 Debug.Log($"Player in shop = {inShop}");
+                
             }
-               
-            
         }
+      
+       
+
+       
     }
 
     void OnTriggerExit(Collider other)
@@ -401,6 +408,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             area.unlockCanvas.enabled = false;
             area.unlockText.text = area.defaultText;
         }
+
+        Disable();
     }
 
     void OnCollisionEnter(Collision enemy)
@@ -453,5 +462,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         return false;
     }
+
+   
 }
 
