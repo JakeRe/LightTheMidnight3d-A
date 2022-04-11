@@ -384,15 +384,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
         else if (other.gameObject.CompareTag("Shop"))
         {
-            Shop();
-
+            if (!inShop)
+            {
+                Shop();
+            }
             if (Input.GetKeyUp(KeyCode.E))
             {
                 inShop = !inShop;
                 canMove = !canMove;
                 Debug.Log($"Player in shop = {inShop}");
-                
             }
+
         }
       
        

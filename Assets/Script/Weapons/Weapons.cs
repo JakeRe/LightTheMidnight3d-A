@@ -100,7 +100,7 @@ public class Weapons : MonoBehaviour
 
     void Update()
     { 
-        if (player.photonView.IsMine && !gameManager.isPaused)
+        if (player.photonView.IsMine && !gameManager.isPaused && !player.inShop)
         {
           
             this.ToggleFlashlight();
