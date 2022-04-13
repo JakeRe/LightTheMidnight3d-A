@@ -86,6 +86,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     public static event ActiveRegion Door;
     public static event ActiveRegion Shop;
     public static event ActiveRegion Disable;
+    public static event ActiveRegion PickUp;
     #endregion
 
 
@@ -396,10 +397,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             }
 
         }
-      
-       
+        else if (other.gameObject.CompareTag("Deployable"))
+        {
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                PickUp();
+            }
+        }
 
-       
+
+
+
     }
 
     void OnTriggerExit(Collider other)
