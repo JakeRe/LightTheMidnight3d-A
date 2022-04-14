@@ -69,14 +69,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisWeaponPv: {fileID: 0}
   weaponName: 
-  weaponID: 2
+  weaponID: 0
   flashlightHitBox: {fileID: 7411144032930981889}
-  flashLightEmitter: {fileID: 0}
   player: {fileID: 0}
   flashlightBeam: {fileID: 0}
   isReady: 0
   isOn: 0
-  lightColor: {r: 0, g: 0, b: 0, a: 0}
   maxFlashlightRange: 0
   playerUI: {fileID: 0}
   canRecharge: 0

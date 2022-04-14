@@ -45,16 +45,19 @@ public class LanternWeapon : Weapons
         this.transform.SetParent(weaponManage.transform);
         gameObject.SetActive(false);
         weaponManage.weaponObjects.Add(this.gameObject);
+        this.weaponID = weaponManage.weaponObjects.Count;
+        this.weaponID -= 1;
     }
 
     void Drop()
     {
-        if (Input.GetKeyDown(KeyCode.E) && this.gameObject.activeSelf)
+        if (Input.GetKeyDown(KeyCode.E) && gameObject.activeSelf)
         {
             rb.isKinematic = false;
             radius.enabled = true;
             this.transform.SetParent(null);
             isDeployed = true;
+            weaponManage.weaponObjects.Remove(this.gameObject);
         }
     }
 

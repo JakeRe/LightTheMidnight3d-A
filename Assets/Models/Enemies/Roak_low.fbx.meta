@@ -8,14 +8,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Outline
-    second: {fileID: -7184819803674296287, guid: 39d5b4b49c3116f47bef5d9bde123934,
-      type: 3}
+    second: {instanceID: 0}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Roak1
-    second: {fileID: -4326561469284765609, guid: 39d5b4b49c3116f47bef5d9bde123934,
-      type: 3}
+    second: {instanceID: 0}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -43,7 +41,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 60

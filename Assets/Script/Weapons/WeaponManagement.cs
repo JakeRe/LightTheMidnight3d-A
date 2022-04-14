@@ -59,6 +59,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     {
             foreach (GameObject weapon in weaponObjects)
             {
+
                 if (selectedWeapon == weapon.GetComponent<Weapons>().weaponID)
                 {
                     weapon.gameObject.SetActive(true);
@@ -157,18 +158,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
         }
     }
 
-    void DeployEquipment()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            if (equipmentCount >= equipmentMax && equipment != null)
-            {
-                equipmentCount--;
-                
-            }
-        }
-       
-    }
+   
 
     public void OnEnable()
     {

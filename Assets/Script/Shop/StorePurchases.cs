@@ -94,6 +94,10 @@ public class StorePurchases : ShopManager
            melee.transform.SetParent(weaponManage.transform);
            melee.SetActive(false);
            weaponManage.weaponObjects.Add(melee);
+           Weapons laser = melee.GetComponent<Weapons>();
+           laser.weaponID = weaponManage.weaponObjects.Count;
+           laser.weaponID -= 1;
+           
         }
     }
 

@@ -104,7 +104,6 @@ public class Weapons : MonoBehaviour
         {
           
             this.ToggleFlashlight();
-            if (weaponID != 1)
             this.FlashlightManagement();
             this.BatteryUpdate();
             
