@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject playerHud;
     [SerializeField] private PlayerController controller;
     [SerializeField] private GameObject player;
+    [SerializeField] private WaveSystem waveSys;
 
     #endregion
 
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         pauseMenu.SetActive(false);
         playerHud.SetActive(true);
         player = GameObject.FindGameObjectWithTag("Player");
+        waveSys = FindObjectOfType<WaveSystem>();
         controller = player.GetComponent<PlayerController>();
         isPaused = false;
     }
@@ -129,6 +131,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void ReturnToMenuOffline()
     {
+        waveSys.ResetHealth();
         PhotonNetwork.LoadLevel("MultiplayerLauncher");
         Destroy(player);
     }
@@ -140,7 +143,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void Restart()
     {
+        waveSys.ResetHealth();
+
         PhotonNetwork.LoadLevel("Vertical Slice");
+
         Destroy(player);
     }
 

@@ -30,6 +30,8 @@ public class WaveSystem : MonoBehaviour
         public float spawnRate;
     }
 
+
+    [SerializeField] private PlayerController player;
     // This list is used to store the waves.
     // public Wave[] waves;
     public List<Wave> wavesList;
@@ -63,9 +65,18 @@ public class WaveSystem : MonoBehaviour
     // This int indicates what the current wave is.
     public int currentWave;
 
+    [SerializeField] private float healthMultiplier;
+
     private void Start()
     {
         waveCountdown = waveGracePeriod;
+        player = FindObjectOfType<PlayerController>();
+    }
+
+    public void ResetHealth()
+    {
+        Enemy enemy = enemyPrefabs[0].GetComponent<Enemy>();
+        enemy.maxHealth = enemy.baseMaxHealth;
     }
 
     private void Update()
@@ -184,13 +195,12 @@ public class WaveSystem : MonoBehaviour
         newWave.spawnRate = (float)newWave.waveNumber * spawnRateIncrease;
         newWave.enemiesList = GenerateEnemies(enemyPrefabs, newWave.enemyCount);
         wavesList.Add(newWave);
-        if(nextWave > 1)
-        {
-            Enemy enemy = enemyPrefabs[0].GetComponent<Enemy>();
-            enemy.maxHealth = enemy.maxHealth * newWave.waveNumber;
-            Debug.Log($"{enemy.maxHealth}");
+        Debug.Log($"{newWave.waveNumber}");
+        Enemy enemy = enemyPrefabs[0].GetComponent<Enemy>();
+        enemy.maxHealth = enemy.maxHealth * newWave.waveNumber * healthMultiplier;
+        Debug.Log($"{enemy.maxHealth}");
 
-        }
+        
 
     }
 

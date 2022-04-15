@@ -470,6 +470,7 @@ MonoBehaviour:
   enemyModel: {fileID: 5924473416757191708}
   currentHealth: 0
   maxHealth: 100
+  baseMaxHealth: 100
   healthSlider: {fileID: 7629958504369781366}
   enemyUI: {fileID: 1787931349923870629}
   uiCam: {fileID: 0}

@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     [SerializeField] private float currentHealth;
     [SerializeField] public float maxHealth;
+    [SerializeField] public float baseMaxHealth;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private GameObject enemyUI;
     [SerializeField] private Camera uiCam;
