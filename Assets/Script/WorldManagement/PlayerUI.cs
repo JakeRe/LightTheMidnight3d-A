@@ -34,6 +34,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private string DoorText;
     [SerializeField] private string ShopText;
+    [SerializeField] private string PickUpText;
 
     [SerializeField] private TextMeshProUGUI wavesSurvived;
     [SerializeField] private GameManager gameManage;
@@ -109,6 +110,7 @@ public class PlayerUI : MonoBehaviour
         PlayerController.Door += ActiveInteract;
         PlayerController.Shop += ActiveShop;
         PlayerController.Disable += DisableInteract;
+        PlayerController.inPickUp += InPickup;
     }
 
     private void OnDisable()
@@ -116,6 +118,7 @@ public class PlayerUI : MonoBehaviour
         PlayerController.Door -= ActiveInteract;
         PlayerController.Shop -= ActiveShop;
         PlayerController.Disable -= DisableInteract;
+        PlayerController.inPickUp -= InPickup;
     }
 
     void ActiveInteract()
@@ -128,6 +131,12 @@ public class PlayerUI : MonoBehaviour
     {
         interact.SetActive(true);
         interactText.text = ShopText;
+    }
+
+    void InPickup()
+    {
+        interact.SetActive(true);
+        interactText.text = PickUpText;
     }
 
     void DisableInteract()

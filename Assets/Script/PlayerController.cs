@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     public static event ChangeHealth OnHealthChangedNegative;
     public delegate void PickedUp();
     public static event PickedUp PickedUpItem;
+    public static event PickedUp inPickUp;
     
     #endregion
 
@@ -399,15 +400,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
         else if (other.gameObject.CompareTag("Deployable"))
         {
+            inPickUp();
             if (Input.GetKeyUp(KeyCode.E))
             {
                 PickUp();
             }
         }
-
-
-
-
     }
 
     void OnTriggerExit(Collider other)

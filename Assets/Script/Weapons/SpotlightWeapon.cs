@@ -60,9 +60,7 @@ public class SpotlightWeapon : Weapons
 
         if (this.gameObject.activeSelf == true && Input.GetButtonDown("Fire1") && shotCount != 0 && !gameManager.isPaused)
         {
-
-           
-            ToggleFlashlight();
+            //ToggleFlashlight();
            StartCoroutine(SpotLightShot());
           
            currentTime = Time.time;
