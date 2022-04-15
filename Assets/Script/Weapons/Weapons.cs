@@ -42,14 +42,10 @@ public class Weapons : MonoBehaviour
     [SerializeField] public float batteryLevelMax;
     [Tooltip("Rate by which the battery for the flashlight drains")]
     [SerializeField] protected float batteryDrain;
-    [Tooltip("Rate by which the battery for the flashlight recharges")]
     [SerializeField] protected float batteryRecharge;
-    [Tooltip("The Weight of the Equipped Weapon")]
-    [SerializeField] protected float weight;
     [Tooltip("This weapon's damage value")]
     [SerializeField] public float damageRate;
 
-    [SerializeField] private float moveSpeed;
     [SerializeField] protected bool canFire;
 
     [Header("Sound Materials")]
@@ -171,19 +167,15 @@ public class Weapons : MonoBehaviour
                 if (!isOn)
                 {
                   isOn = true;
-                if(weaponID != 1) {
+              
                     weaponSoundSource.PlayOneShot(flashlightSounds[0]);
-                }
-                 
-                   
                 }
                 else if (isOn && !isCharging && !isFiring)
                 {
                   isOn = false;
-                if(weaponID != 1)
-                {
+               
                     weaponSoundSource.PlayOneShot(flashlightSounds[1]);
-                }   
+                
                 }
         }
     }
