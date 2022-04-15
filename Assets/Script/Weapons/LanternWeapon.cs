@@ -11,7 +11,7 @@ public class LanternWeapon : Weapons
     [SerializeField] private WeaponManagement weaponManage;
     [SerializeField] private GameObject weaponSpawn;
     [SerializeField] private Rigidbody rb;
-
+   
     void OnEnable()
     {
          PlayerController.PickUp += PickUp;
@@ -24,6 +24,7 @@ public class LanternWeapon : Weapons
 
     private void Start()
     {
+        playerUI = FindObjectOfType<PlayerUI>();
         radius = GetComponent<NavMeshObstacle>();
         weaponSpawn = GameObject.FindGameObjectWithTag("WeaponSpawn");
         weaponManage = GameObject.FindObjectOfType<WeaponManagement>();
@@ -38,6 +39,7 @@ public class LanternWeapon : Weapons
 
     void PickUp()
     {
+        playerUI.DisableInteract();
         this.transform.position = weaponSpawn.transform.position;
         isDeployed = false;
         rb.isKinematic = true;

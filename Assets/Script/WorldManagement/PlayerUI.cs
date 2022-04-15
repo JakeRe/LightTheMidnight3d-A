@@ -139,7 +139,7 @@ public class PlayerUI : MonoBehaviour
         interactText.text = PickUpText;
     }
 
-    void DisableInteract()
+    public void DisableInteract()
     {
         interact.SetActive(false);
     }
