@@ -82,9 +82,7 @@ MonoBehaviour:
   batteryLevelMax: 4000
   batteryDrain: 0
   batteryRecharge: 20
-  weight: 0
-  damageRate: 15
-  moveSpeed: 0
+  damageRate: 2000
   canFire: 0
   weaponSoundSource: {fileID: 0}
   flashlightSounds: []

@@ -32,7 +32,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject enemyUI;
     [SerializeField] private Camera uiCam;
     [SerializeField] private BoxCollider boxCollider;
+    [SerializeField] private int minOdds;
+    [SerializeField] private int maxOdds;
+    [SerializeField] private GameObject[] powerUps;
 
+    #region Sounds
     [Header("Sound Materials")]
     [SerializeField] public AudioSource roakSoundSource;
     [SerializeField] private AudioClip[] roakGrowlSounds;
@@ -47,6 +51,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float spaceBetweenSounds;
     [SerializeField] private float minPitch;
     [SerializeField] private float maxPitch;
+    #endregion
 
     public NavMeshAgent enemyAgent;
 
@@ -251,4 +256,15 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSecondsRealtime(spaceBetweenSounds);
         hasPlayedRecently = false;
     }
+
+    //void SpawnPowerUp()
+    ////{
+    ////    int odds = Random.Range(minOdds, maxOdds);
+    ////    switch (odds)
+    ////    {
+    ////        case :
+
+    ////            break;
+    ////    }
+    //}
 }
