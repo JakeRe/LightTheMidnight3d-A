@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
     /// as well as the UI elements that display the health.
     /// </summary>
     [SerializeField] private float currentHealth;
-    [SerializeField] private float maxHealth;
+    [SerializeField] public float maxHealth;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private GameObject enemyUI;
     [SerializeField] private Camera uiCam;
@@ -73,11 +73,7 @@ public class Enemy : MonoBehaviour
         triggerEvent = new TrackTrigger(gameObject);
     }
 
-    private void OnAwake()
-    {
-        
-    }
-
+   
     void Update()
     {
 

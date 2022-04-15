@@ -183,8 +183,15 @@ public class WaveSystem : MonoBehaviour
         newWave.enemyCount = newWave.waveNumber * (int)enemyIncreaseRate;
         newWave.spawnRate = (float)newWave.waveNumber * spawnRateIncrease;
         newWave.enemiesList = GenerateEnemies(enemyPrefabs, newWave.enemyCount);
-
         wavesList.Add(newWave);
+        if(nextWave > 1)
+        {
+            Enemy enemy = enemyPrefabs[0].GetComponent<Enemy>();
+            enemy.maxHealth = enemy.maxHealth * newWave.waveNumber;
+            Debug.Log($"{enemy.maxHealth}");
+
+        }
+
     }
 
     List<Transform> GenerateEnemies(Transform[] _enemies, int count)

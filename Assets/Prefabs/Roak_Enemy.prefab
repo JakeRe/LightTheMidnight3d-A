@@ -469,7 +469,7 @@ MonoBehaviour:
   deathFX: {fileID: 1763868617577308476}
   enemyModel: {fileID: 5924473416757191708}
   currentHealth: 0
-  maxHealth: 50
+  maxHealth: 100
   healthSlider: {fileID: 7629958504369781366}
   enemyUI: {fileID: 1787931349923870629}
   uiCam: {fileID: 0}
