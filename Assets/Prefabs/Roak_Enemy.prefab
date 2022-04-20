@@ -469,12 +469,17 @@ MonoBehaviour:
   deathFX: {fileID: 1763868617577308476}
   enemyModel: {fileID: 5924473416757191708}
   currentHealth: 0
-  maxHealth: 100
+  maxHealth: 0.3032567
   baseMaxHealth: 100
   healthSlider: {fileID: 7629958504369781366}
   enemyUI: {fileID: 1787931349923870629}
   uiCam: {fileID: 0}
   boxCollider: {fileID: 0}
+  minOdds: 0
+  maxOdds: 100
+  powerUps:
+  - {fileID: 7624912126648607364, guid: 78dda24de1101cf4996995499c7cd710, type: 3}
+  - {fileID: 4820113269998381580, guid: c5a308980b2d94a41b3d98cd0e2faf6c, type: 3}
   roakSoundSource: {fileID: -4406323136832127243}
   roakGrowlSounds:
   - {fileID: 8300000, guid: 20901fbba0084d4479d40773cc7e5e98, type: 3}

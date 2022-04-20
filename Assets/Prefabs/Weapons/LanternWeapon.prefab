@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisWeaponPv: {fileID: 0}
   weaponName: 
-  weaponID: 2
+  weaponID: 0
   flashlightHitBox: {fileID: 0}
   player: {fileID: 0}
   flashlightBeam: {fileID: 0}
@@ -169,9 +169,7 @@ MonoBehaviour:
   batteryLevelMax: 100
   batteryDrain: 1
   batteryRecharge: 0
-  weight: 0
   damageRate: 0
-  moveSpeed: 0
   canFire: 0
   weaponSoundSource: {fileID: 0}
   flashlightSounds: []

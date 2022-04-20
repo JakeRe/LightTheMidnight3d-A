@@ -20,12 +20,13 @@ public class Enemy : MonoBehaviour
     private GameObject enemyModel;
     private bool isDead;
     private bool givePoints = true;
+    private bool oddsCalced = false;
 
     /// <summary>
     /// The following fields are used to manage the health of the Enemy,
     /// as well as the UI elements that display the health.
     /// </summary>
-    [SerializeField] private float currentHealth;
+    [SerializeField] public float currentHealth;
     [SerializeField] public float maxHealth;
     [SerializeField] public float baseMaxHealth;
     [SerializeField] private Slider healthSlider;
@@ -225,6 +226,7 @@ public class Enemy : MonoBehaviour
             deathFX.GetComponent<ParticleSystem>().Play();
             roakSkin[0].enabled = false;
             roakSkin[1].enabled = false;
+            StartCoroutine(SpawnPowerUp());
             Destroy(gameObject, 1f);
             isDead = true;
         }
@@ -257,14 +259,37 @@ public class Enemy : MonoBehaviour
         hasPlayedRecently = false;
     }
 
-    //void SpawnPowerUp()
-    ////{
-    ////    int odds = Random.Range(minOdds, maxOdds);
-    ////    switch (odds)
-    ////    {
-    ////        case :
+    IEnumerator SpawnPowerUp()
+    {
+        if (!oddsCalced)
+        { 
+            int odds = Random.Range(minOdds, maxOdds);
+            Debug.Log(odds);
+            if (odds < 50)
+            {
+                oddsCalced = true;
+                //do nothing 
+            }
+            else if (odds >= 50 && odds <= 60)
+            {
+                oddsCalced = true;
 
-    ////            break;
-    ////    }
-    //}
+                Instantiate(powerUps[0], transform.position, transform.rotation);
+            }
+            else if (odds >= 61 && odds <= 70)
+            {
+                oddsCalced = true;
+
+                Instantiate(powerUps[1], this.transform);
+            }
+            else
+            {
+                oddsCalced = true;
+            }
+        }
+
+        yield break;
+
+
+    }
 }
