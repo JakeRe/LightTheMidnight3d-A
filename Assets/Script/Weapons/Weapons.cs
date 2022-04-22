@@ -60,15 +60,15 @@ public class Weapons : MonoBehaviour
     [Header("UI for Weapons")]
     [SerializeField] protected Slider weaponCharge;
 
-    private void OnEnable()
-    {
-        WeaponManagement.OnActive += CanFire;
-    }
+    //private void OnEnable()
+    //{
+    //    WeaponManagement.OnActive += CanFire;
+    //}
 
-    private void OnDisable()
-    {
-        WeaponManagement.OnActive -= CanFire;
-    }
+    //private void OnDisable()
+    //{
+    //    WeaponManagement.OnActive -= CanFire;
+    //}
 
     void Awake()
     {

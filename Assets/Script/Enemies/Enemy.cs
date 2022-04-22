@@ -13,7 +13,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float attackRate;
     [SerializeField]
-    private int enemyValue;
+    public int enemyValue;
+    [SerializeField]
+    public int enemyBaseValue = 100;
     [SerializeField]
     private GameObject deathFX;
     [SerializeField]
@@ -36,6 +38,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int minOdds;
     [SerializeField] private int maxOdds;
     [SerializeField] private GameObject[] powerUps;
+    [SerializeField] private int multiplier;
+    [SerializeField] public bool multiplierIsActive;
 
     #region Sounds
     [Header("Sound Materials")]
@@ -233,7 +237,15 @@ public class Enemy : MonoBehaviour
         if (isDead && givePoints)
         {
             PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
-            playerScript.playerPoints += enemyValue;
+
+            if (multiplierIsActive)
+            {
+                playerScript.playerPoints += enemyValue * multiplier;
+            }
+            else
+            {
+                playerScript.playerPoints += enemyValue;
+            }
             givePoints = false;
         }
     }

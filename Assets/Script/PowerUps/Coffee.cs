@@ -19,7 +19,7 @@ public class Coffee : PowerUps
     {
         PlayerController player = FindObjectOfType<PlayerController>();
         player.movementSpeed = player.movementSpeed * speedMultiplier;
-        yield return new WaitForSecondsRealtime(30f);
+        yield return new WaitForSecondsRealtime(duration);
         player.movementSpeed = player.movementSpeed / speedMultiplier;
         Destroy(this.gameObject);
     }

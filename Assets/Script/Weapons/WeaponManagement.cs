@@ -28,13 +28,13 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     [SerializeField] private GameObject weaponWheel;
     [SerializeField] public int activeWeapon;
 
-    [SerializeField] public delegate void WeaponWheel();
-    [SerializeField] public static event WeaponWheel OnActive;
+    //[SerializeField] public delegate void WeaponWheel();
+    //[SerializeField] public static event WeaponWheel OnActive;
   
     public const byte WeaponSwitchEventCode = 1;
     private void Awake()
     {
-        weaponWheel.SetActive(false);
+        //weaponWheel.SetActive(false);
         playerController = GetComponentInParent<PlayerController>();
         weaponPV = playerController.GetComponent<PhotonView>();
         foreach(Transform weapon in transform)
@@ -50,7 +50,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     private void Update()
     {
         WeaponChange();
-        WeaponWheelControl();
+        //WeaponWheelControl();
 
     }
 
@@ -83,7 +83,7 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
     public void WeaponChange()
     {
         int previousWeaponSelection = selectedWeapon;
-        if (playerController.photonView.IsMine && weaponWheel.gameObject.activeInHierarchy == false && weaponWheel.gameObject != null)
+        if (playerController.photonView.IsMine)
         {
             activeWeapon = 0;
            
@@ -120,23 +120,23 @@ public class WeaponManagement: MonoBehaviour, IPunObservable, IOnEventCallback
 
     }
 
-    void WeaponWheelControl()
-    {
-        if(weaponWheel != null)
-        {
-            if (Input.GetKey(KeyCode.Q))
-            {
-                weaponWheel.SetActive(true);
-                Time.timeScale = .5f;
-            }
-            else
-            {
-                weaponWheel.SetActive(false);
-                Time.timeScale = 1f;
-            }
-        }
+    //void WeaponWheelControl()
+    //{
+    //    if(weaponWheel != null)
+    //    {
+    //        if (Input.GetKey(KeyCode.Q))
+    //        {
+    //            weaponWheel.SetActive(true);
+    //            Time.timeScale = .5f;
+    //        }
+    //        else
+    //        {
+    //            weaponWheel.SetActive(false);
+    //            Time.timeScale = 1f;
+    //        }
+    //    }
       
-    }
+    //}
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

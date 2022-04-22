@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("How Much Time In Invincibility The Player has After Taking Damage")]
     [SerializeField] public float invincibilityTime;
     [Tooltip("This player can be damaged")]
-    [SerializeField] private bool canBeDamaged;
+    [SerializeField] public bool canBeDamaged;
     [Tooltip("Alpha of the player material when the player takes damage")]
     [SerializeField] private float damageAlpha;
     [SerializeField] private Renderer playerRenderer;

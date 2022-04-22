@@ -197,8 +197,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             foreach (Enemy enemy in enemy_in_map)
             {
-                NavMeshAgent enemyNavmesh = enemy.enemyAgent;
-                enemyNavmesh.enabled = false;
+                enemy.enemyAgent.isStopped = true;
                 AudioSource audio = enemy.roakSoundSource;
                 audio.enabled = false;
             }
@@ -213,8 +212,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             foreach (Enemy enemy in enemy_in_map)
             {
-                NavMeshAgent enemyNavmesh = enemy.enemyAgent;
-                enemyNavmesh.enabled = true;
+                enemy.enemyAgent.isStopped = false;
                 AudioSource audio = enemy.roakSoundSource;
                 audio.enabled = true;
             }

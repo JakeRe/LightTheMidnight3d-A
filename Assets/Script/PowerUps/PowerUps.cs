@@ -7,6 +7,8 @@ public class PowerUps : MonoBehaviour
 
     [SerializeField] private MeshRenderer mesh;
     [SerializeField] private Collider collider;
+    [SerializeField] protected float duration;
+
 
 
     private void Awake()
