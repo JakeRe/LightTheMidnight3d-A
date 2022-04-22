@@ -45,6 +45,7 @@ public class Weapons : MonoBehaviour
     [SerializeField] protected float batteryRecharge;
     [Tooltip("This weapon's damage value")]
     [SerializeField] public float damageRate;
+    public float defaultDamage;
 
     [SerializeField] protected bool canFire;
 
@@ -72,6 +73,7 @@ public class Weapons : MonoBehaviour
 
     void Awake()
     {
+        defaultDamage = damageRate;
         flashlightBeam = GetComponentInChildren<VolumetricLightBeam>();
         player = GetComponentInParent<PlayerController>();
         thisWeaponPv = GetComponent<PhotonView>();

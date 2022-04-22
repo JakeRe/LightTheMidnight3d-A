@@ -27,6 +27,7 @@ public class Freeze : PowerUps
             currentTime += Time.deltaTime;
             
         }
+        Destroy(this);
        
 
     }
