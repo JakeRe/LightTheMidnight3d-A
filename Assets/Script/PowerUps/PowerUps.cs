@@ -13,8 +13,8 @@ public class PowerUps : MonoBehaviour
 
     private void Awake()
     {
-        mesh = GetComponent<MeshRenderer>();
-        collider = GetComponent<Collider>();
+        mesh = GetComponentInChildren<MeshRenderer>();
+        collider = GetComponentInChildren<Collider>();
     }
 
 

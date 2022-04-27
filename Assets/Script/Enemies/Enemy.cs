@@ -40,6 +40,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject[] powerUps;
     [SerializeField] private int multiplier;
     [SerializeField] public bool multiplierIsActive;
+    [Tooltip("This array is used to determine the odds of powerups dropping. The cells operate in pairs. 0-1, 2-3, 4-5, etc.")]
+    [SerializeField] private int[] oddsRange;
+    [SerializeField] private int noPowerUps;
 
     #region Sounds
     [Header("Sound Materials")]
@@ -231,7 +234,6 @@ public class Enemy : MonoBehaviour
             roakSkin[0].enabled = false;
             roakSkin[1].enabled = false;
             StartCoroutine(SpawnPowerUp());
-            Destroy(gameObject, 1f);
             isDead = true;
         }
         if (isDead && givePoints)
@@ -274,32 +276,59 @@ public class Enemy : MonoBehaviour
     IEnumerator SpawnPowerUp()
     {
         if (!oddsCalced)
-        { 
+        {
             int odds = Random.Range(minOdds, maxOdds);
             Debug.Log(odds);
-            if (odds < 50)
+            if (odds < noPowerUps)
             {
                 oddsCalced = true;
                 //do nothing 
             }
-            else if (odds >= 50 && odds <= 60)
+            else if (odds >= oddsRange[0] && odds <= oddsRange[1])
             {
                 oddsCalced = true;
 
                 Instantiate(powerUps[0], transform.position, transform.rotation);
             }
-            else if (odds >= 61 && odds <= 70)
+            else if (odds >= oddsRange[2] && odds <= oddsRange[3])
             {
                 oddsCalced = true;
 
-                Instantiate(powerUps[1], this.transform);
+                Instantiate(powerUps[1], transform.position, transform.rotation);
+            }
+            else if (odds >= oddsRange[4] && odds <= oddsRange[5])
+            {
+                oddsCalced = true;
+                Instantiate(powerUps[2], transform.position, transform.rotation);
+            }
+            else if (odds >= oddsRange[6] && odds <= oddsRange[7])
+            {
+                oddsCalced = true;
+                Instantiate(powerUps[3], transform.position, transform.rotation);
+            }
+            else if (odds >= oddsRange[8] && odds <= oddsRange[9])
+            {
+                oddsCalced = true;
+                Instantiate(powerUps[4], transform.position, transform.rotation);
+            }
+            else if (odds >= oddsRange[10] && odds <= oddsRange[11])
+            {
+                oddsCalced = true;
+                Instantiate(powerUps[5], transform.position, transform.rotation);
+            }
+            else if (odds >= oddsRange[12] && odds <= oddsRange[13])
+            {
+                oddsCalced = true;
+                Instantiate(powerUps[6], transform.position, transform.rotation);
             }
             else
             {
                 oddsCalced = true;
             }
-        }
+            
 
+        }
+        Destroy(this.gameObject, 1f);
         yield break;
 
 
