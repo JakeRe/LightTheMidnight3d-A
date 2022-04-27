@@ -27,6 +27,7 @@ public class ShopManager : MonoBehaviour
     [Tooltip("Array of playable assets that are accessed by the shop director")]
     [SerializeField] private PlayableAsset[] transitions;
     [SerializeField] protected float cost;
+    [SerializeField] private ParticleSystem rain;
     #endregion
 
     protected void Start()
@@ -37,6 +38,8 @@ public class ShopManager : MonoBehaviour
        shopDirector = GetComponent<PlayableDirector>();
        points = player.playerPoints;
        playerPoints.text = points.ToString();
+       rain.Play();
+
     }
 
     // Update is called once per frame
@@ -62,7 +65,7 @@ public class ShopManager : MonoBehaviour
     {
         if(player.inShop == true)
         {
-           
+            rain.Stop();
             playerUI.gameObject.SetActive(false);
             ShopCanvas.gameObject.SetActive(true);
             shopDirector.playableAsset = transitions[0];
@@ -71,14 +74,18 @@ public class ShopManager : MonoBehaviour
 
             foreach (Enemy enemy in enemy_in_map)
             {
-                NavMeshAgent enemyNavmesh = enemy.gameObject.GetComponent<NavMeshAgent>();
-                enemyNavmesh.enabled = false;
+                enemy.enemyAgent.isStopped = true;
             }
             StartCoroutine(WaitForTIme());
           
         }
-        else
+        else if(player.inShop == false)
         {
+            if (rain.isStopped)
+            {
+                rain.Play();
+            }
+
             playerUI.gameObject.SetActive(true);
             ShopCanvas.gameObject.SetActive(false);
             shopDirector.playableAsset = transitions[1];
@@ -89,8 +96,7 @@ public class ShopManager : MonoBehaviour
 
             foreach (Enemy enemy in enemy_in_map)
             {
-                NavMeshAgent enemyNavmesh = enemy.gameObject.GetComponent<NavMeshAgent>();
-                enemyNavmesh.enabled = true;
+                enemy.enemyAgent.isStopped = false;
             }
         }
         StatsUpdated();
