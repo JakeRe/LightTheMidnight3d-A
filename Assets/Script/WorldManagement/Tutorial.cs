@@ -27,6 +27,7 @@ public class Tutorial : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
         dialoguePassed = 0;
         currentDialogue = 1;
+        activeDialogueBox = dialogueBoxes[0];
         dialogueBoxes[1].SetActive(false);
         dialogueBoxes[0].SetActive(true);
     }
@@ -57,18 +58,20 @@ public class Tutorial : MonoBehaviour
             {
                 case 1:
                     playDirect.playableAsset = tutorials[0];
+                    dialogueBoxes[0] = activeDialogueBox;
                     dialogueBoxes[0].SetActive(true);
                     playDirect.Play();
                     currentDialogue += 1;
                     StartCoroutine(WaitForDialogueToFinish());
+                    dialogueBoxes[0].SetActive(false);
                     break;
                 case 2:
                     if (player.health < player.maxHealth && dialogueBoxes[0].activeInHierarchy == false)
                     {
+                        activeDialogueBox = dialogueBoxes[1];
                         playDirect.playableAsset = tutorials[1];
                         dialogueBoxes[1].SetActive(true);
                         playDirect.Play();
-                        //dialogueBoxes[1].SetActive(false);
                         currentDialogue += 1;
 
                     }
@@ -76,6 +79,8 @@ public class Tutorial : MonoBehaviour
                     {
                         StartCoroutine(TimeSkip());
                         playDirect.playableAsset = tutorials[1];
+                        dialogueBoxes[0].SetActive(false);
+                        activeDialogueBox = dialogueBoxes[1];
                         dialogueBoxes[1].SetActive(true);
                         playDirect.Play();
                         //dialogueBoxes[1].SetActive(false);
@@ -88,6 +93,7 @@ public class Tutorial : MonoBehaviour
                     if (player.playerPoints > 500 && foodTutorialComplete)
                     {
                         playDirect.playableAsset = tutorials[2];
+                        activeDialogueBox = dialogueBoxes[2];
                         dialogueBoxes[2].SetActive(true);
                         playDirect.Play();
                         dialogueBoxes[2].SetActive(false);
@@ -99,6 +105,7 @@ public class Tutorial : MonoBehaviour
                     if (firstDoor == null)
                     {
                         playDirect.playableAsset = tutorials[3];
+                        activeDialogueBox = dialogueBoxes[3];
                         dialogueBoxes[3].SetActive(true);
                         playDirect.Play();
                         dialogueBoxes[3].SetActive(false);
@@ -125,7 +132,7 @@ public class Tutorial : MonoBehaviour
             currentDialogue = 4;
             dialoguePassed = 3;
             playDirect.Stop();
-            dialogueBoxes[0].SetActive(false);
+            activeDialogueBox.SetActive(false);
             waveManager.gameObject.SetActive(true);
 
         }
