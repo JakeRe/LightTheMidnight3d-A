@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Animations")]
     //[SerializeField] private Animator enemyAnimator;
-    [SerializeField] private MeshRenderer[] roakSkin;
+    [SerializeField] private SkinnedMeshRenderer[] roakSkin;
 
     private TrackTrigger triggerEvent;
 
