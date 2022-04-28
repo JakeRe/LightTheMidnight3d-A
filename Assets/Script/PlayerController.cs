@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private Vector3 worldPosition;
     [Tooltip("Player's Movement Speed.")]
     [SerializeField] public float movementSpeed;
+    [SerializeField] public float baseMovementSpeed;
     [Tooltip("Stored Vector for Player Rotation")]
     [SerializeField] private Vector3 movementControl = Vector3.zero;
     [SerializeField] private float horizontal;
@@ -135,6 +136,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             canBeDamaged = true;
             canMove = true;
             canRotate = true;
+            baseMovementSpeed = movementSpeed;
          
         }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Coffee : PowerUps
 {
     public float speedMultiplier;
+    public bool multiplied;
     public override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
@@ -17,10 +18,15 @@ public class Coffee : PowerUps
     
     IEnumerator IncreaseSpeed()
     {
+
         PlayerController player = FindObjectOfType<PlayerController>();
-        player.movementSpeed = player.movementSpeed * speedMultiplier;
+        if (player.movementSpeed <= player.baseMovementSpeed)
+        {
+            player.movementSpeed = player.movementSpeed * speedMultiplier;
+            multiplied = true;
+        }
         yield return new WaitForSecondsRealtime(duration);
-        player.movementSpeed = player.movementSpeed / speedMultiplier;
+        player.movementSpeed = player.baseMovementSpeed;
         Destroy(this.gameObject);
     }
 
