@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GodMode : PowerUps
 {
+    [SerializeField] private Material godMode;
 
     public override void OnTriggerEnter(Collider other)
     {
@@ -16,11 +18,22 @@ public class GodMode : PowerUps
 
     IEnumerator SetInvulnerable()
     {
+        PlayerUI playerUI = FindObjectOfType<PlayerUI>();
         PlayerController player = FindObjectOfType<PlayerController>();
         player.canBeDamaged = false;
+        foreach(Image image in playerUI.hearts)
+        {
+            image.material = godMode;
+        }
         yield return new WaitForSecondsRealtime(duration);
         player.canBeDamaged = true;
+        foreach (Image image in playerUI.hearts)
+        {
+            image.material = null;
+        }
         Destroy(this.gameObject);
+        
+        
     }
 
 

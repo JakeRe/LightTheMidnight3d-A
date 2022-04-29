@@ -4,23 +4,26 @@ using UnityEngine;
 
 public class PowerSurge : PowerUps
 {
+    [SerializeField] private Animator surgeAnim;
     public override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
         if (other.gameObject.CompareTag("Player"))
         {
-            DestroyAllEnemies();
+            StartCoroutine(DestroyAllEnemies());
         }
     }
-
-    void DestroyAllEnemies()
+ 
+    IEnumerator DestroyAllEnemies()
     {
         var enemy_in_map = FindObjectsOfType<Enemy>();
-
-        foreach(Enemy enemy in enemy_in_map)
+        surgeAnim.SetTrigger("Interacted");
+        yield return new WaitForSecondsRealtime(2);
+        foreach (Enemy enemy in enemy_in_map)
         {
             enemy.currentHealth = 0;
         }
+        yield return new WaitForSecondsRealtime(3);
         Destroy(this.gameObject);
     }
 }

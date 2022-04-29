@@ -118,7 +118,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Update()
     {
         Pause();
-        detectEnemies();
     }
 
     #endregion
@@ -176,7 +175,20 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            isPaused = !isPaused;
+            UIPause();
+            if (isPaused)
+            {
+                StartCoroutine(PauseEnemies());
+
+            }
+            if (!isPaused)
+            {
+                StopCoroutine(PauseEnemies());
+                playerHud.SetActive(true);
+                pauseMenu.SetActive(false);
+                controller.canMove = true;
+                controller.canRotate = true;
+            }
         }
 
     }
@@ -192,9 +204,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             controller.canMove = false;
             controller.canRotate = false;
+
             var enemy_in_map = FindObjectsOfType<Enemy>();
-
-
             foreach (Enemy enemy in enemy_in_map)
             {
                 enemy.enemyAgent.isStopped = true;
@@ -204,23 +215,43 @@ public class GameManager : MonoBehaviourPunCallbacks
             playerHud.SetActive(false);
             pauseMenu.SetActive(true);
         }
-        else
-        {
-            controller.canRotate = true;
-            controller.canMove = true;
-            var enemy_in_map = FindObjectsOfType<Enemy>();
 
-            foreach (Enemy enemy in enemy_in_map)
-            {
-                enemy.enemyAgent.isStopped = false;
-                AudioSource audio = enemy.roakSoundSource;
-                audio.enabled = true;
-            }
-            playerHud.SetActive(true);
-            pauseMenu.SetActive(false);
+        //else if(isPaused == false)
+        //{
+        //    controller.canRotate = true;
+        //    controller.canMove = true;
+        //    var enemy_in_map = FindObjectsOfType<Enemy>();
+
+        //    foreach (Enemy enemy in enemy_in_map)
+        //    {
+        //        enemy.enemyAgent.isStopped = false;
+        //        AudioSource audio = enemy.roakSoundSource;
+        //        audio.enabled = true;
+        //    }
+        //    playerHud.SetActive(true);
+        //    pauseMenu.SetActive(false);
 
             
-        }
+        //}
     }
     #endregion
+
+    IEnumerator PauseEnemies()
+    {
+        while (isPaused)
+        {
+            controller.canMove = false;
+            controller.canRotate = false;
+            var enemy_in_map = FindObjectsOfType<Enemy>();
+            foreach (Enemy enemy in enemy_in_map)
+            {
+                enemy.enemyAgent.isStopped = true;
+                AudioSource audio = enemy.roakSoundSource;
+                audio.enabled = false;
+            }
+            playerHud.SetActive(false);
+            pauseMenu.SetActive(true);
+            yield return null;
+        }
+    }
 }

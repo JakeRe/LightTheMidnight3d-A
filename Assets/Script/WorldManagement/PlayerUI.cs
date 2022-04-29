@@ -18,7 +18,7 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] private float health;
     [SerializeField] private float numOfHearts;
-    [SerializeField] private Image[] hearts;
+    [SerializeField] public Image[] hearts;
     [SerializeField] public Image batteryLevel;
     [SerializeField] private Sprite fullHeart;
     [SerializeField] private Sprite emptyHeart;
