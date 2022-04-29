@@ -675,12 +675,10 @@ MonoBehaviour:
   weaponName: Standard Flashlight
   weaponID: 0
   flashlightHitBox: {fileID: 8023462376318219397}
-  flashLightEmitter: {fileID: 6545203067312216260}
   player: {fileID: 0}
   flashlightBeam: {fileID: 0}
   isReady: 0
   isOn: 0
-  lightColor: {r: 1, g: 0.9831135, b: 0.41037738, a: 0}
   maxFlashlightRange: 50
   playerUI: {fileID: 0}
   canRecharge: 1
@@ -688,9 +686,8 @@ MonoBehaviour:
   batteryLevelMax: 50
   batteryDrain: 2
   batteryRecharge: 0
-  weight: 2
   damageRate: 0
-  moveSpeed: 0
+  defaultDamage: 0
   canFire: 0
   weaponSoundSource: {fileID: 0}
   flashlightSounds:
@@ -938,6 +935,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Base_Flashlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4df49f7f506acf946a6cc020c4f20a5d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4528533586825986717, guid: 4df49f7f506acf946a6cc020c4f20a5d,
         type: 3}

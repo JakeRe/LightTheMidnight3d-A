@@ -197,7 +197,7 @@ public class WaveSystem : MonoBehaviour
         wavesList.Add(newWave);
         Debug.Log($"{newWave.waveNumber}");
         Enemy enemy = enemyPrefabs[0].GetComponent<Enemy>();
-        enemy.maxHealth = enemy.maxHealth * newWave.waveNumber * healthMultiplier;
+        enemy.maxHealth += 50f; /*enemy.maxHealth * newWave.waveNumber * healthMultiplier*/;
         Debug.Log($"{enemy.maxHealth}");
 
         

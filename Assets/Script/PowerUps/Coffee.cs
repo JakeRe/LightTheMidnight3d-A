@@ -18,15 +18,18 @@ public class Coffee : PowerUps
     
     IEnumerator IncreaseSpeed()
     {
-
+        
         PlayerController player = FindObjectOfType<PlayerController>();
+        Animator playerAnim = player.gameObject.GetComponentInChildren<Animator>();
         if (player.movementSpeed <= player.baseMovementSpeed)
         {
+            playerAnim.speed = 2;
             player.movementSpeed = player.movementSpeed * speedMultiplier;
             multiplied = true;
         }
         yield return new WaitForSecondsRealtime(duration);
         player.movementSpeed = player.baseMovementSpeed;
+        playerAnim.speed = 1;
         Destroy(this.gameObject);
     }
 
