@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject playerPrefab;
     public const int SpawnLocalPlayer = 1;
     public LightTheMidnightLauncher LTML;
+    public bool altPause;
 
 
 
@@ -178,6 +179,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             UIPause();
             if (isPaused)
             {
+                playerHud.SetActive(false);
+                pauseMenu.SetActive(true);
                 StartCoroutine(PauseEnemies());
 
             }
@@ -193,46 +196,24 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     }
 
+    public void EnemyPause()
+    {
+        altPause = true;
+        StartCoroutine(AltPause());
+    }
+
+    public void EnemyUnpause()
+    {
+        altPause = false;
+        controller.canMove = true;
+        controller.canRotate = true;
+        
+    }
+
     public void UIPause()
     {
         isPaused = !isPaused;
-    }
-
-    public void detectEnemies()
-    {
-        if (isPaused == true)
-        {
-            controller.canMove = false;
-            controller.canRotate = false;
-
-            var enemy_in_map = FindObjectsOfType<Enemy>();
-            foreach (Enemy enemy in enemy_in_map)
-            {
-                enemy.enemyAgent.isStopped = true;
-                AudioSource audio = enemy.roakSoundSource;
-                audio.enabled = false;
-            }
-            playerHud.SetActive(false);
-            pauseMenu.SetActive(true);
-        }
-
-        //else if(isPaused == false)
-        //{
-        //    controller.canRotate = true;
-        //    controller.canMove = true;
-        //    var enemy_in_map = FindObjectsOfType<Enemy>();
-
-        //    foreach (Enemy enemy in enemy_in_map)
-        //    {
-        //        enemy.enemyAgent.isStopped = false;
-        //        AudioSource audio = enemy.roakSoundSource;
-        //        audio.enabled = true;
-        //    }
-        //    playerHud.SetActive(true);
-        //    pauseMenu.SetActive(false);
-
-            
-        //}
+       
     }
     #endregion
 
@@ -249,8 +230,23 @@ public class GameManager : MonoBehaviourPunCallbacks
                 AudioSource audio = enemy.roakSoundSource;
                 audio.enabled = false;
             }
-            playerHud.SetActive(false);
-            pauseMenu.SetActive(true);
+            yield return null;
+        }
+    }
+
+    IEnumerator AltPause()
+    {
+        while (altPause)
+        {
+            controller.canMove = false;
+            controller.canRotate = false;
+            var enemy_in_map = FindObjectsOfType<Enemy>();
+            foreach (Enemy enemy in enemy_in_map)
+            {
+                enemy.enemyAgent.isStopped = true;
+                AudioSource audio = enemy.roakSoundSource;
+                audio.enabled = false;
+            }
             yield return null;
         }
     }
