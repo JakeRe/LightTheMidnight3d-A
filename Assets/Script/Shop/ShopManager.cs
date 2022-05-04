@@ -28,6 +28,9 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private PlayableAsset[] transitions;
     [SerializeField] protected float cost;
     [SerializeField] private ParticleSystem rain;
+    [SerializeField] private AudioSource shopAudio;
+    [SerializeField] private GameObject mainGameAudio;
+    [SerializeField] private AudioSource mainGameAudioSource;
     #endregion
 
     protected void Start()
@@ -39,7 +42,8 @@ public class ShopManager : MonoBehaviour
        points = player.playerPoints;
        playerPoints.text = points.ToString();
        rain.Play();
-
+       mainGameAudio = GameObject.FindGameObjectWithTag("SceneMusic");
+       mainGameAudioSource = mainGameAudio.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -66,6 +70,11 @@ public class ShopManager : MonoBehaviour
         if(player.inShop == true)
         {
             rain.Stop();
+            mainGameAudioSource.Pause();
+            if(shopAudio.isPlaying == false)
+            {
+                shopAudio.Play();
+            }
             playerUI.gameObject.SetActive(false);
             ShopCanvas.gameObject.SetActive(true);
             shopDirector.playableAsset = transitions[0];
@@ -86,6 +95,12 @@ public class ShopManager : MonoBehaviour
                 rain.Play();
             }
 
+            if(mainGameAudioSource.isPlaying == false)
+            {
+                mainGameAudioSource.Play();
+
+            }
+            shopAudio.Stop();
             playerUI.gameObject.SetActive(true);
             ShopCanvas.gameObject.SetActive(false);
             shopDirector.playableAsset = transitions[1];
