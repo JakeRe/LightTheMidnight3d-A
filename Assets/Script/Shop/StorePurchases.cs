@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class StorePurchases : ShopManager
 {
@@ -11,16 +12,27 @@ public class StorePurchases : ShopManager
     [SerializeField] private float healthUpgrade;
     [SerializeField] private float healthRefill;
     [SerializeField] private float laserSwordCost;
+    [SerializeField] private float damageUpgradeCost;
 
+    [Header("Upgrade for Damages")]
+    [SerializeField] private float damageUpgrade;
+
+    [Header("Damage Upgrade Text")]
+    [SerializeField] private string costOfUpgrade;
+    [SerializeField] private TextMeshProUGUI upgradeCostText;
+
+
+    [Header("Manages weapon spawn locations")]
     [SerializeField] private Vector3 weaponSpawnOffset;
     [SerializeField] private WeaponManagement weaponManage;
     [SerializeField] private GameObject weaponSpawn;
-
+    [Header("Weapons Purchasable in the Shop")]
     [SerializeField] private GameObject[] weapons;
 
 
     private new void Start()
     {
+        upgradeCostText.text = $"{damageUpgradeCost} Plasm";
         base.Start();
         weaponSpawn = GameObject.FindGameObjectWithTag("WeaponSpawn");
         weaponManage = GameObject.FindObjectOfType<WeaponManagement>();
@@ -101,4 +113,20 @@ public class StorePurchases : ShopManager
         }
     }
 
+    public void DamageUpgrade()
+    {
+        cost = damageUpgradeCost;
+
+        if (player != null && player.playerPoints >= cost) { 
+        Weapons standardWeapon = FindObjectOfType<Weapons>();
+        standardWeapon.damageRate += damageUpgrade;
+        damageUpgradeCost += damageUpgradeCost;
+        Purchase();
+
+        }
+
+        upgradeCostText.text = $"{damageUpgradeCost} Plasm";
+
+
+    }
 }
