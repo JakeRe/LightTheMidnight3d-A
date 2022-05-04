@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class PowerUps : MonoBehaviour
@@ -12,10 +14,13 @@ public class PowerUps : MonoBehaviour
     
     [SerializeField] private AudioSource powerUpAudio;
     [SerializeField] private AudioClip powerUpClip;
+    [SerializeField] private GameObject icon;
+    [SerializeField] private TextMeshProUGUI timerText;
 
 
     private void Awake()
     {
+        icon.SetActive(false);
         mesh = GetComponentInChildren<MeshRenderer>();
         collider = GetComponentInChildren<Collider>();
         powerUpAudio = GetComponent<AudioSource>();
@@ -29,6 +34,7 @@ public class PowerUps : MonoBehaviour
             Debug.Log("Power Up Interacted With");
             mesh.enabled = false;
             collider.enabled = false;
+            icon.SetActive(true);
             powerUpAudio.PlayOneShot(powerUpClip);
         }
     }
