@@ -30,6 +30,9 @@ public class WaveSystem : MonoBehaviour
         public float spawnRate;
     }
 
+    [Header("Audio for completed waves")]
+    [SerializeField] private AudioSource waveComplete;
+    [SerializeField] private AudioClip waveCompleteClip;
 
     [SerializeField] private PlayerController player;
     // This list is used to store the waves.
@@ -69,6 +72,7 @@ public class WaveSystem : MonoBehaviour
 
     private void Start()
     {
+        waveComplete = GetComponent<AudioSource>();
         waveCountdown = waveGracePeriod;
         player = FindObjectOfType<PlayerController>();
     }
@@ -114,6 +118,7 @@ public class WaveSystem : MonoBehaviour
 
     void WaveCompleted()
     {
+        waveComplete.PlayOneShot(waveCompleteClip);
         Debug.Log("Wave Completed!");
 
         state = SpawnState.COUNTDOWN;
