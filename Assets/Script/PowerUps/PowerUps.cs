@@ -11,11 +11,12 @@ public class PowerUps : MonoBehaviour
     [SerializeField] private MeshRenderer mesh;
     [SerializeField] private Collider collider;
     [SerializeField] protected float duration;
+    [SerializeField] protected float timer;
     
     [SerializeField] private AudioSource powerUpAudio;
     [SerializeField] private AudioClip powerUpClip;
     [SerializeField] private GameObject icon;
-    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] protected TextMeshProUGUI timerText;
 
 
     private void Awake()
@@ -34,8 +35,29 @@ public class PowerUps : MonoBehaviour
             Debug.Log("Power Up Interacted With");
             mesh.enabled = false;
             collider.enabled = false;
-            icon.SetActive(true);
+            if(icon != null)
+            {
+                icon.SetActive(true);
+            }
             powerUpAudio.PlayOneShot(powerUpClip);
+            if(duration != 0)
+            {
+                timer = duration;
+                StartCoroutine(Timer());
+            }
         }
     }
+
+    IEnumerator Timer()
+    {
+        while (timer > 0)
+        {
+            timerText.text = timer.ToString();
+            timer -= 1;
+            Mathf.Round(timer);
+            yield return new WaitForSecondsRealtime(1f);
+        }
+        yield return null;
+    }
+
 }

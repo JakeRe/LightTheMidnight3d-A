@@ -7,6 +7,7 @@ using TMPro;
 public class GodMode : PowerUps
 {
     [SerializeField] private Material godMode;
+    
 
     public override void OnTriggerEnter(Collider other)
     {
@@ -14,8 +15,11 @@ public class GodMode : PowerUps
         if (other.gameObject.CompareTag("Player"))
         {
             StartCoroutine(SetInvulnerable());
+            
+           
         }
     }
+
 
     IEnumerator SetInvulnerable()
     {
@@ -33,10 +37,9 @@ public class GodMode : PowerUps
             image.material = null;
         }
         Destroy(this.gameObject);
-        
-        
     }
 
+    
 
 }
    

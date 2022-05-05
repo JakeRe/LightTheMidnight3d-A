@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Tooltip("Local player Instance")]
     [SerializeField] public static GameObject LocalPlayerInstance;
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private Animator playerAnim;
     #endregion
 
     #region Sound Effects
@@ -133,6 +134,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             playerRenderer = LocalPlayerInstance.GetComponent<Renderer>();
             playerNormal = playerRenderer.material.color;
             playerMaterial = playerRenderer.material;
+            playerAnim = GetComponentInChildren<Animator>();
             canBeDamaged = true;
             canMove = true;
             canRotate = true;
@@ -272,6 +274,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         if (direction.magnitude >= 0.01f)
         {
+            playerAnim.SetBool("IsWalking", true);
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothRotate, smoothDamp);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
@@ -279,7 +282,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            
+            playerAnim.SetBool("IsWalking", false);
+            AnimatePlayerIdle(); 
         }
         
     }
@@ -473,6 +477,19 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         return false;
     }
 
+    void AnimatePlayerIdle()
+    {
+        int RandomNum;
+        RandomNum = Random.Range(1, 15);
+        if (RandomNum < 5)
+        {
+            playerAnim.SetTrigger("IdleCautious");
+        }
+        else if (RandomNum > 10)
+        {
+            playerAnim.SetTrigger("IdleHeadScratch");
+        }
+    }
    
 }
 

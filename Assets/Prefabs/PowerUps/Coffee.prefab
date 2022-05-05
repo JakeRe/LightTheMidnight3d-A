@@ -309,9 +309,10 @@ MonoBehaviour:
   mesh: {fileID: 0}
   collider: {fileID: 0}
   duration: 30
+  timer: 0
   powerUpAudio: {fileID: 0}
   powerUpClip: {fileID: 8300000, guid: cfa640af0ea62eb4dbf2f94f17942158, type: 3}
-  icon: {fileID: 5940067742239633466}
+  icon: {fileID: 692241456425561103}
   timerText: {fileID: 6695933110528254871}
   speedMultiplier: 2
   multiplied: 0
