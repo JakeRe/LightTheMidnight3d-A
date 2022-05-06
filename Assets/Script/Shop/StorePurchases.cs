@@ -56,6 +56,12 @@ public class StorePurchases : ShopManager
         playerPoints.text = points.ToString();
     }
 
+    public void LeaveShop()
+    {
+        player.inShop = false;
+        player.canMove = true;
+    }
+
     public void SpotCannonRefill()
     {
         
