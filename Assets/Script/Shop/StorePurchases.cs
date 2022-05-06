@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class StorePurchases : ShopManager
 {
@@ -28,6 +29,11 @@ public class StorePurchases : ShopManager
     [SerializeField] private GameObject weaponSpawn;
     [Header("Weapons Purchasable in the Shop")]
     [SerializeField] private GameObject[] weapons;
+    [Header("Weapons Stored for Upgrades")]
+    [SerializeField] private SpotlightWeapon weapon;
+
+    [Header("Ugrade Buttons")]
+    [SerializeField] private List<Button> buttons;
 
 
     private new void Start()
@@ -52,18 +58,23 @@ public class StorePurchases : ShopManager
 
     public void SpotCannonRefill()
     {
-        SpotlightWeapon weapon = (SpotlightWeapon)FindObjectOfType(typeof(SpotlightWeapon));
-
+        
         cost = spotLightRefill;
 
+        if(weapon.shotCount < weapon.maxShotCount)
+        {
+            buttons[0].interactable = true;
+        }
         if (weapon != null && weapon.shotCount != weapon.maxShotCount && points >= cost)
         {
             weapon.shotCount += 1;
+            weapon.BatteryUpdate();
             Purchase();
             Debug.Log($"Refilled weapon to {weapon.shotCount}");
         }
-        else
+        else if (weapon.shotCount >= weapon.maxShotCount)
         {
+            buttons[0].interactable = false;
             Debug.Log("Purchase Failed");
             Debug.Log($"Points Left {points}");
         }
@@ -78,6 +89,10 @@ public class StorePurchases : ShopManager
             player.maxHealth += 1;
             player.health = player.maxHealth;
             Purchase();
+        }
+        else if(player.maxHealth >= player.maxHealthAbsolute)
+        {
+            buttons[1].interactable = false;
         }
 
       

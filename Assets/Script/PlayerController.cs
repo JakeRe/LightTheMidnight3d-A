@@ -107,6 +107,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private AudioClip[] Sounds;
     [Tooltip("AudioSource Attached to the Player")]
     [SerializeField] private AudioSource playerAS;
+    [Tooltip("Audio For Player Movement")]
+    [SerializeField] private AudioSource footstepSoundSource;
+    [SerializeField] private AudioClip[] steps;
     #endregion
 
     #region Weapons Management
@@ -275,6 +278,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         if (direction.magnitude >= 0.01f)
         {
             playerAnim.SetBool("IsWalking", true);
+            Step();
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothRotate, smoothDamp);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
@@ -490,6 +494,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             playerAnim.SetTrigger("IdleHeadScratch");
         }
     }
-   
+
+    void Step()
+    {
+        int step = Random.Range(0, steps.Length);
+        if(footstepSoundSource.isPlaying == false)
+        {
+            footstepSoundSource.PlayOneShot(steps[step]);
+
+        }
+    }
+
 }
 
