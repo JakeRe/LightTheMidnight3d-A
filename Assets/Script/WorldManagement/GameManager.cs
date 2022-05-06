@@ -249,5 +249,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             yield return null;
         }
+        var enemies_in_map = FindObjectsOfType<Enemy>();
+        foreach (Enemy enemy in enemies_in_map)
+        {
+            AudioSource audio = enemy.roakSoundSource;
+            audio.enabled = true;
+        }
     }
 }
