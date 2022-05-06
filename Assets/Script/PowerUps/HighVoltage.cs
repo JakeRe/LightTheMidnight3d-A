@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HighVoltage : PowerUps
 {
+
     public override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);

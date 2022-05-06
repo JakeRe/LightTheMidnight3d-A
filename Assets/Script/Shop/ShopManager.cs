@@ -84,6 +84,8 @@ public class ShopManager : MonoBehaviour
             foreach (Enemy enemy in enemy_in_map)
             {
                 enemy.enemyAgent.isStopped = true;
+                AudioSource enemyAudio = enemy.GetComponent<AudioSource>();
+                enemyAudio.Pause();
             }
             StartCoroutine(WaitForTIme());
           
@@ -112,6 +114,8 @@ public class ShopManager : MonoBehaviour
             foreach (Enemy enemy in enemy_in_map)
             {
                 enemy.enemyAgent.isStopped = false;
+                AudioSource enemyAudio = enemy.GetComponent<AudioSource>();
+                enemyAudio.Play();
             }
         }
         StatsUpdated();

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PowerUps : MonoBehaviour
 {
 
-    [SerializeField] private MeshRenderer mesh;
+    [SerializeField] protected MeshRenderer mesh;
     [SerializeField] private Collider collider;
     [SerializeField] protected float duration;
     [SerializeField] protected float timer;

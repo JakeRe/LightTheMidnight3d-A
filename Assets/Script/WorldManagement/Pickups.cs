@@ -53,10 +53,14 @@ public class Pickups : MonoBehaviour
         if (this.activeAndReady == false)
         {
             pickupMat.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, alpha);
+            BoxCollider collider = GetComponentInChildren<BoxCollider>();
+            collider.enabled = false;
         }
         else
         {
             pickupMat.color = defaultColor;
+            BoxCollider collider = GetComponentInChildren<BoxCollider>();
+            collider.enabled = true;
         }
     }
 }
