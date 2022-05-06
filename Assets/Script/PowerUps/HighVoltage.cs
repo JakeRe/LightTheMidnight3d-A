@@ -32,6 +32,6 @@ public class HighVoltage : PowerUps
         {
             weapon.damageRate = weapon.defaultDamage;
         }
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 }

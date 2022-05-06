@@ -42,7 +42,7 @@ public class Freeze : PowerUps
             roakSkin.material = baseMat;
         }
         
-        Destroy(this);
+        Destroy(this.gameObject);
        
 
     }
