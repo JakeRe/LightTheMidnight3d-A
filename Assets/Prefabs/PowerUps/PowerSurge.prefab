@@ -134,11 +134,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440d2420a9d67ae48a70f3f796a8e5d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 0}
-  collider: {fileID: 0}
+  mesh: {fileID: 3675404595147359596}
+  collider: {fileID: 6100111604514200715}
   duration: 0
-  powerUpAudio: {fileID: 0}
+  timer: 0
+  powerUpAudio: {fileID: 1796705356528056551}
   powerUpClip: {fileID: 8300000, guid: 87f0213df9944e74d94051c7ed007200, type: 3}
+  icon: {fileID: 0}
+  timerText: {fileID: 0}
   surgeAnim: {fileID: 5106235101675585287}
 --- !u!54 &606774510609622630
 Rigidbody:
@@ -454,6 +457,12 @@ GameObject:
 --- !u!4 &2542992124904160771 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 00ad3eca870b50d45b067ea8c1bbfba4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2648183239880628712}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3675404595147359596 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 00ad3eca870b50d45b067ea8c1bbfba4,
     type: 3}
   m_PrefabInstance: {fileID: 2648183239880628712}
   m_PrefabAsset: {fileID: 0}
