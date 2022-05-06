@@ -118,8 +118,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.47108, y: 2.8334904, z: 1.300314}
-  m_Center: {x: 0.023368895, y: 0.15, z: -0.05128646}
+  m_Size: {x: 1.47108, y: 4.267243, z: 2.3525114}
+  m_Center: {x: 0.023368895, y: 0.81793857, z: 0.044843197}
 --- !u!114 &9189496979898966923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +206,7 @@ MonoBehaviour:
   debugPoints: 0
   tutorial: {fileID: 0}
   rb: {fileID: 3142378130236130317}
+  playerAnim: {fileID: 0}
   Sounds:
   - {fileID: 8300000, guid: 9666ca5e4dacd1845980574db969e007, type: 3}
   - {fileID: 8300000, guid: 12c05cf2132af8340b861fe50c539626, type: 3}

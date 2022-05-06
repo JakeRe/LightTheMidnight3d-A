@@ -184,7 +184,7 @@ public class Weapons : MonoBehaviour
 
     void FlashlightManagement()
     {
-        if (isOn && playerUI != null)
+        if (isOn && playerUI != null && !player.inShop)
         {
             if(flashlightBeam != null)
             {

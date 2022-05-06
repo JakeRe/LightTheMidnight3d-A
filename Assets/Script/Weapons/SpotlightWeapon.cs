@@ -58,7 +58,7 @@ public class SpotlightWeapon : Weapons
             }
         }
 
-        if (this.gameObject.activeSelf == true && Input.GetButtonDown("Fire1") && shotCount != 0 && !gameManager.isPaused)
+        if (this.gameObject.activeSelf == true && Input.GetButtonDown("Fire1") && shotCount != 0 && !gameManager.isPaused && !player.inShop)
         {
             //ToggleFlashlight();
            StartCoroutine(SpotLightShot());
