@@ -489,7 +489,7 @@ MonoBehaviour:
   deathFX: {fileID: 1763868617577308476}
   enemyModel: {fileID: 4298818948858530917}
   currentHealth: 0
-  maxHealth: 100
+  maxHealth: 250
   baseMaxHealth: 100
   healthSlider: {fileID: 7629958504369781366}
   enemyUI: {fileID: 1787931349923870629}
@@ -573,16 +573,16 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 20901fbba0084d4479d40773cc7e5e98, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.206
+  m_Volume: 1
   m_Pitch: -0.01
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 218
+  Priority: 126
   DopplerLevel: 0.66
   MinDistance: 1
-  MaxDistance: 10.93
+  MaxDistance: 8.982674
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
