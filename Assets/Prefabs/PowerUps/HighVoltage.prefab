@@ -177,6 +177,10 @@ MonoBehaviour:
   powerUpClip: {fileID: 8300000, guid: f2c4ad634ef347c409255d02a059edcb, type: 3}
   icon: {fileID: 3747455306998815237}
   timerText: {fileID: 3536034379606052777}
+  batteryRenderer:
+  - {fileID: 7278771087039794547}
+  - {fileID: 1795371063529157877}
+  - {fileID: 8235312101798935903}
 --- !u!54 &9094288094139220689
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -620,6 +624,24 @@ PrefabInstance:
 --- !u!4 &4904843317223645492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 02c41b2e58518e94196b8cf9bd45a4ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 4871549544014087903}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7278771087039794547 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -6442298374534657108, guid: 02c41b2e58518e94196b8cf9bd45a4ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 4871549544014087903}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1795371063529157877 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6589126927893049898, guid: 02c41b2e58518e94196b8cf9bd45a4ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 4871549544014087903}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8235312101798935903 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3590086638062959488, guid: 02c41b2e58518e94196b8cf9bd45a4ee,
     type: 3}
   m_PrefabInstance: {fileID: 4871549544014087903}
   m_PrefabAsset: {fileID: 0}

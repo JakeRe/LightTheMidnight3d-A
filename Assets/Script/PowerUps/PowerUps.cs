@@ -27,13 +27,20 @@ public class PowerUps : MonoBehaviour
         powerUpAudio = GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        StartCoroutine(Despawn());
+    }
 
     public virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("Power Up Interacted With");
-            mesh.enabled = false;
+            if(mesh != null)
+            {
+                mesh.enabled = false;
+            }
             collider.enabled = false;
             if(icon != null)
             {
@@ -60,4 +67,9 @@ public class PowerUps : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator Despawn()
+    {
+        yield return new WaitForSecondsRealtime(20f);
+        Destroy(this.gameObject);
+    }
 }

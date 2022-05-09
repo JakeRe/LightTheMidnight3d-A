@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class HighVoltage : PowerUps
 {
+    [SerializeField] private MeshRenderer[] batteryRenderer;
 
     public override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
         if (other.gameObject.CompareTag("Player"))
         {
+            batteryRenderer[0].enabled = false;
+            batteryRenderer[1].enabled = false;
+            batteryRenderer[2].enabled = false;
+
             StartCoroutine(ActivateHighVoltage());
         }
     }
