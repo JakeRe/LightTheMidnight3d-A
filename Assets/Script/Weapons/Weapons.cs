@@ -184,7 +184,7 @@ public class Weapons : MonoBehaviour
 
     void FlashlightManagement()
     {
-        if (isOn && playerUI != null && !player.inShop)
+        if (isOn && playerUI != null && !player.inShop && batteryLevel >0)
         {
             if(flashlightBeam != null)
             {
@@ -216,6 +216,12 @@ public class Weapons : MonoBehaviour
                     batteryLevel += batteryRecharge * Time.deltaTime;
                
             }
+        }
+
+        if(batteryLevel <=0)
+        {
+            flashlightBeam.enabled = false;
+            flashlightHitBox.gameObject.SetActive(false);
         }
     }
 
