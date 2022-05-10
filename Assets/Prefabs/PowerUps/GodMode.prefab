@@ -288,10 +288,11 @@ MonoBehaviour:
   mesh: {fileID: 0}
   collider: {fileID: 0}
   duration: 30
+  timer: 0
   powerUpAudio: {fileID: 0}
   powerUpClip: {fileID: 8300000, guid: 5bdf5940b1c8ea649bd80283fbc96772, type: 3}
-  icon: {fileID: 1982042789645796768}
-  timerText: {fileID: 8296175402879636179}
+  icon: {fileID: 7373246519011047547, guid: 9b04d3c5ea5f5bf45b8cdb56a8af39a9, type: 3}
+  timerText: {fileID: 0}
   godMode: {fileID: 2100000, guid: a4e466e47085d314399457035819dd83, type: 2}
 --- !u!54 &-2914763417500184523
 Rigidbody:

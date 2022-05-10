@@ -424,8 +424,8 @@ MonoBehaviour:
   timer: 0
   powerUpAudio: {fileID: 0}
   powerUpClip: {fileID: 8300000, guid: fc5958829de864e409ed435b40083ef3, type: 3}
-  icon: {fileID: 8143424994469017656}
-  timerText: {fileID: 8346826031964381176}
+  icon: {fileID: 7349401343065379333, guid: 7e2f219d532864f4a8b8f926a6b93eba, type: 3}
+  timerText: {fileID: 0}
   frozenMat: {fileID: 2100000, guid: a3fe71a78a73a4b43937babe111d8c76, type: 2}
   baseMat: {fileID: 2100000, guid: b08237d7a0618d44d9606b16679ed1e6, type: 2}
 --- !u!54 &1659202204026749510

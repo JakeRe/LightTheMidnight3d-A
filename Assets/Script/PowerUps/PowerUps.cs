@@ -15,13 +15,17 @@ public class PowerUps : MonoBehaviour
     
     [SerializeField] private AudioSource powerUpAudio;
     [SerializeField] private AudioClip powerUpClip;
-    [SerializeField] private GameObject icon;
+    [SerializeField] protected GameObject icon;
     [SerializeField] protected TextMeshProUGUI timerText;
 
+    [SerializeField] protected PowerUpManagement powerUpManage;
 
-    private void Awake()
+    
+
+
+    public virtual void Awake()
     {
-        icon.SetActive(false);
+        powerUpManage = FindObjectOfType<PowerUpManagement>();
         mesh = GetComponentInChildren<MeshRenderer>();
         collider = GetComponentInChildren<Collider>();
         powerUpAudio = GetComponent<AudioSource>();
@@ -29,7 +33,19 @@ public class PowerUps : MonoBehaviour
 
     private void Start()
     {
+        icon.SetActive(false);
+        timerText = icon.GetComponentInChildren<TextMeshProUGUI>();
         StartCoroutine(Despawn());
+    }
+
+    public void OnEnable()
+    {
+        PowerUpManagement.PowerUpActivated += timeStart;
+    }
+
+    public void OnDisable()
+    {
+        PowerUpManagement.PowerUpActivated -= timeStart;
     }
 
     public virtual void OnTriggerEnter(Collider other)
@@ -53,6 +69,11 @@ public class PowerUps : MonoBehaviour
                 StartCoroutine(Timer());
             }
         }
+    }
+
+    void timeStart()
+    {
+        StartCoroutine(Timer());
     }
 
     IEnumerator Timer()

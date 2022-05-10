@@ -175,8 +175,8 @@ MonoBehaviour:
   timer: 0
   powerUpAudio: {fileID: 0}
   powerUpClip: {fileID: 8300000, guid: f2c4ad634ef347c409255d02a059edcb, type: 3}
-  icon: {fileID: 3747455306998815237}
-  timerText: {fileID: 3536034379606052777}
+  icon: {fileID: 8227948461914618618, guid: 51fca64a9ff463c408724590a344c58c, type: 3}
+  timerText: {fileID: 0}
   batteryRenderer:
   - {fileID: 7278771087039794547}
   - {fileID: 1795371063529157877}

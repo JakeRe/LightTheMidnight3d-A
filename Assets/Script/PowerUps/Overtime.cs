@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Overtime : PowerUps
 {
-   
+
+    public override void Awake()
+    {
+       
+        base.Awake(); 
+        icon = powerUpManage.icons[1];
+    }
+
 
     public override void OnTriggerEnter(Collider other)
     {

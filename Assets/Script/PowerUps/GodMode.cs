@@ -7,7 +7,14 @@ using TMPro;
 public class GodMode : PowerUps
 {
     [SerializeField] private Material godMode;
-    
+
+    public override void Awake()
+    {
+        base.Awake();
+        icon = powerUpManage.icons[0];
+
+    }
+
 
     public override void OnTriggerEnter(Collider other)
     {

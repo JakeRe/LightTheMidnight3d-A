@@ -6,6 +6,15 @@ public class Freeze : PowerUps
 {
     [SerializeField] private Material frozenMat;
     [SerializeField] private Material baseMat;
+
+    public override void Awake()
+    {
+       
+        base.Awake(); 
+        icon = powerUpManage.icons[2];
+    }
+
+
     public override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);

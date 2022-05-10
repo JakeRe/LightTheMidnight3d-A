@@ -6,6 +6,14 @@ public class HighVoltage : PowerUps
 {
     [SerializeField] private MeshRenderer[] batteryRenderer;
 
+    public override void Awake()
+    {
+        
+        base.Awake();
+        icon = powerUpManage.icons[3];
+    }
+
+
     public override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);

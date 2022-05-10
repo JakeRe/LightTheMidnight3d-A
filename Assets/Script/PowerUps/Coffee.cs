@@ -6,6 +6,14 @@ public class Coffee : PowerUps
 {
     public float speedMultiplier;
     public bool multiplied;
+
+    public override void Awake()
+    {
+        
+        base.Awake();
+        icon = powerUpManage.icons[4];
+    }
+
     public override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);

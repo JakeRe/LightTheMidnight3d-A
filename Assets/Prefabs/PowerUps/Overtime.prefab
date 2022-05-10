@@ -192,8 +192,8 @@ MonoBehaviour:
   timer: 0
   powerUpAudio: {fileID: 0}
   powerUpClip: {fileID: 8300000, guid: 7ed9c67ef6736174ab15471b5d56550c, type: 3}
-  icon: {fileID: 252589168373639557}
-  timerText: {fileID: 8183061353207977754}
+  icon: {fileID: 640173812460915908, guid: d9510cde06ef9ad4f9d0e52fdb1641a1, type: 3}
+  timerText: {fileID: 0}
 --- !u!54 &9204729627425309763
 Rigidbody:
   m_ObjectHideFlags: 0
