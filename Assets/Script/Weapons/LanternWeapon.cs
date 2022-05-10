@@ -55,11 +55,12 @@ public class LanternWeapon : Weapons
     {
         if (Input.GetKeyDown(KeyCode.E) && gameObject.activeSelf)
         {
+            weaponManage.weaponObjects.Remove(this.gameObject);
+            this.transform.SetParent(null);
+
             rb.isKinematic = false;
             radius.enabled = true;
-            this.transform.SetParent(null);
             isDeployed = true;
-            weaponManage.weaponObjects.Remove(this.gameObject);
         }
     }
 
