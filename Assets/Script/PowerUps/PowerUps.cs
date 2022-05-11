@@ -55,6 +55,7 @@ public class PowerUps : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            StopCoroutine(Despawn());
             Debug.Log("Power Up Interacted With");
             if(mesh != null)
             {

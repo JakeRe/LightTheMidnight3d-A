@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] public float maxHealthAbsolute;
     [Tooltip("How Much Time In Invincibility The Player has After Taking Damage")]
     [SerializeField] public float invincibilityTime;
+    [SerializeField] public bool interactedWithPowerUp;
     [Tooltip("This player can be damaged")]
     [SerializeField] public bool canBeDamaged;
     [Tooltip("Alpha of the player material when the player takes damage")]
@@ -141,6 +142,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             canBeDamaged = true;
             canMove = true;
             canRotate = true;
+            interactedWithPowerUp = false;
             baseMovementSpeed = movementSpeed;
          
         }
@@ -432,7 +434,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     void OnCollisionEnter(Collision enemy)
     {
-        if (enemy.gameObject.CompareTag("Enemy") && canBeDamaged)
+        if (enemy.gameObject.CompareTag("Enemy") && canBeDamaged && !interactedWithPowerUp)
         {
             Debug.Log("enemy hit player");
             health -= 1;
@@ -443,12 +445,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     IEnumerator Invincibility()
     {
-        canBeDamaged = !canBeDamaged;
-        ChangeAlpha();
-        yield return new WaitForSecondsRealtime(invincibilityTime);
-        canBeDamaged = !canBeDamaged;
-        ChangeAlpha();
-        yield break;
+       
+         canBeDamaged = !canBeDamaged;
+         ChangeAlpha();
+         yield return new WaitForSecondsRealtime(invincibilityTime);
+         canBeDamaged = !canBeDamaged;
+         ChangeAlpha();
+         yield break;
+       
     }
 
     #endregion

@@ -33,12 +33,14 @@ public class GodMode : PowerUps
         PlayerUI playerUI = FindObjectOfType<PlayerUI>();
         PlayerController player = FindObjectOfType<PlayerController>();
         player.canBeDamaged = false;
+        player.interactedWithPowerUp = true;
         foreach(Image image in playerUI.hearts)
         {
             image.material = godMode;
         }
         yield return new WaitForSecondsRealtime(duration);
         player.canBeDamaged = true;
+        player.interactedWithPowerUp = false;
         foreach (Image image in playerUI.hearts)
         {
             image.material = null;
