@@ -122,10 +122,10 @@ public class LightTheMidnightLauncher : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            PhotonNetwork.LoadLevel("Vertical Slice");
-        }
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    PhotonNetwork.LoadLevel("Vertical Slice");
+        //}
     }
 
     public void ConnectSinglePlayer()

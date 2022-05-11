@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using UnityEngine.Video;
+using UnityEngine.UI;
 using Photon.Realtime;
 using UnityEngine.AI;
 using ExitGames.Client.Photon;
@@ -48,7 +50,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     public const int SpawnLocalPlayer = 1;
     public LightTheMidnightLauncher LTML;
     public bool altPause;
-
+    public VideoPlayer ending;
+    public RawImage endingScreen;
+    public GameObject soundManager;
+    public WeaponManagement weaponManage;
 
 
 
@@ -72,7 +77,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        weaponManage = FindObjectOfType<WeaponManagement>();
         PhotonNetwork.AutomaticallySyncScene = true;
+        endingScreen.gameObject.SetActive(false);
+        ending.Prepare();
+        ending.loopPointReached += CheckVideo;
         pauseMenu.SetActive(false);
         playerHud.SetActive(true);
         player = GameObject.FindGameObjectWithTag("Player");
@@ -119,7 +128,25 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Update()
     {
         Pause();
+        CheckForEnding();
     }
+
+    void CheckForEnding()
+    {
+        if(waveSys.currentWave >= 11)
+        {
+            altPause = true;
+            StartCoroutine(AltPause());
+            weaponManage.gameObject.SetActive(false);
+            endingScreen.gameObject.SetActive(true);
+            soundManager.SetActive(false);
+            UIPause();
+            playerHud.SetActive(false);
+            pauseMenu.SetActive(false);
+            ending.Play();
+        }
+    }
+
 
     #endregion
 
@@ -215,6 +242,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         isPaused = !isPaused;
        
     }
+
+    void CheckVideo(UnityEngine.Video.VideoPlayer vp)
+    {
+        waveSys.ResetHealth();
+        Destroy(player);
+        PhotonNetwork.LoadLevel("MultiplayerLauncher");
+
+    }
     #endregion
 
     IEnumerator PauseEnemies()
@@ -231,6 +266,12 @@ public class GameManager : MonoBehaviourPunCallbacks
                 audio.enabled = false;
             }
             yield return null;
+        }
+        var enemies_in_map = FindObjectsOfType<Enemy>();
+        foreach (Enemy enemy in enemies_in_map)
+        {
+            AudioSource audio = enemy.roakSoundSource;
+            audio.enabled = true;
         }
     }
 
