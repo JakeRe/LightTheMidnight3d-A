@@ -42,6 +42,7 @@ public class Overtime : PowerUps
         {
             enemy.multiplierIsActive = false;
         }
+        DeactivateIcon();
         Destroy(this.gameObject);
     }
 }

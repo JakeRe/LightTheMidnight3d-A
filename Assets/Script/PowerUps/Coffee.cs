@@ -38,6 +38,7 @@ public class Coffee : PowerUps
         yield return new WaitForSecondsRealtime(duration);
         player.movementSpeed = player.baseMovementSpeed;
         playerAnim.speed = 1;
+        DeactivateIcon();
         Destroy(this.gameObject);
     }
 

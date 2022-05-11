@@ -45,6 +45,7 @@ public class GodMode : PowerUps
         {
             image.material = null;
         }
+        DeactivateIcon();
         Destroy(this.gameObject);
     }
 

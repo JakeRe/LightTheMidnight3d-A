@@ -19,6 +19,7 @@ public class PowerUps : MonoBehaviour
     [SerializeField] protected TextMeshProUGUI timerText;
 
     [SerializeField] protected PowerUpManagement powerUpManage;
+    private IEnumerator despawn;
 
     
 
@@ -36,9 +37,10 @@ public class PowerUps : MonoBehaviour
         if(icon != null)
         {
             icon.SetActive(false);
+            timerText = icon.GetComponentInChildren<TextMeshProUGUI>();
         }
-        timerText = icon.GetComponentInChildren<TextMeshProUGUI>();
-        StartCoroutine(Despawn());
+        despawn = Despawn();
+        StartCoroutine(despawn);
     }
 
     public void OnEnable()
@@ -55,7 +57,7 @@ public class PowerUps : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            StopCoroutine(Despawn());
+            StopCoroutine(despawn);
             Debug.Log("Power Up Interacted With");
             if(mesh != null)
             {
@@ -89,12 +91,19 @@ public class PowerUps : MonoBehaviour
             Mathf.Round(timer);
             yield return new WaitForSecondsRealtime(1f);
         }
+        DeactivateIcon();
         yield return null;
     }
 
     IEnumerator Despawn()
     {
         yield return new WaitForSecondsRealtime(20f);
+        Debug.Log("Destroyed Power up");
         Destroy(this.gameObject);
+    }
+
+    protected void DeactivateIcon()
+    {
+        icon.SetActive(false);
     }
 }

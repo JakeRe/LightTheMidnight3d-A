@@ -50,7 +50,8 @@ public class Freeze : PowerUps
             SkinnedMeshRenderer roakSkin = enemy.GetComponentInChildren<SkinnedMeshRenderer>();
             roakSkin.material = baseMat;
         }
-        
+
+        DeactivateIcon();
         Destroy(this.gameObject);
        
 
