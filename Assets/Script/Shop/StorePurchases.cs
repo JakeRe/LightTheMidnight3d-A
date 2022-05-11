@@ -14,6 +14,7 @@ public class StorePurchases : ShopManager
     [SerializeField] private float healthRefill;
     [SerializeField] private float laserSwordCost;
     [SerializeField] private float damageUpgradeCost;
+    [SerializeField] private float lanternCost;
 
     [Header("Upgrade for Damages")]
     [SerializeField] private float damageUpgrade;
@@ -121,16 +122,37 @@ public class StorePurchases : ShopManager
 
         if(player != null && points >= cost)
         {
+          player.playerPoints -= cost;
+            playerPoints.text = points.ToString();
+            GameObject melee = Instantiate(weapons[0], weaponSpawn.transform);
+            melee.transform.SetParent(weaponManage.transform);
+            melee.SetActive(false);
+            weaponManage.weaponObjects.Add(melee);
+            Weapons laser = melee.GetComponent<Weapons>();
+            laser.weaponID = weaponManage.weaponObjects.Count;
+            laser.weaponID -= 1; 
+           
+        }
+    }
+
+    public void LanternPurchase()
+    {
+        cost = lanternCost;
+
+        if (player != null && points >= cost)
+        {
+            
+            
            player.playerPoints -= cost;
            playerPoints.text = points.ToString();
-           GameObject melee =  Instantiate(weapons[0], weaponSpawn.transform);
-           melee.transform.SetParent(weaponManage.transform);
-           melee.SetActive(false);
-           weaponManage.weaponObjects.Add(melee);
-           Weapons laser = melee.GetComponent<Weapons>();
-           laser.weaponID = weaponManage.weaponObjects.Count;
-           laser.weaponID -= 1;
-           
+           GameObject lantern =  Instantiate(weapons[1], weaponSpawn.transform);
+           lantern.transform.SetParent(weaponManage.transform);
+           lantern.SetActive(false);
+           weaponManage.weaponObjects.Add(lantern);
+           Weapons lamp = lantern.GetComponent<Weapons>();
+           lamp.weaponID = weaponManage.weaponObjects.Count;
+           lamp.weaponID -= 1;
+
         }
     }
 

@@ -33,7 +33,10 @@ public class PowerUps : MonoBehaviour
 
     private void Start()
     {
-        icon.SetActive(false);
+        if(icon != null)
+        {
+            icon.SetActive(false);
+        }
         timerText = icon.GetComponentInChildren<TextMeshProUGUI>();
         StartCoroutine(Despawn());
     }

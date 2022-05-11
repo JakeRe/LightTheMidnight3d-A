@@ -177,6 +177,7 @@ MonoBehaviour:
   powerUpClip: {fileID: 8300000, guid: f2c4ad634ef347c409255d02a059edcb, type: 3}
   icon: {fileID: 8227948461914618618, guid: 51fca64a9ff463c408724590a344c58c, type: 3}
   timerText: {fileID: 0}
+  powerUpManage: {fileID: 0}
   batteryRenderer:
   - {fileID: 7278771087039794547}
   - {fileID: 1795371063529157877}
@@ -563,6 +564,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02c41b2e58518e94196b8cf9bd45a4ee,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0059184995
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02c41b2e58518e94196b8cf9bd45a4ee,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0059184995
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 02c41b2e58518e94196b8cf9bd45a4ee,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0059184995
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 02c41b2e58518e94196b8cf9bd45a4ee,
         type: 3}
