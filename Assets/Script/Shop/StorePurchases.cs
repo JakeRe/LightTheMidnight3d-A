@@ -163,6 +163,7 @@ public class StorePurchases : ShopManager
         if (player != null && player.playerPoints >= cost) { 
         Weapons standardWeapon = FindObjectOfType<Weapons>();
         standardWeapon.damageRate += damageUpgrade;
+        standardWeapon.defaultDamage = standardWeapon.damageRate;
         damageUpgradeCost += damageUpgradeCost;
         Purchase();
 

@@ -14,7 +14,8 @@ public class SuperSandwhich : PowerUps
            
             PlayerController player = FindObjectOfType<PlayerController>();
             player.health = player.maxHealth;
+            Destroy(this.gameObject);
         }
-        Destroy(this.gameObject);
+       
     }
 }
